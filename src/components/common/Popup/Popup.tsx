@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import fonts from '../../../styles/FontStyle';
 import colors from '../../../styles/Theme';
+import FlexibleButton from '../FlexibleButton';
 
 const Popup = ({ isOpenPopup, message, buttonText, closePopup }) => {
   return (

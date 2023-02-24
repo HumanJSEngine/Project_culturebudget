@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../components/common/Button';
 const Auth = () => {
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.VITE_KAKAO_API}&redirect_uri=${process.env.VITE_REDITECT_URI}&response_type=code`;
+  const { VITE_KAKAO_API, VITE_REDITECT_URI } = import.meta.env;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${VITE_KAKAO_API}&redirect_uri=${VITE_REDITECT_URI}&response_type=code`;
   return (
     <Page>
       <ButtonArea>

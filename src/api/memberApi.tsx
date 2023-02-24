@@ -1,6 +1,6 @@
 import apiClient from './apiClient';
 
-export const memberJoin = async (joinData:) => {
+export const memberJoin = async (joinData) => {
   const { email, password, nickName } = joinData;
   const params = {
     email: email,

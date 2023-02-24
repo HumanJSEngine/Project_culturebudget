@@ -6,13 +6,13 @@ interface GalleryListProps {
 }
 
 const GalleryList = ({ list }: GalleryListProps) => {
-  const IMAGE_PATH = process.env.VITE_IMAGE_URL;
+  const { VITE_IMAGE_URL } = import.meta.env;
   return (
     <GalleryLayout>
       {list.map(({ ehSeq, ehImgFile, ehPrice }) => (
         <GalleryListImg
           key={ehSeq}
-          src={`${IMAGE_PATH}/${ehImgFile}`}
+          src={`${VITE_IMAGE_URL}/${ehImgFile}`}
           price={ehPrice}
         />
       ))}
