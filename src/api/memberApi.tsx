@@ -1,10 +1,5 @@
+import { MemberData } from '../types/User';
 import apiClient from './apiClient';
-
-interface MemberData {
-  email: string;
-  password: string;
-  nickName: string;
-}
 
 export const memberJoin = async (joinData: MemberData) => {
   const { email, password, nickName } = joinData;

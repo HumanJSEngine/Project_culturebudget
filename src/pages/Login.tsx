@@ -16,22 +16,12 @@ import Popup from '../components/common/Popup/Popup';
 import usePopup from '../hooks/usePopup';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../store/userReducer';
+import { loginSchema } from '../types/Validation';
 
 interface LoginFormVlaue {
   email: string;
   password: string;
 }
-
-const loginSchema = yup
-  .object({
-    email: yup
-      .string()
-      .trim()
-      .required('이메일 입력은 필수입니다.')
-      .email('이메일 형식이 아닙니다.'),
-    password: yup.string().required('비밀번호를 입력해 주세요.'),
-  })
-  .required();
 
 const Login = () => {
   const dispatch = useDispatch();

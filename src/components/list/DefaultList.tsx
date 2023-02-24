@@ -10,7 +10,7 @@ import TitleList from '../calendar/TitleList';
 import DateListTotal from './DateListTotal';
 
 interface DefaultListProps {
-    list: BudgetData[];
+  list: BudgetData[];
 }
 
 const DefaultList = ({ list }: DefaultListProps) => {

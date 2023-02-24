@@ -1,9 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { MemberData } from '../types/User';
 
-const INITIAL_STATE = {
+type UserState = Pick<MemberData, 'email' | 'nickName'>;
+
+const INITIAL_STATE: UserState = {
   // useruid: '',
-  useremail: '',
-  usernickname: '',
+  email: '',
+  nickName: '',
   // username: '',
   // userbirth: '',
   // usersex: '',
@@ -18,8 +21,8 @@ const userReducer = createSlice({
       // const { uid, name, birth, nickname, sex, job, email } = action.payload;
       const { nickname, email } = action.payload;
       // state.useruid = uid;
-      state.useremail = email;
-      state.usernickname = nickname;
+      state.email = email;
+      state.nickName = nickname;
       // state.username = name;
       // state.userbirth = birth;
       // state.usersex = sex;
@@ -27,15 +30,18 @@ const userReducer = createSlice({
     },
     clearUser: (state) => {
       // state.useruid = '';
-      state.useremail = '';
-      state.usernickname = '';
+      state.email = '';
+      state.nickName = '';
       // state.username = '';
       // state.userbirth = '';
       // state.usersex = '';
       // state.userjob = '';
     },
+    default: (state) => {
+      return state;
+    },
   },
 });
 
 export const { loginUser, clearUser } = userReducer.actions;
-export default userReducer.reducer;
+export default userReducer;
