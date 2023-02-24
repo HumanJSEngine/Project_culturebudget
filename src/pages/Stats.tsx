@@ -13,15 +13,13 @@ import Header from '../components/Layout/Header';
 import useFetch from '../hooks/useFetch';
 import Container from '../styles/Container';
 import ConvertPercent from '../utils/ConvertPercent';
+import { BudgetData } from '../types/Budget';
 
 const Stats = () => {
-    const statdata = useFetch(
+    const statdata: Array<BudgetData> = useFetch(
         'get',
         'http://haeji.mawani.kro.kr:8585/api/expense/list'
     );
-
-    let percent = ConvertPercent(statdata);
-    console.log('퍼센트', percent);
 
     return (
         <Page>
@@ -32,7 +30,7 @@ const Stats = () => {
                     monthprice={ConvertPercent(statdata)}
                 />
                 <Category>
-                    <Monthprice />
+                    <Monthprice ccSeq={'대분류'} />
                     <Chart statdata={statdata} />
                     <Expcatelist>
                         {statdata.map((item) => (
