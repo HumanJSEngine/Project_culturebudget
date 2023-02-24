@@ -6,8 +6,8 @@ import userReducer from './userReducer';
 import settingReducer from './settingReducer';
 
 const reducers = combineReducers({
-  user: userReducer,
-  setting: settingReducer,
+  user: userReducer.reducer,
+  setting: settingReducer.reducer,
 });
 
 const persistConfig = {
@@ -26,4 +26,5 @@ const store = configureStore({
   },
 });
 
+export type RootState = ReturnType<typeof store.getState>;
 export default store;

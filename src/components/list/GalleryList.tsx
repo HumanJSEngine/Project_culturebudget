@@ -1,8 +1,9 @@
+import { BudgetData } from '../../types/Budget';
 import GalleryLayout from '../gallerylist/GalleryLayout';
 import GalleryListImg from '../gallerylist/GalleryListImg';
 
 interface GalleryListProps {
-  list: [];
+  list: BudgetData[];
 }
 
 const GalleryList = ({ list }: GalleryListProps) => {

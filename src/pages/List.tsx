@@ -10,10 +10,10 @@ import { getPost } from '../api/postApi';
 import { useSelector } from 'react-redux';
 import DefaultList from '../components/list/DefaultList';
 import GalleryList from '../components/list/GalleryList';
+import { RootState } from '../store/store';
 
 const List = () => {
-  const setting = useSelector((state) => state.setting);
-  const { listType } = setting;
+  const listType = useSelector((state: RootState) => state.setting?.listType);
   const [postList, setPostList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const getPostList = async () => {

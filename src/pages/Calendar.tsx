@@ -15,9 +15,9 @@ import 'react-calendar/dist/Calendar.css';
 import 'moment/locale/ko';
 import Container from '../styles/Container';
 import GetTotal from '../utils/GetTotal';
-import axios from 'axios';
 import colors from '../styles/Theme';
 import { BudgetData } from '../types/Budget';
+import { getPost } from '../api/postApi';
 
 const Calendar = () => {
   const [result, setResult] = useState<BudgetData[]>([]);
@@ -25,15 +25,27 @@ const Calendar = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getFetchData = async () => {
-    await axios
-      .get('http://haeji.mawani.kro.kr:8585/api/expense/list')
-      .then((res) => {
-        let response = res.data.expense;
-        setResult(response.slice(0, 5));
-        response = response.slice(5);
-        setItem(response);
-        setIsLoading(false);
-      });
+    setIsLoading(true);
+    try {
+      const res = await getPost();
+      const { expense } = res;
+      setResult(expense.slice(0, 5));
+      const sliceData = expense.slice(5);
+      setItem(sliceData);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
+    // await axios
+    //   .get('http://haeji.mawani.kro.kr:8585/api/expense/list')
+    //   .then((res) => {
+    //     let response = res.data.expense;
+    //     setResult(response.slice(0, 5));
+    //     response = response.slice(5);
+    //     setItem(response);
+    //     setIsLoading(false);
+    //   });
   };
 
   //   const _infiniteScroll = useCallback(() => {

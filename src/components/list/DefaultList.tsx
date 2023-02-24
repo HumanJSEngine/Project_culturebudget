@@ -1,4 +1,5 @@
 import React from 'react';
+import { BudgetData } from '../../types/Budget';
 import GetTotal from '../../utils/GetTotal';
 import Category from '../calendar/Category';
 import Expenditure from '../calendar/Expenditure';
@@ -9,7 +10,7 @@ import TitleList from '../calendar/TitleList';
 import DateListTotal from './DateListTotal';
 
 interface DefaultListProps {
-  list: [];
+  list: BudgetData[];
 }
 
 const DefaultList = ({ list }: DefaultListProps) => {

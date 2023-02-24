@@ -1,4 +1,3 @@
-import React from 'react';
 import BottomNavigation from '../components/common/BottomNavigation';
 import Page from '../styles/Page';
 import Header from '../components/common/Header';
@@ -13,30 +12,30 @@ import Category from '../components/calendar/Category';
 import Price from '../components/calendar/Price';
 
 const CateList = () => {
-    return (
-        <Page>
-            <Header />
-            <CateExpAll part={'영화'} total={400000} />
-            <Expenditure>
-                <Catename />
-                <Perdaytotal counts={2} amounts={10000} />
-                <hr />
-                <ExpendList>
-                    <TitleList>
-                        <Title title={'제목입니다'} />
-                        <Category
-                            culture={'2023.03.03'}
-                            place={'장소'}
-                            payment={'결제수단'}
-                        ></Category>
-                    </TitleList>
-                    <Price price={10000} />
-                </ExpendList>
-            </Expenditure>
+  return (
+    <Page>
+      <Header />
+      <CateExpAll part={'영화'} total={400000} />
+      <Expenditure>
+        <Catename />
+        <Perdaytotal counts={2} amounts={10000} />
+        <hr />
+        <ExpendList>
+          <TitleList>
+            <Title title={'제목입니다'} />
+            <Category
+              culture={'2023.03.03'}
+              place={'장소'}
+              payment={'결제수단'}
+            ></Category>
+          </TitleList>
+          <Price price={10000} />
+        </ExpendList>
+      </Expenditure>
 
-            <BottomNavigation />
-        </Page>
-    );
+      <BottomNavigation />
+    </Page>
+  );
 };
 
 export default CateList;
