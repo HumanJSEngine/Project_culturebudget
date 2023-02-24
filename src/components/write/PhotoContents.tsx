@@ -3,7 +3,7 @@ import { AiFillCamera } from 'react-icons/ai';
 import colors from '../../styles/Theme';
 
 interface PhotoContentsProps {
-  imgRef: HTMLInputElement;
+  imgRef: React.ForwardedRef<any>;
   cropImg: string;
   clickImageEvent: () => void;
 }

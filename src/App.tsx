@@ -19,7 +19,7 @@ import SetPayment from './pages/SetPayment';
 import SettingCdclist from './components/setting/SettingCdclist';
 
 function App() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

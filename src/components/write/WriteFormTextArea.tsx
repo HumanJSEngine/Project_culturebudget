@@ -5,6 +5,7 @@ import useResizeTextArea from '../../hooks/useResizeTextArea';
 
 interface WriteFormTextAreaProps {
   title: string;
+  textRef: React.ForwardedRef<HTMLTextAreaElement>;
 }
 
 const WriteFormTextArea = ({ title, textRef }: WriteFormTextAreaProps) => {
@@ -39,7 +40,7 @@ const FormTitle = styled.p`
   font: ${fonts.score15Regular};
 `;
 
-const FormInput = styled.textarea`
+const FormInput = styled.textarea<{ row: number }>`
   width: 70%;
   min-height: 15px;
   height: ${({ row }) => 15 * row + 3}px;

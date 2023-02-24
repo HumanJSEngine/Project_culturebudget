@@ -4,6 +4,7 @@ import colors from '../../styles/Theme';
 
 interface WriteFormTextProps {
   title: string;
+  textRef: React.ForwardedRef<HTMLInputElement>;
 }
 
 const WriteFormText = ({ title, textRef }: WriteFormTextProps) => {

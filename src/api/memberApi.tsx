@@ -1,6 +1,12 @@
 import apiClient from './apiClient';
 
-export const memberJoin = async (joinData) => {
+interface MemberData {
+  email: string;
+  password: string;
+  nickName: string;
+}
+
+export const memberJoin = async (joinData: MemberData) => {
   const { email, password, nickName } = joinData;
   const params = {
     email: email,
@@ -11,7 +17,7 @@ export const memberJoin = async (joinData) => {
   return res.data;
 };
 
-export const memberLogin = async (loginData) => {
+export const memberLogin = async (loginData: Omit<MemberData, 'nickName'>) => {
   const { email, password } = loginData;
   const params = {
     email: email,

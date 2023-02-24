@@ -8,13 +8,13 @@ const Auth = () => {
     <Page>
       <ButtonArea>
         <Link to={KAKAO_AUTH_URL}>
-          <Button kakao>카카오로 가입하기</Button>
+          <Button variant={'kakao'}>카카오로 가입하기</Button>
         </Link>
         <Link to='/register'>
-          <Button primary>이메일로 가입하기</Button>
+          <Button variant={'primary'}>이메일로 가입하기</Button>
         </Link>
         <Link to='/login'>
-          <Button transparent>로그인하기</Button>
+          <Button variant={'transparent'}>로그인하기</Button>
         </Link>
       </ButtonArea>
     </Page>

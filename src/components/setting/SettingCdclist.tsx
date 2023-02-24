@@ -8,9 +8,14 @@ import Container from '../../styles/Container';
 import AddCateList from './AddCateList';
 import SettingCateList from './SettingCateList';
 
+interface DetailCategoryData {
+  cdcSeq: number;
+  cdcName: string;
+}
+
 const SettingCdclist = () => {
   const { no, name } = useParams();
-  const [cdclist, setCdclist] = useState([]);
+  const [cdclist, setCdclist] = useState<DetailCategoryData[]>([]);
 
   const fetchData = async () => {
     try {
@@ -62,7 +67,7 @@ const SettingCdclist = () => {
                 cdcSeq={list.cdcSeq}
                 fetchData={fetchData}
               >
-                {list.cdcName}
+                <span>{list.cdcName}</span>
               </SettingCateList>
             ))
           ) : (

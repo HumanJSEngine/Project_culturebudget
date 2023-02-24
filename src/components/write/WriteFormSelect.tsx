@@ -7,14 +7,12 @@ interface WriteFormSelectProps {
   title: string;
   value: string;
   selectEvent: () => void;
-  validation: object;
 }
 
 const WriteFormSelect = ({
   title,
   value,
   selectEvent,
-  validation,
 }: WriteFormSelectProps) => {
   return (
     <Box>
@@ -24,7 +22,6 @@ const WriteFormSelect = ({
         value={value}
         placeholder='선택하세요.'
         readOnly={true}
-        {...validation}
       ></FormInput>
       <SelectIcon onClick={selectEvent}>
         <SlArrowRight size={12} />

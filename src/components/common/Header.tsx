@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import fonts from '../../styles/FontStyle';
 import colors from '../../styles/Theme';
 
+type titlePosition = 'left' | 'right';
+type border = boolean;
+
 interface HeaderProps {
   title?: string;
   titlePosition?: string;
-  border?: string;
-  HeaderLeft?: Component;
-  HeaderRight?: Component;
+  border?: boolean;
+  HeaderLeft?: React.ReactNode;
+  HeaderRight?: React.ReactNode;
 }
 
 const Header = ({
@@ -27,7 +30,7 @@ const Header = ({
   );
 };
 
-const Block = styled.header`
+const Block = styled.header<{ titlePosition?: titlePosition; border?: border }>`
   position: relative;
   display: flex;
   justify-content: ${({ titlePosition }) =>
@@ -52,7 +55,7 @@ const HeaderTitle = styled.p`
   line-height: 15px;
 `;
 
-const HeaderSide = styled.div`
+const HeaderSide = styled.div<{ position: string }>`
   position: absolute;
   left: ${({ position }) => (position === 'left' ? '4px' : 'auto')};
   right: ${({ position }) => (position === 'right' ? '4px' : 'auto')};
