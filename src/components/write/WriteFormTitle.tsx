@@ -3,7 +3,7 @@ import fonts from '../../styles/FontStyle';
 import colors from '../../styles/Theme';
 
 interface WriteFormTitleProps {
-  textRef: string;
+  textRef: React.ForwardedRef<HTMLInputElement>;
 }
 
 const WriteFormTitle = ({ textRef }: WriteFormTitleProps) => {

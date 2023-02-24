@@ -17,6 +17,11 @@ import usePopup from '../hooks/usePopup';
 import { useDispatch } from 'react-redux';
 import { loginUser } from '../store/userReducer';
 
+interface LoginFormVlaue {
+  email: string;
+  password: string;
+}
+
 const loginSchema = yup
   .object({
     email: yup
@@ -35,8 +40,11 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ resolver: yupResolver(loginSchema), mode: 'onClick' });
-  const loginHandler = async ({ email, password }) => {
+  } = useForm<LoginFormVlaue>({
+    resolver: yupResolver(loginSchema),
+    mode: 'onSubmit',
+  });
+  const loginHandler = handleSubmit(async ({ email, password }) => {
     const loginData = { email, password };
     try {
       const res = await memberLogin(loginData);
@@ -51,16 +59,13 @@ const Login = () => {
       console.log(err);
       openPopup('에러가 발생하였습니다. 다시 시도해주세요.');
     }
-  };
+  });
 
   return (
     <Page>
-      <Header
-        title={'로그인'}
-        HeaderLeft={<HeaderGoBackButton position={'left'} />}
-      />
+      <Header title={'로그인'} HeaderLeft={<HeaderGoBackButton />} />
       <Container>
-        <FormArea onSubmit={handleSubmit(loginHandler)}>
+        <FormArea onSubmit={loginHandler}>
           <InputArea>
             <AuthTextArea>
               <FormInput
@@ -75,7 +80,6 @@ const Login = () => {
             <AuthTextArea>
               <FormInput
                 type={`password`}
-                name={'password'}
                 placeholder={'비밀번호를 입력해 주세요.'}
                 autoComplete={'off'}
                 {...register('password')}
@@ -86,9 +90,9 @@ const Login = () => {
             </AuthTextArea>
           </InputArea>
           <ActionArea>
-            <Button primary>로그인</Button>
-            <Link to="/register">
-              <Button transparent>
+            <Button variant='primary'>로그인</Button>
+            <Link to='/register'>
+              <Button variant='transparent'>
                 계정이 없으신가요? <TextUnderline>회원가입하기</TextUnderline>
               </Button>
             </Link>

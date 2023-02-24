@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import Cropper, { ReactCropperElement } from 'react-cropper';
+import { Dispatch, SetStateAction, useRef } from 'react';
+import Cropper from 'react-cropper';
 import styled from 'styled-components';
 import colors from '../../styles/Theme';
 import 'cropperjs/dist/cropper.css';
@@ -10,10 +10,10 @@ import fonts from '../../styles/FontStyle';
 interface ImageCropperProps {
   isOpenCropper: boolean;
   closeImageCropper: () => void;
-  imgRef: HTMLInputElement;
+  imgRef: React.ForwardedRef<any>;
   imgFile: string;
-  setImgFile: () => void;
-  setCropImg: (img: string) => void;
+  setImgFile: Dispatch<SetStateAction<string>>;
+  setCropImg: Dispatch<SetStateAction<string>>;
 }
 
 const ImageCropper = ({
@@ -24,52 +24,53 @@ const ImageCropper = ({
   setImgFile,
   setCropImg,
 }: ImageCropperProps) => {
-  const cropperRef = useRef<ReactCropperElement | null>(null);
+  const cropperRef = useRef<any>(null);
   const onCrop = () => {
     const imageElement = cropperRef.current;
     const cropper = imageElement.cropper;
     setCropImg(cropper.getCroppedCanvas().toDataURL('image/jpeg', 0.7));
   };
   const closeCropperHandler = () => {
-    imgRef.current.value = null;
-    setImgFile();
+    // imgRef.current.value = null;
+    setImgFile('');
     closeImageCropper();
   };
   const onCropHandler = () => {
     onCrop();
-    imgRef.current.value = null;
-    setImgFile();
+    // imgRef.current.value = null;
+    setImgFile('');
     closeImageCropper();
   };
   return (
-    isOpenCropper && (
-      <ImageCropperBox>
-        <Header>
-          <HeaderCloseButton event={closeCropperHandler} />
-          <HeaderButton onClick={onCropHandler}>
-            <ButtonText>완료</ButtonText>
-          </HeaderButton>
-        </Header>
-        <Container>
-          <Cropper
-            src={imgFile}
-            aspectRatio={1}
-            dragMode={true}
-            viewMode={1}
-            minCropBoxHeight={10}
-            minCropBoxWidth={10}
-            background={false}
-            responsive={true}
-            autoCropArea={1}
-            movable={true}
-            checkOrientation={false}
-            guides={true}
-            rotatable={true}
-            ref={cropperRef}
-          />
-        </Container>
-      </ImageCropperBox>
-    )
+    <>
+      {isOpenCropper && (
+        <ImageCropperBox>
+          <Header>
+            <HeaderCloseButton event={closeCropperHandler} />
+            <HeaderButton onClick={onCropHandler}>
+              <ButtonText>완료</ButtonText>
+            </HeaderButton>
+          </Header>
+          <Container>
+            <Cropper
+              src={imgFile}
+              aspectRatio={1}
+              viewMode={1}
+              minCropBoxHeight={10}
+              minCropBoxWidth={10}
+              background={false}
+              responsive={true}
+              autoCropArea={1}
+              movable={true}
+              checkOrientation={false}
+              guides={true}
+              rotatable={true}
+              ref={cropperRef}
+            />
+          </Container>
+        </ImageCropperBox>
+      )}
+    </>
   );
 };
 

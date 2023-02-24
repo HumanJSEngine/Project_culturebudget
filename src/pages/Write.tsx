@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { addPost } from '../api/postApi';
+import { addPost, PostParameter } from '../api/postApi';
 import Header from '../components/common/Header';
 import HeaderButton from '../components/common/HeaderButton';
 import HeaderCloseButton from '../components/common/HeaderCloseButton';
@@ -26,26 +26,37 @@ import fonts from '../styles/FontStyle';
 import Page from '../styles/Page';
 import colors from '../styles/Theme';
 
+interface CategoryInfo {
+  categorySeq: number;
+  categoryName: string;
+  detailCategorySeq: number;
+  detailCategoryName: string;
+}
+interface PaymentInfo {
+  paymentSeq: number;
+  paymentName: string;
+}
+
 const Write = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoding] = useState(false);
-  const titleRef = useRef(null);
-  const imgRef = useRef(null);
-  const [imgFile, setImgFile] = useState();
-  const [cropImg, setCropImg] = useState();
-  const placeRef = useRef(null);
-  const timeRef = useRef(moment().format('YYYY-MM-DDTHH:mm:ss'));
-  const categoryRef = useRef(null);
-  const contentRef = useRef(null);
-  const paymentRef = useRef(null);
-  const payPlaceRef = useRef(null);
-  const [payPrice, setPayPrice] = useState('');
+  const [isLoading, setIsLoding] = useState<boolean>(false);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const imgRef = useRef<any>(null);
+  const [imgFile, setImgFile] = useState<string>('');
+  const [cropImg, setCropImg] = useState<string>('');
+  const placeRef = useRef<HTMLInputElement>(null);
+  const timeRef = useRef<string>(moment().format('YYYY-MM-DDTHH:mm:ss'));
+  const categoryRef = useRef<CategoryInfo>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+  const paymentRef = useRef<PaymentInfo>(null);
+  const payPlaceRef = useRef<HTMLInputElement>(null);
+  const [payPrice, setPayPrice] = useState<string>('');
   const { isOpenPopup, popupMessage, openPopup, closePopup } = usePopup();
   const { openedModal, openModal, closeModal } = useModal();
   const { isOpenCropper, openImageCropper, closeImageCropper } =
     useImageCropper();
   const handleDateSelect = () => {
-    openModal(<ModalDate closeModal={closeModal} timeRef={timeRef} />);
+    openModal(<ModalDate closeModal={closeModal} timeRef={timeRef.current} />);
   };
   const handleCategorySelect = () => {
     openModal(
@@ -68,26 +79,27 @@ const Write = () => {
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-    const imageFile = new File([u8arr], `${titleRef.current.value}.jpeg`, {
+    const imageFile = new File([u8arr], `${Date.now()}.jpeg`, {
       type: 'image/jpeg',
     });
 
-    const formData = new FormData();
-    formData.append('ehTitle', titleRef.current.value);
-    formData.append('ehDate', timeRef.current);
-    formData.append('ehMiSeq', 1);
-    formData.append('ehPiSeq', paymentRef.current.paymentSeq);
-    formData.append('ehPrice', Number(payPrice.replace(/,/g, '')));
-    formData.append('ehStoreName', payPlaceRef.current.value);
-    formData.append('ehLocation', placeRef.current.value);
-    formData.append('ehBalance', 10000);
-    formData.append('ehCcSeq', categoryRef.current.categorySeq);
-    formData.append('ehCdcSeq', categoryRef.current.detailCategorySeq);
-    formData.append('ehContent', contentRef.current.value);
-    formData.append('ehImgFile', imageFile);
+    const postData: PostParameter = {
+      ehTitle: titleRef.current!.value,
+      ehDate: timeRef.current,
+      ehMiSeq: 1,
+      ehPiSeq: paymentRef.current?.paymentSeq,
+      ehPrice: Number(payPrice.replace(/,/g, '')),
+      ehStoreName: payPlaceRef.current?.value,
+      ehLocation: placeRef.current?.value,
+      ehBalance: 10000,
+      ehCcSeq: categoryRef.current?.categorySeq,
+      ehCdcSeq: categoryRef.current?.detailCategorySeq,
+      ehContent: contentRef.current?.value,
+      ehImgFile: imageFile,
+    };
 
     try {
-      const res = await addPost(formData);
+      const res = await addPost(postData);
       console.log(res);
       setIsLoding(false);
       navigate('/');
@@ -98,7 +110,7 @@ const Write = () => {
   };
 
   const checkValidation = () => {
-    if (!titleRef.current.value.trim()) {
+    if (!titleRef.current?.value.trim()) {
       openPopup('제목을 입력해 주세요.');
       return true;
     }
@@ -106,7 +118,7 @@ const Write = () => {
       openPopup('사진을 등록해 주세요.');
       return true;
     }
-    if (!placeRef.current.value) {
+    if (!placeRef.current?.value) {
       openPopup('장소를 입력해 주세요.');
       return true;
     }
@@ -122,11 +134,11 @@ const Write = () => {
       openPopup('결제 수단을 선택해 주세요.');
       return true;
     }
-    if (!payPlaceRef.current.value) {
+    if (!payPlaceRef.current?.value) {
       openPopup('결제처를 입력해 주세요.');
       return true;
     }
-    if (!payPlaceRef.current.value) {
+    if (payPrice === '') {
       openPopup('금액을 입력해 주세요.');
       return true;
     }
@@ -138,7 +150,7 @@ const Write = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setImgFile(reader.result);
+      setImgFile(reader.result as string);
     };
     openImageCropper();
   };
@@ -220,7 +232,6 @@ const Write = () => {
     </Page>
   );
 };
-
 
 const ButtonText = styled.span`
   color: ${colors.primary};

@@ -7,9 +7,10 @@ import axios from 'axios';
 
 interface SettingCateListProps {
   children: React.ReactNode;
-  to: string;
+  to?: string | undefined;
   ccSeq: number;
-  cdcSeq: number;
+  cdcSeq?: number;
+  name: string;
   fetchData: () => Promise<void>;
 }
 
@@ -18,6 +19,7 @@ const SettingCateList = ({
   to,
   ccSeq,
   cdcSeq,
+  name,
   fetchData,
 }: SettingCateListProps) => {
   console.log('대분류번호', ccSeq);

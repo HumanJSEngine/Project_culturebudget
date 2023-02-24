@@ -13,9 +13,9 @@ const AddCateList = ({ children, addCclist, addCdclist }: AddCateListProps) => {
   return (
     <Box>
       {addCclist ? (
-        <Plus onClick={() => addCclist()}>+</Plus>
+        <Plus onClick={addCclist}>+</Plus>
       ) : (
-        <Plus onClick={() => addCdclist()}>+</Plus>
+        <Plus onClick={addCdclist && addCdclist}>+</Plus>
       )}
 
       <Catelist>

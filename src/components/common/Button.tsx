@@ -1,29 +1,27 @@
 import styled, { css } from 'styled-components';
 import colors from '../../styles/Theme';
 
-const Button = styled.button<{
-  primary: string;
-  transparent: string;
-  kakao: string;
-}>`
+type variant = 'primary' | 'transparent' | 'kakao';
+
+const Button = styled.button<{ variant: variant }>`
   width: 100%;
   height: 48px;
   border: none;
   border-radius: 8px;
-  ${({ primary }) =>
-    primary &&
+  ${({ variant }) =>
+    variant === 'primary' &&
     css`
       color: ${colors.white};
       background: ${colors.primary};
     `}
-  ${({ transparent }) =>
-    transparent &&
+  ${({ variant }) =>
+    variant === 'transparent' &&
     css`
       color: ${colors.primary};
       background: transparent;
     `}
-  ${({ kakao }) =>
-    kakao &&
+  ${({ variant }) =>
+    variant === 'kakao' &&
     css`
       color: ${colors.kakaoLabel};
       background: ${colors.kakaoContainer};

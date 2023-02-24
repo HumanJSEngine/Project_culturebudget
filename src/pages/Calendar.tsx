@@ -17,11 +17,12 @@ import Container from '../styles/Container';
 import GetTotal from '../utils/GetTotal';
 import axios from 'axios';
 import colors from '../styles/Theme';
+import { BudgetData } from '../types/Budget';
 
 const Calendar = () => {
-  const [result, setResult] = useState([]);
-  const [item, setItem] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [result, setResult] = useState<BudgetData[]>([]);
+  const [item, setItem] = useState<BudgetData[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const getFetchData = async () => {
     await axios
@@ -101,7 +102,7 @@ const Calendar = () => {
               <Price price={ehPrice} />
             </ExpendList>
           ))}
-          <LoadingBox>{setIsLoading && <span>로딩중</span>}</LoadingBox>
+          <LoadingBox>{isLoading && <span>로딩중</span>}</LoadingBox>
         </Expenditure>
       </Container>
       <BottomNavigation />

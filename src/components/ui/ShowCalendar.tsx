@@ -1,26 +1,32 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import moment from 'moment/moment';
+import moment, { calendarFormat } from 'moment/moment';
 import styled from 'styled-components';
 import colors from '../../styles/Theme';
 import { RxTriangleLeft, RxTriangleRight } from 'react-icons/rx';
+import { BudgetData } from '../../types/Budget';
 
 interface ShowCalendarProps {
-  caldata: [];
+  caldata: BudgetData[];
+}
+
+interface CalendarData {
+  date: string;
+  price: number;
 }
 
 const ShowCalendar = ({ caldata }: ShowCalendarProps) => {
   const [currentMonth, setCurrentMonth] = useState();
   const [value, onChange] = useState(new Date());
-  const data = caldata.map((item) => {
+  const data: CalendarData[] = caldata.map((item) => {
     return {
       date: moment(item.ehDate).format('YYYY-MM-DD'),
       price: item.ehPrice,
     };
   });
 
-  const result = data.reduce((acc, cur) => {
+  const result = data.reduce((acc: CalendarData[], cur) => {
     const index = acc.findIndex((item) => item.date === cur.date);
     if (index >= 0) {
       acc[index].price += cur.price;
