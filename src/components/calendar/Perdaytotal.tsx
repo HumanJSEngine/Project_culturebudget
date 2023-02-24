@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import colors from '../../styles/Theme';
 import fonts from '../../styles/FontStyle';
 
-const Perdaytotal = ({ counts, amounts }) => {
+interface PerdaytotalProps {
+    counts: number;
+    amounts: number;
+}
+
+const Perdaytotal = ({ counts, amounts }: PerdaytotalProps) => {
     return (
         <Perdaytotals>
             <span>총 {counts}건</span>

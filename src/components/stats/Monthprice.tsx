@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+interface MonthpriceProps {
+    ccSeq: string;
+}
 
-const Monthprice = () => {
+const Monthprice = ({ ccSeq }: MonthpriceProps) => {
     return (
         <Monthprices>
-            <p className='exppercate'>카테고리별 지출</p>
+            <p className='exppercate'>{ccSeq}</p>
         </Monthprices>
     );
 };
