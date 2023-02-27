@@ -1,16 +1,36 @@
-import { useEffect, useState } from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { getCategory } from '../../../api/categoryApi';
+import { CategoryInfo } from '../../../pages/Write';
 import Header from '../Header';
 import HeaderCloseButton from '../HeaderCloseButton';
 import ModalListBack from './ModalListBack';
 import ModalListItem from './ModalListItem';
 
-const ModalCategory = ({ closeModal, categoryRef }) => {
-  const [categoryView, switchCategoryView] = useState('default');
-  const [categoryList, setCategoryList] = useState([]);
-  const [detailCategoryList, setDetailCategoryList] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState({});
+interface ModalCategoryProps {
+  closeModal: () => void;
+  categoryRef: MutableRefObject<CategoryInfo>;
+}
+
+type CategoryViewType = 'default' | 'detail';
+interface ModalCategoryInfo {
+  ccSeq: number;
+  ccName: string;
+  cdclist: ModalDetailCategoryInfo[];
+}
+interface ModalDetailCategoryInfo {
+  cdcSeq: number;
+  cdcName: string;
+}
+
+const ModalCategory = ({ closeModal, categoryRef }: ModalCategoryProps) => {
+  const [categoryView, switchCategoryView] =
+    useState<CategoryViewType>('default');
+  const [categoryList, setCategoryList] = useState<ModalCategoryInfo[]>([]);
+  const [detailCategoryList, setDetailCategoryList] = useState<
+    ModalDetailCategoryInfo[]
+  >([]);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryInfo>();
   const getCategoryList = async () => {
     switchCategoryView('default');
     try {
@@ -24,7 +44,10 @@ const ModalCategory = ({ closeModal, categoryRef }) => {
       console.log(err);
     }
   };
-  const getDetailCategoryList = async (categorySeq, categoryName) => {
+  const getDetailCategoryList = async (
+    categorySeq: number,
+    categoryName: string
+  ) => {
     setSelectedCategory({ categorySeq, categoryName });
     switchCategoryView('detail');
     const categoryArrIndex = categoryList.findIndex(
@@ -35,7 +58,7 @@ const ModalCategory = ({ closeModal, categoryRef }) => {
   useEffect(() => {
     getCategoryList();
   }, []);
-  const selectCategoryHandler = (categorySeq, categoryName) => {
+  const selectCategoryHandler = (categorySeq: number, categoryName: string) => {
     const categoryInfo = {
       categorySeq,
       categoryName,
@@ -43,10 +66,13 @@ const ModalCategory = ({ closeModal, categoryRef }) => {
     categoryRef.current = categoryInfo;
     closeModal();
   };
-  const selectDetailCategoryHandler = (categorySeq, categoryName) => {
+  const selectDetailCategoryHandler = (
+    categorySeq: number,
+    categoryName: string
+  ) => {
     const categoryInfo = {
-      categorySeq: selectedCategory.categorySeq,
-      categoryName: selectedCategory.categoryName,
+      categorySeq: selectedCategory!.categorySeq,
+      categoryName: selectedCategory!.categoryName,
       detailCategorySeq: categorySeq,
       detailCategoryName: categoryName,
     };
@@ -90,7 +116,7 @@ const ModalCategory = ({ closeModal, categoryRef }) => {
         {categoryView === 'detail' && (
           <ModalList>
             <ModalListBack
-              name={selectedCategory.categoryName}
+              name={selectedCategory!.categoryName}
               backEvent={backCategory}
             />
             {detailList}

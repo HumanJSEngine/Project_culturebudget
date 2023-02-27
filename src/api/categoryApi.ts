@@ -6,11 +6,11 @@ export const getCategory = async () => {
 };
 
 export const addCategory = async (categoryName: string) => {
-  const params = {
-    ccName: categoryName,
-  };
-  const res = await apiClient.put('/api/category/input', { params });
-  return res.data;
+  // const params = {
+  //   ccName: categoryName,
+  // };
+  // const res = await apiClient.put('/api/category/input', { params });
+  // return res.data;
 };
 
 export const editCategory = async (

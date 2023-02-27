@@ -3,7 +3,12 @@ import fonts from '../../../styles/FontStyle';
 import colors from '../../../styles/Theme';
 import { SlArrowLeft } from 'react-icons/sl';
 
-const ModalListBack = ({ name, backEvent }) => {
+interface ModalListBackProps {
+  name: string;
+  backEvent: () => void;
+}
+
+const ModalListBack = ({ name, backEvent }: ModalListBackProps) => {
   return (
     <Box onClick={() => backEvent()}>
       <SelectIcon>
