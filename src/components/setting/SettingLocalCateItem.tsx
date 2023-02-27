@@ -1,4 +1,5 @@
 import { SlArrowRight } from 'react-icons/sl';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import CategoryStorage from '../../api/localApi/CategoryStorage';
 import fonts from '../../styles/FontStyle';
@@ -27,9 +28,9 @@ const SettingLocalCateList = ({
   };
 
   const editCategoryList = async () => {
-    let changeValue;
-    while (!changeValue) {
-      changeValue = prompt('수정할 카테고리명을 선택하세요');
+    const changeValue = prompt('수정할 카테고리명을 선택하세요');
+    if (!changeValue) {
+      return;
     }
     try {
       categoryStorage.editCategory(categoryId, changeValue);
@@ -43,7 +44,9 @@ const SettingLocalCateList = ({
       <Minus onClick={() => removeCategoryList()}>-</Minus>
       <Catelist>
         <ItemName onClick={() => editCategoryList()}>{categoryName}</ItemName>
-        <SlArrowRight size={12} />
+        <Link to={'/'}>
+          <SlArrowRight size={12} />
+        </Link>
       </Catelist>
     </Box>
   );

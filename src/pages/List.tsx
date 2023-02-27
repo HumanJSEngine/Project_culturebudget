@@ -11,10 +11,14 @@ import { useSelector } from 'react-redux';
 import DefaultList from '../components/list/DefaultList';
 import GalleryList from '../components/list/GalleryList';
 import { RootState } from '../store/store';
+import Loading from '../components/common/Loading';
+import { BudgetData } from '../types/Budget';
+import Post from './Post';
 
 const List = () => {
   const listType = useSelector((state: RootState) => state.setting?.listType);
-  const [postList, setPostList] = useState([]);
+  const [postList, setPostList] = useState<BudgetData[]>([]);
+  const [postData, setPostData] = useState<BudgetData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const getPostList = async () => {
     setIsLoading(true);
@@ -30,15 +34,29 @@ const List = () => {
   useEffect(() => {
     getPostList();
   }, []);
+  const openPost = (postData: BudgetData) => {
+    setPostData(postData);
+  };
+  const closePost = () => {
+    setPostData(null);
+  };
   return (
     <Page>
       <Header />
       <Container>
-        {listType === 'default' && <DefaultList list={postList} />}
-        {listType === 'gallery' && <GalleryList list={postList} />}
+        {isLoading && <Loading />}
+        <>
+          {listType === 'default' && (
+            <DefaultList list={postList} openPost={openPost} />
+          )}
+          {listType === 'gallery' && (
+            <GalleryList list={postList} openPost={openPost} />
+          )}
+        </>
       </Container>
       <WriteButton />
       <BottomNavigation />
+      <Post postData={postData} closePost={closePost} />
     </Page>
   );
 };

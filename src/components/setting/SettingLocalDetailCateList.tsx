@@ -6,53 +6,20 @@ import Page from '../../styles/Page';
 import Header from '../common/Header';
 import Container from '../../styles/Container';
 import AddCateList from './AddCateList';
-import SettingCateList from './SettingCateList';
+import SettingLocalCateList from './SettingLocalCateItem';
+import { LocalDetailCategoryData } from '../../types/Local';
 
-interface DetailCategoryData {
-  cdcSeq: number;
-  cdcName: string;
-}
+const SettingLocalDetailCateList = () => {
+  const { categoryId } = useParams();
+  const [cdclist, setCdclist] = useState<LocalDetailCategoryData[]>([]);
 
-const SettingCdclist = () => {
-  const { no, name } = useParams();
-  const [cdclist, setCdclist] = useState<DetailCategoryData[]>([]);
-
-  const fetchData = async () => {
-    try {
-      const result = await axios.get(
-        `http://haeji.mawani.kro.kr:8585/api/category/detail/list?no=${no}`
-      );
-      setCdclist(result.data.cdclist);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const fetchData = async () => {};
 
   useEffect(() => {
     fetchData();
   }, []);
 
-  const addCdclist = async () => {
-    const cdcName = prompt('추가할 소분류를 입력하세요');
-    let body = {
-      cdcName: cdcName,
-      cdcCcSeq: no,
-    };
-    try {
-      await axios
-        .put('http://haeji.mawani.kro.kr:8585/api/category/detail/input', body)
-        .then((res) => {
-          if (res.data.status) {
-            alert(res.data.message);
-            fetchData();
-          } else {
-            alert('카테고리 추가 실패');
-          }
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const addCdclist = async () => {};
 
   return (
     <Page>
@@ -61,14 +28,13 @@ const SettingCdclist = () => {
         <SettingList>
           <AddCateList addCdclist={addCdclist}>세부 카테고리 추가</AddCateList>
           {cdclist.length > 0 ? (
-            cdclist.map((list) => (
-              <SettingCateList
-                key={list.cdcSeq}
-                cdcSeq={list.cdcSeq}
-                fetchData={fetchData}
-              >
-                <span>{list.cdcName}</span>
-              </SettingCateList>
+            cdclist.map((category) => (
+              <SettingLocalCateList
+                key={category.categoryId}
+                categoryId={category.categoryId}
+                categoryName={category.categoryName}
+                getCategoryList={getCategoryList}
+              ></SettingLocalCateList>
             ))
           ) : (
             <span>세부 카테고리를 추가해주세요</span>
@@ -83,4 +49,4 @@ const SettingList = styled.ul`
   width: 100%;
   padding: 0 16px;
 `;
-export default SettingCdclist;
+export default SettingLocalDetailCateList;

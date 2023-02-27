@@ -9,7 +9,7 @@ interface ModalPostProps {
 }
 
 const ModalPost = ({ closeModal, postSeq }: ModalPostProps) => {
-  // const editPostHandler = () => {};
+  const editPostHandler = () => {};
   const deletePostHandler = () => {};
   return (
     <Box>
@@ -19,7 +19,7 @@ const ModalPost = ({ closeModal, postSeq }: ModalPostProps) => {
       />
       <ModalContents>
         <ModalList>
-          {/* <ModalListItem name={'수정하기'} selectEvent={editPostHandler} /> */}
+          <ModalListItem name={'수정하기'} selectEvent={editPostHandler} />
           <ModalListItem name={'삭제하기'} selectEvent={deletePostHandler} />
         </ModalList>
       </ModalContents>

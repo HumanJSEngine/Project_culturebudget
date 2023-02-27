@@ -14,15 +14,9 @@ interface HeaderProps {
   HeaderRight?: React.ReactNode;
 }
 
-const Header = ({
-  title,
-  titlePosition,
-  border,
-  HeaderLeft,
-  HeaderRight,
-}: HeaderProps) => {
+const Header = ({ title, border, HeaderLeft, HeaderRight }: HeaderProps) => {
   return (
-    <Block titlePosition={titlePosition} border={border}>
+    <Block border={border}>
       {HeaderLeft && <HeaderSide position={'left'}>{HeaderLeft}</HeaderSide>}
       {title && <HeaderTitle>{title}</HeaderTitle>}
       {HeaderRight && <HeaderSide position={'right'}>{HeaderRight}</HeaderSide>}
@@ -30,15 +24,15 @@ const Header = ({
   );
 };
 
-const Block = styled.header<{ titlePosition?: titlePosition; border?: border }>`
+const Block = styled.header<{ border?: border }>`
   position: relative;
   display: flex;
-  justify-content: ${({ titlePosition }) =>
-    titlePosition ? titlePosition : 'center'};
+  justify-content: center;
   align-items: center;
   width: 100%;
   height: 44px;
   padding: 0 4px;
+  background: ${colors.white};
   color: ${colors.gray900};
   border-top: ${({ border }) => (border ? `1px solid ${colors.gray200}` : '')};
   border-bottom: ${({ border }) =>

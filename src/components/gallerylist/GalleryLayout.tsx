@@ -11,9 +11,9 @@ const GalleryLayout = ({ children }: GalleryLayoutProps) => {
 
 const GLayout = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, minmax(120px, auto));
-  grid-auto-rows: minmax(120px, auto);
+  grid-template-columns: repeat(3, minmax(auto, auto));
+  grid-auto-rows: minmax(auto, auto);
   grid-auto-flow: dense;
-  gap: 2px;
+  gap: 1px;
 `;
 export default GalleryLayout;

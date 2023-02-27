@@ -1,8 +1,6 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import colors from '../styles/Theme';
 import fonts from '../styles/FontStyle';
-import Page from '../styles/Page';
 import Container from '../styles/Container';
 import Header from '../components/common/Header';
 import HeaderCloseButton from '../components/common/HeaderCloseButton';
@@ -12,64 +10,86 @@ import { FiMoreHorizontal } from 'react-icons/fi';
 import useModal from '../hooks/useModal';
 import Modal from '../components/common/Modal/Modal';
 import ModalPost from '../components/common/Modal/ModalPost';
+import moment from 'moment';
+import { BudgetData } from '../types/Budget';
 
-const Post = () => {
+interface PostProps {
+  postData: BudgetData | null;
+  closePost: () => void;
+}
+
+const Post = ({ postData, closePost }: PostProps) => {
   const { openedModal, openModal, closeModal } = useModal();
-
-  const [category, setCategory] = useState('카테고리');
-  const [detailCategory, setDetailCategory] = useState('세부 카테고리');
   const handlePostMore = () => {
     openModal(<ModalPost closeModal={closeModal} postSeq={1} />);
   };
+  const { VITE_IMAGE_URL } = import.meta.env;
   return (
-    <Page>
-      <Header
-        title={'작성하다'}
-        HeaderLeft={<HeaderCloseButton />}
-        HeaderRight={
-          <HeaderButton onClick={handlePostMore}>
-            <IconBox>
-              <FiMoreHorizontal size={16} />
-            </IconBox>
-          </HeaderButton>
-        }
-      />
-      <Container>
-        <PhotoArea>
-          <ContentsInfo>
-            <ContentsInfoItem>장소</ContentsInfoItem>
-            <ContentsInfoItem>2022.02.02</ContentsInfoItem>
-          </ContentsInfo>
-        </PhotoArea>
-        <ContentsArea>
-          <MainContents>
-            <Category>
-              {category} {'>'} {detailCategory}
-            </Category>
-            <Title>제목입니다.</Title>
-            <MainText>
-              내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.내용입니다.
-            </MainText>
-          </MainContents>
-          <BudgetContents>
-            <BudgetPrice>{'10,000원'}</BudgetPrice>
-            <BudgetInfo>
-              <BudgetInfoItem>결제처</BudgetInfoItem>
-              <BudgetInfoItem>결제 수단</BudgetInfoItem>
-            </BudgetInfo>
-          </BudgetContents>
-        </ContentsArea>
-      </Container>
-      <Modal openedModal={openedModal} closeModal={closeModal} />
-    </Page>
+    <>
+      {postData && (
+        <Page>
+          <Header
+            HeaderLeft={<HeaderCloseButton event={closePost} />}
+            HeaderRight={
+              <HeaderButton onClick={handlePostMore}>
+                <IconBox>
+                  <FiMoreHorizontal size={16} />
+                </IconBox>
+              </HeaderButton>
+            }
+          />
+          <Container>
+            <PhotoArea>
+              <img src={`${VITE_IMAGE_URL}/${postData.ehImgFile}`} alt='' />
+              <ContentsInfo>
+                <ContentsInfoItem>{postData.ehLocation}</ContentsInfoItem>
+                <ContentsInfoItem>
+                  {moment(postData.ehDate).format('YYYY.MM.DD')}
+                </ContentsInfoItem>
+              </ContentsInfo>
+            </PhotoArea>
+            <ContentsArea>
+              <MainContents>
+                {/* <Category>{category} {'>'} {detailCategory}</Category> */}
+                <Title>{postData.ehTitle}</Title>
+                <MainText>{postData.ehContent}</MainText>
+              </MainContents>
+              <BudgetContents>
+                <BudgetPrice>{`${postData.ehPrice.toLocaleString()}원`}</BudgetPrice>
+                <BudgetInfo>
+                  <BudgetInfoItem>{postData.ehStoreName}</BudgetInfoItem>
+                  <BudgetInfoItem>결제 수단</BudgetInfoItem>
+                </BudgetInfo>
+              </BudgetContents>
+            </ContentsArea>
+          </Container>
+          <Modal openedModal={openedModal} closeModal={closeModal} />
+        </Page>
+      )}
+    </>
   );
 };
+
+const Page = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+`;
 
 const PhotoArea = styled.div`
   position: relative;
   width: 100%;
-  height: 400px;
+  height: auto;
   background: ${colors.gray300};
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const ContentsInfo = styled.div`
@@ -81,10 +101,11 @@ const ContentsInfo = styled.div`
   width: 100%;
   gap: 16px;
   padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.5);
 `;
 
 const ContentsInfoItem = styled.span`
-  color: ${colors.gray900};
+  color: ${colors.white};
   font: ${fonts.score13Regular};
 `;
 
@@ -92,7 +113,9 @@ const ContentsArea = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100%;
   padding: 20px 16px;
+  background: ${colors.white};
 `;
 
 const MainContents = styled.div`
@@ -118,6 +141,8 @@ const Title = styled.p`
 const MainText = styled.p`
   color: ${colors.gray800};
   font: ${fonts.score15Regular};
+  line-height: 1.4;
+  white-space: pre-wrap;
 `;
 
 const BudgetContents = styled.div`

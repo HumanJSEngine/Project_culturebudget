@@ -1,34 +1,53 @@
 import styled from 'styled-components';
 import Header from '../Header';
 import HeaderCloseButton from '../HeaderCloseButton';
-import ModalListItem from './ModalListItem';
+import ModalListItem, { selectPaymentHandler } from './ModalListItem';
 import { getPayment } from '../../../api/paymentApi';
-import { useEffect } from 'react';
+import { MutableRefObject, useEffect, useState } from 'react';
+import { PaymentInfo } from '../../../pages/Write';
+import { PaymentData } from '../../../types/Budget';
 
-const ModalPayment = ({ closeModal, paymentRef }) => {
-  const getPaymentList = async (paymentType) => {
+interface ModalPaymentProps {
+  closeModal: () => void;
+  paymentRef: MutableRefObject<PaymentInfo>;
+}
+
+const ModalPayment = ({ closeModal, paymentRef }: ModalPaymentProps) => {
+  const [paymentList, setPaymentList] = useState<PaymentData[]>([]);
+  const getPaymentList = async () => {
     try {
-      const res = await getPayment(paymentType);
-      const { message, status } = res;
-      console.log(res);
+      const res = await getPayment();
+      const { message, status, payList } = res;
       if (!status) {
-        return console.log(message);
+        return;
       }
+      setPaymentList(payList);
     } catch (err) {
       console.log(err);
     }
   };
-  const selectPaymentHandler = (paymentSeq, paymentName) => {
+  const selectPaymentHandler: selectPaymentHandler = (
+    paymentSeq,
+    paymentName
+  ) => {
     const paymentInfo = {
-      paymentSeq: 1,
-      paymentName: '샘숭',
+      paymentSeq: paymentSeq,
+      paymentName: paymentName,
     };
     paymentRef.current = paymentInfo;
     closeModal();
   };
   useEffect(() => {
-    getPaymentList(1);
+    getPaymentList();
   }, []);
+  const list = paymentList.map(({ piSeq, piName }) => (
+    <ModalListItem
+      key={piSeq}
+      seq={piSeq}
+      name={piName}
+      selectEvent={selectPaymentHandler}
+    />
+  ));
   return (
     <Box>
       <Header
@@ -38,9 +57,7 @@ const ModalPayment = ({ closeModal, paymentRef }) => {
         border={true}
       />
       <ModalContents>
-        <ModalList>
-          <ModalListItem name={'카드이름'} selectEvent={selectPaymentHandler} />
-        </ModalList>
+        <ModalList>{list}</ModalList>
       </ModalContents>
     </Box>
   );

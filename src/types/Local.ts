@@ -5,8 +5,8 @@ export interface LocalBudgetData {
   date: string;
   categoryId: Pick<LocalCategoryData, 'categoryId'>;
   categoryName: Pick<LocalCategoryData, 'categoryName'>;
-  detailCategoryId: Pick<LocalDetailCategoryData, 'detailCategoryId'>;
-  detailCategoryName: Pick<LocalDetailCategoryData, 'detailCategoryName'>;
+  detailCategoryId: Pick<LocalDetailCategoryListData, 'detailCategoryId'>;
+  detailCategoryName: Pick<LocalDetailCategoryListData, 'detailCategoryName'>;
   contents?: string;
   paymentId: Pick<LocalPaymentData, 'paymentId'>;
   paymentName: Pick<LocalPaymentData, 'paymentName'>;
@@ -17,11 +17,15 @@ export interface LocalBudgetData {
 export interface LocalCategoryData {
   categoryId: number;
   categoryName: string;
-  detailCategory?: LocalDetailCategoryData[];
 }
 
-interface LocalDetailCategoryData {
+export interface LocalDetailCategoryData {
   categoryId: Pick<LocalCategoryData, 'categoryId'>;
+  categoryName: Pick<LocalCategoryData, 'categoryName'>;
+  detailCategoryList: LocalDetailCategoryListData[];
+}
+
+interface LocalDetailCategoryListData {
   detailCategoryId: number;
   detailCategoryName: string;
 }

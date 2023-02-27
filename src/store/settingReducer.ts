@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface SettingState {
+export interface SettingState {
   listType: 'default' | 'gallery';
 }
 
@@ -12,7 +12,7 @@ const settingReducer = createSlice({
   name: 'setting',
   initialState: INITIAL_STATE,
   reducers: {
-    modifyGallery: (state, action) => {
+    modifyListType: (state, action) => {
       state.listType = action.payload;
     },
     default: (state) => {
@@ -21,5 +21,5 @@ const settingReducer = createSlice({
   },
 });
 
-export const { modifyGallery } = settingReducer.actions;
+export const { modifyListType } = settingReducer.actions;
 export default settingReducer;
