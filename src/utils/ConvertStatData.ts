@@ -1,4 +1,14 @@
-const ConvertStatData = (items) => {
+import { string } from 'yup';
+import { BudgetData } from '../types/Budget';
+
+interface Newstatdata {
+    id: number;
+    label: number;
+    value: number;
+    color: string;
+}
+
+const ConvertStatData = (items: Array<BudgetData>) => {
     const color = [
         'hsl(273, 70%, 50%)',
         'hsl(75, 70%, 50%)',
@@ -6,10 +16,10 @@ const ConvertStatData = (items) => {
         'hsl(297, 70%, 50%)',
         'hsl(277, 70%, 50%)',
     ];
-    let statdata = [];
-    let priceTotal = 0;
+    let statdata: Newstatdata[] = [];
+    let priceTotal: number = 0;
     items.forEach((item) => (priceTotal += item.ehPrice));
-    items.forEach((item, idx) =>
+    items.forEach((item) =>
         statdata.push({
             id: item.ehSeq,
             label: item.ehSeq,

@@ -1,7 +1,12 @@
-const GetDateList = (items) => {
-    let arr = [];
-    // items.forEach((item) => arr.push(item.ehDate.slice(0, 10)));
-    let dayhap = 0;
+import { BudgetData } from '../types/Budget';
+
+interface Getdatelist {
+    date: string;
+    price: number;
+}
+
+const GetDateList = (items: Array<BudgetData>) => {
+    let arr: Getdatelist[] = [];
 
     items.forEach((item) =>
         arr.push({ date: item.ehDate.slice(0, 10), price: item.ehPrice })
