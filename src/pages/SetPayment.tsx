@@ -4,15 +4,26 @@ import Page from '../styles/Page';
 import Header from '../components/common/Header';
 import Container from '../styles/Container';
 import SetPaymentList from '../components/setting/SetPaymentList';
+import AddPType from '../components/setting/AddPType';
+import Modal from '../components/common/Modal/AddPaymentModal';
 
 const SetPayment = () => {
-    const [payments, setPayments] = useState([]);
+    const [addpayment, setAddpayment] = useState(true);
 
     return (
         <Page>
-            <Header title={'결제 수단 추가'} />
+            <Header
+                onClick={() => setAddpayment(!addpayment)}
+                title={'결제 수단 편집'}
+            />
+            {addpayment && (
+                <Modal visible={addpayment}>
+                    <div className='모달창 테스트'></div>
+                </Modal>
+            )}
             <Container>
                 <SettingList>
+                    <AddPType title={'결제 수단 추가'} />
                     <SetPaymentList
                         title={'카드'}
                         to={'/ptype/카드'}

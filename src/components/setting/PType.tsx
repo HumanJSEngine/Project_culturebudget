@@ -45,6 +45,7 @@ const PType = () => {
         }
     };
 
+    console.log(plists);
     useEffect(() => {
         fetchData(name);
     }, []);
@@ -61,6 +62,8 @@ const PType = () => {
                                 piSeq={piSeq}
                                 piType={piType}
                                 piName={piName}
+                                fetchData={fetchData}
+                                name={name}
                             />
                         ))}
                     {plists.length === 0 && (

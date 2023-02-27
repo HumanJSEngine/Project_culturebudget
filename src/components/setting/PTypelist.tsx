@@ -2,23 +2,52 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import fonts from '../../styles/FontStyle';
 import colors from '../../styles/Theme';
+import axios from 'axios';
 
 interface PTypelistProps {
     piSeq: number;
     piType: number;
     piName: string;
+    fetchData: () => void;
+    name: string;
 }
 
-const PTypelist = ({ piSeq, piType, piName }: PTypelistProps) => {
+const PTypelist = ({
+    piSeq,
+    piType,
+    piName,
+    fetchData,
+    name,
+}: PTypelistProps) => {
+    const delPlist = async (piSeq) => {
+        try {
+            await axios
+                .delete(
+                    `http://haeji.mawani.kro.kr:8585/api/payment/delete/${piSeq}`
+                )
+                .then((res) => {
+                    if (res.data.status) {
+                        alert(res.data.message);
+                        fetchData(name);
+                    } else {
+                        alert('카테고리 삭제 실패');
+                    }
+                });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <Box>
-            <Minus>-</Minus>
+            <Minus onClick={() => delPlist(piSeq)}>-</Minus>
             <Catelist>
                 <ItemName>{piName}</ItemName>
             </Catelist>
         </Box>
     );
 };
+
 const Box = styled.li`
     display: flex;
     width: 100%;
