@@ -18,6 +18,8 @@ import SetCategory from './pages/SetCategory';
 import SettingCdclist from './components/setting/SettingCdclist';
 import KakaoLogin from './pages/KakaoLogin';
 import SetListType from './pages/SetListType';
+import SetLocalCategory from './pages/SetLocalCategory';
+import PType from './components/setting/PType';
 
 function App() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -36,13 +38,14 @@ function App() {
         <Route path={'/setting'} element={<Setting />} />
         <Route path={'/setlisttype'} element={<SetListType />} />
         <Route path={'/setpayment'} element={<SetPayment />} />
+        <Route path={'/ptype/:name'} element={<PType />} />
         <Route path={'/setcategory'} element={<SetCategory />} />
         <Route path={'/setcategory/:no/:name'} element={<SettingCdclist />} />
+        <Route path={'/post'} element={<Post />} />
         <Route path={'/write'} element={<Write />} />
         <Route path={'*'} element={<Navigate to='/' />} />
       </Routes>
     </ThemeProvider>
   );
-}
 
 export default App;

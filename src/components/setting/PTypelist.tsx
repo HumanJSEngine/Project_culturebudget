@@ -1,25 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import fonts from '../../styles/FontStyle';
 import colors from '../../styles/Theme';
 
-interface AddCateListProps {
-    children: React.ReactNode;
-    addCclist?: () => Promise<void>;
-    addCdclist?: () => Promise<void>;
+interface PTypelistProps {
+    piSeq: number;
+    piType: number;
+    piName: string;
 }
 
-const AddCateList = ({ children, addCclist, addCdclist }: AddCateListProps) => {
+const PTypelist = ({ piSeq, piType, piName }: PTypelistProps) => {
     return (
-        <Box onClick={addCclist ? addCclist : addCdclist}>
-            {addCclist && <Plus>+</Plus>}
+        <Box>
+            <Minus>-</Minus>
             <Catelist>
-                <ItemName>{children}</ItemName>
+                <ItemName>{piName}</ItemName>
             </Catelist>
         </Box>
     );
 };
-
 const Box = styled.li`
     display: flex;
     width: 100%;
@@ -28,13 +27,13 @@ const Box = styled.li`
     justify-content: start;
     align-items: center;
     gap: 0 10px;
-    padding: 0px 16px;
+    margin: 0px 16px;
 `;
 
-const Plus = styled.button`
-    width: 16px;
-    height: 16px;
-    background: #72c54a;
+const Minus = styled.button`
+    width: 15px;
+    height: 15px;
+    background: #e23636;
     border-radius: 50%;
     border: none;
     color: white;
@@ -50,11 +49,6 @@ const Catelist = styled.div`
     justify-content: space-between;
     border-bottom: 1px solid ${colors.gray200};
     padding: 10px 0px;
-    button {
-        border: none;
-        background: transparent;
-        outline: none;
-    }
 `;
 
 const ItemName = styled.span`
@@ -63,5 +57,6 @@ const ItemName = styled.span`
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 `;
-export default AddCateList;
+export default PTypelist;
