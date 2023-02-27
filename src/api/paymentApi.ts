@@ -1,8 +1,7 @@
 import apiClient from './apiClient';
 
-export const getPayment = async (paymentType: number) => {
-  // payment 1.카드 2.계좌 3.현금
-  const res = await apiClient.get(`/api/payment/list/${paymentType}`);
+export const getPayment = async () => {
+  const res = await apiClient.get(`/api/payment/listall`);
   return res.data;
 };
 

@@ -14,3 +14,9 @@ export interface BudgetData {
   ehImgFile: string;
 }
 
+export interface PaymentData {
+  piSeq: number;
+  piType: number;
+  piName: string;
+  piMiSeq: number;
+}

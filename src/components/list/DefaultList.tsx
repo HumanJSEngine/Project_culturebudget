@@ -11,41 +11,33 @@ import DateListTotal from './DateListTotal';
 
 interface DefaultListProps {
   list: BudgetData[];
+  openPost: (postData: BudgetData) => void;
 }
 
-const DefaultList = ({ list }: DefaultListProps) => {
-    return (
-        <Expenditure>
-            <>
-                <DateListTotal
-                    date={'16일 월요일'}
-                    price={GetTotal(list).toLocaleString()}
-                />
-                {list.map(
-                    ({
-                        ehSeq,
-                        ehTitle,
-                        ehCcSeq,
-                        ehStoreName,
-                        ehPiSeq,
-                        ehPrice,
-                    }) => (
-                        <ExpendList key={ehSeq}>
-                            <TitleList>
-                                <Title title={ehTitle} />
-                                <Category
-                                    culture={ehCcSeq}
-                                    place={ehStoreName}
-                                    payment={ehPiSeq}
-                                ></Category>
-                            </TitleList>
-                            <Price price={ehPrice} />
-                        </ExpendList>
-                    )
-                )}
-            </>
-        </Expenditure>
-    );
+const DefaultList = ({ list, openPost }: DefaultListProps) => {
+  return (
+    <Expenditure>
+      <>
+        <DateListTotal
+          date={'16일 월요일'}
+          price={GetTotal(list).toLocaleString()}
+        />
+        {list.map((listItem) => (
+          <ExpendList key={listItem.ehSeq} onClick={() => openPost(listItem)}>
+            <TitleList>
+              <Title title={listItem.ehTitle} />
+              <Category
+                culture={listItem.ehCcSeq}
+                place={listItem.ehStoreName}
+                payment={listItem.ehPiSeq}
+              ></Category>
+            </TitleList>
+            <Price price={listItem.ehPrice} />
+          </ExpendList>
+        ))}
+      </>
+    </Expenditure>
+  );
 };
 
 export default DefaultList;

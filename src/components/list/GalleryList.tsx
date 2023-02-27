@@ -3,22 +3,22 @@ import GalleryLayout from '../gallerylist/GalleryLayout';
 import GalleryListImg from '../gallerylist/GalleryListImg';
 
 interface GalleryListProps {
-    list: BudgetData[];
+  list: BudgetData[];
+  openPost: (postData: BudgetData) => void;
 }
 
-const GalleryList = ({ list }: GalleryListProps) => {
-    const { VITE_IMAGE_URL } = import.meta.env;
-    return (
-        <GalleryLayout>
-            {list.map(({ ehSeq, ehImgFile, ehPrice }) => (
-                <GalleryListImg
-                    key={ehSeq}
-                    src={`${VITE_IMAGE_URL}/${ehImgFile}`}
-                    price={ehPrice}
-                />
-            ))}
-        </GalleryLayout>
-    );
+const GalleryList = ({ list, openPost }: GalleryListProps) => {
+  return (
+    <GalleryLayout>
+      {list.map((listItem) => (
+        <GalleryListImg
+          key={listItem.ehSeq}
+          openPost={openPost}
+          itemData={listItem}
+        />
+      ))}
+    </GalleryLayout>
+  );
 };
 
 export default GalleryList;

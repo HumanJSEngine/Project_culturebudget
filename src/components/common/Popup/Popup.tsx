@@ -3,20 +3,34 @@ import fonts from '../../../styles/FontStyle';
 import colors from '../../../styles/Theme';
 import FlexibleButton from '../FlexibleButton';
 
-const Popup = ({ isOpenPopup, message, buttonText, closePopup }) => {
+interface PopupProps {
+  isOpenPopup: boolean;
+  message: string;
+  buttonText: string;
+  closePopup: () => void;
+}
+
+const Popup = ({
+  isOpenPopup,
+  message,
+  buttonText,
+  closePopup,
+}: PopupProps) => {
   return (
-    isOpenPopup && (
-      <PopupBackground>
-        <PopupBox>
-          <PopupText>{message}</PopupText>
-          <ActiveArea>
-            <FlexibleButton primary onClick={closePopup}>
-              {buttonText}
-            </FlexibleButton>
-          </ActiveArea>
-        </PopupBox>
-      </PopupBackground>
-    )
+    <>
+      {isOpenPopup && (
+        <PopupBackground>
+          <PopupBox>
+            <PopupText>{message}</PopupText>
+            <ActiveArea>
+              <FlexibleButton variant='primary' onClick={closePopup}>
+                {buttonText}
+              </FlexibleButton>
+            </ActiveArea>
+          </PopupBox>
+        </PopupBackground>
+      )}
+    </>
   );
 };
 

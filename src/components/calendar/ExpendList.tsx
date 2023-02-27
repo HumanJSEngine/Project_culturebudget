@@ -1,11 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const ExpendList = ({ children }) => {
-  return <Expendlist>{children}</Expendlist>;
-};
-
-const Expendlist = styled.div`
+const ExpendList = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 5%;

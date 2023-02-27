@@ -21,3 +21,8 @@ export const memberLogin = async (loginData: Omit<MemberData, 'nickName'>) => {
   const res = await apiClient.post('/api/members/login', params);
   return res.data;
 };
+
+export const kakaoLogin = async (code: string) => {
+  const res = await apiClient.post(`/oauth/kakao/${code}`);
+  return res.data;
+};

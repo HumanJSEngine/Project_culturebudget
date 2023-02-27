@@ -3,11 +3,36 @@ import styled from 'styled-components';
 import fonts from '../../../styles/FontStyle';
 import colors from '../../../styles/Theme';
 
+export type selectCategoryHandler = (
+  categorySeq: number,
+  categoryName: string
+) => void;
+export type getDetailCategoryList = (
+  categorySeq: number,
+  categoryName: string
+) => void;
+export type selectDetailCategoryHandler = (
+  categorySeq: number,
+  categoryName: string
+) => void;
+export type selectPaymentHandler = (
+  paymentSeq: number,
+  paymentName: string
+) => void;
+export type editPostHandler = () => void;
+export type deletePostHandler = () => void;
+
 interface ModlaListItem {
   hasDetail?: boolean;
   seq?: number;
   name: string;
-  selectEvent: () => void;
+  selectEvent:
+    | selectCategoryHandler
+    | getDetailCategoryList
+    | selectDetailCategoryHandler
+    | selectPaymentHandler
+    | editPostHandler
+    | deletePostHandler;
 }
 
 const ModalListItem = ({
@@ -17,7 +42,15 @@ const ModalListItem = ({
   selectEvent,
 }: ModlaListItem) => {
   return (
-    <Box onClick={selectEvent}>
+    <Box
+      onClick={() => {
+        if (seq) {
+          return selectEvent(seq, name);
+        } else {
+          return selectEvent;
+        }
+      }}
+    >
       <ItemName>{name}</ItemName>
       {hasDetail && (
         <SelectIcon>

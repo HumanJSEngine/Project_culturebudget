@@ -6,14 +6,14 @@ import { useNavigate } from 'react-router-dom';
 
 interface SettingListItemProps {
   children: React.ReactNode;
-  to: string;
+  to?: string;
 }
 
 const SettingListItem = ({ children, to }: SettingListItemProps) => {
   const navigate = useNavigate();
 
   return (
-    <Box onClick={() => navigate(to)}>
+    <Box onClick={() => to && navigate(to)}>
       <ItemName>{children}</ItemName>
       <SelectIcon>
         <SlArrowRight size={12} />

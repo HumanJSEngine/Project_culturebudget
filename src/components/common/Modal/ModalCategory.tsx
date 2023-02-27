@@ -5,7 +5,11 @@ import { CategoryInfo } from '../../../pages/Write';
 import Header from '../Header';
 import HeaderCloseButton from '../HeaderCloseButton';
 import ModalListBack from './ModalListBack';
-import ModalListItem from './ModalListItem';
+import ModalListItem, {
+  getDetailCategoryList,
+  selectCategoryHandler,
+  selectDetailCategoryHandler,
+} from './ModalListItem';
 
 interface ModalCategoryProps {
   closeModal: () => void;
@@ -44,9 +48,10 @@ const ModalCategory = ({ closeModal, categoryRef }: ModalCategoryProps) => {
       console.log(err);
     }
   };
-  const getDetailCategoryList = async (
-    categorySeq: number,
-    categoryName: string
+
+  const getDetailCategoryList: getDetailCategoryList = async (
+    categorySeq,
+    categoryName
   ) => {
     setSelectedCategory({ categorySeq, categoryName });
     switchCategoryView('detail');
@@ -58,7 +63,11 @@ const ModalCategory = ({ closeModal, categoryRef }: ModalCategoryProps) => {
   useEffect(() => {
     getCategoryList();
   }, []);
-  const selectCategoryHandler = (categorySeq: number, categoryName: string) => {
+
+  const selectCategoryHandler: selectCategoryHandler = (
+    categorySeq,
+    categoryName
+  ) => {
     const categoryInfo = {
       categorySeq,
       categoryName,
@@ -66,9 +75,10 @@ const ModalCategory = ({ closeModal, categoryRef }: ModalCategoryProps) => {
     categoryRef.current = categoryInfo;
     closeModal();
   };
-  const selectDetailCategoryHandler = (
-    categorySeq: number,
-    categoryName: string
+
+  const selectDetailCategoryHandler: selectDetailCategoryHandler = (
+    categorySeq,
+    categoryName
   ) => {
     const categoryInfo = {
       categorySeq: selectedCategory!.categorySeq,
@@ -79,10 +89,12 @@ const ModalCategory = ({ closeModal, categoryRef }: ModalCategoryProps) => {
     categoryRef.current = categoryInfo;
     closeModal();
   };
+
   const backCategory = () => {
     setDetailCategoryList([]);
     switchCategoryView('default');
   };
+
   const list = categoryList.map(({ ccSeq, ccName, cdclist }) => (
     <ModalListItem
       key={ccSeq}

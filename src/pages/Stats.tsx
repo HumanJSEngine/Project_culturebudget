@@ -14,42 +14,41 @@ import useFetch from '../hooks/useFetch';
 import Container from '../styles/Container';
 import ConvertPercent from '../utils/ConvertPercent';
 import { BudgetData } from '../types/Budget';
+import Loading from '../components/common/Loading';
 
 const Stats = () => {
-    const statdata: Array<BudgetData> = useFetch(
-        'get',
-        'http://haeji.mawani.kro.kr:8585/api/expense/list'
-    );
+  const statdata: Array<BudgetData> = useFetch(
+    'get',
+    'http://haeji.mawani.kro.kr:8585/api/expense/list'
+  );
 
-    return (
-        <Page>
-            <Header />
-            <Container>
-                <Exppermonth
-                    month={'1월'}
-                    monthprice={ConvertPercent(statdata)}
+  return (
+    <Page>
+      <Header />
+      <Container>
+        <Exppermonth month={'1월'} monthprice={ConvertPercent(statdata)} />
+        <Category>
+          <Monthprice ccSeq={'대분류'} />
+          <Chart statdata={statdata} />
+          <Expcatelist>
+            {statdata.map((item) => (
+              <List key={item.ehSeq}>
+                <Leftlist
+                  part={item.ehCcSeq}
+                  price={item.ehPrice}
+                  percent={ConvertPercent(statdata)}
+                  color={'#6C80FF'}
                 />
-                <Category>
-                    <Monthprice ccSeq={'대분류'} />
-                    <Chart statdata={statdata} />
-                    <Expcatelist>
-                        {statdata.map((item) => (
-                            <List key={item.ehSeq}>
-                                <Leftlist
-                                    part={item.ehCcSeq}
-                                    price={item.ehPrice}
-                                    percent={ConvertPercent(statdata)}
-                                    color={'#6C80FF'}
-                                />
-                                <Rightlist price={item.ehPrice} />
-                            </List>
-                        ))}
-                    </Expcatelist>
-                </Category>
-            </Container>
-            <BottomNavigation />
-        </Page>
-    );
+                <Rightlist price={item.ehPrice} />
+              </List>
+            ))}
+          </Expcatelist>
+        </Category>
+        {/* {isLoading && <Loading />} */}
+      </Container>
+      <BottomNavigation />
+    </Page>
+  );
 };
 
 export default Stats;

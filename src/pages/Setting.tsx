@@ -12,11 +12,11 @@ const Setting = () => {
       <Header title={'설정'} />
       <Container>
         <SettingList>
-          <SettingListItem to='/'>내 정보 관리</SettingListItem>
-          <SettingListItem to='/'>리스트 형태 편집</SettingListItem>
-          <SettingListItem to={'/setcategory'}>카테고리 편집</SettingListItem>
-          <SettingListItem to={'/setpayment'}>결제 수단 편집</SettingListItem>
-          <SettingListItem to='/'>설정</SettingListItem>
+          <SettingListItem>내 정보 관리</SettingListItem>
+          <SettingListItem to='/setlisttype'>리스트 형태 편집</SettingListItem>
+          <SettingListItem to='/setcategory'>카테고리 편집</SettingListItem>
+          <SettingListItem to='/setpayment'>결제 수단 편집</SettingListItem>
+          <SettingListItem>설정</SettingListItem>
         </SettingList>
       </Container>
       <BottomNavigation />

@@ -2,18 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/Theme';
 import fonts from '../../styles/FontStyle';
+import { BudgetData } from '../../types/Budget';
 
 interface GalleryListImgProps {
-  src: string;
-  price: number;
+  itemData: BudgetData;
+  openPost: (postData: BudgetData) => void;
 }
 
-const GalleryListImg = ({ src, price }: GalleryListImgProps) => {
+const GalleryListImg = ({ itemData, openPost }: GalleryListImgProps) => {
+  const { VITE_IMAGE_URL } = import.meta.env;
   return (
-    <GList>
-      <MainImg src={src} alt='ex' />
-      {/* <span className='date'>{date}</span> */}
-      <span className='price'>+{price}</span>
+    <GList onClick={() => openPost(itemData)}>
+      <MainImg src={`${VITE_IMAGE_URL}/${itemData.ehImgFile}`} alt='ex' />
     </GList>
   );
 };
@@ -21,16 +21,16 @@ const GalleryListImg = ({ src, price }: GalleryListImgProps) => {
 const MainImg = styled.img.attrs((props) => ({
   src: props.src,
 }))`
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 100%;
   opacity: 1;
 `;
 
 const GList = styled.div`
   position: relative;
   object-fit: contain;
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 100%;
   .date {
     position: absolute;
     top: 8px;

@@ -5,7 +5,7 @@ import Container from '../styles/Container';
 import Header from '../components/common/Header';
 import { useState, useEffect } from 'react';
 import CategoryStorage from '../api/localApi/CategoryStorage';
-import SettingLocalCateList from '../components/setting/SettingLocalCateList';
+import SettingLocalCateList from '../components/setting/SettingLocalCateItem';
 import { LocalCategoryData } from '../types/Local';
 import AddLocalCateList from '../components/setting/AddLocalCateList';
 
@@ -28,9 +28,9 @@ const SetLocalCategory = () => {
   }, []);
 
   const addCategory = () => {
-    let categoryName;
-    while (!categoryName) {
-      categoryName = prompt('추가할 카테고리명을 선택하세요');
+    const categoryName = prompt('추가할 카테고리명을 선택하세요');
+    if (!categoryName) {
+      return;
     }
     try {
       categoryStorage.addCategory(categoryName);

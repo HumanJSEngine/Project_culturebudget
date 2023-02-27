@@ -8,12 +8,14 @@ interface ModalProps {
 
 const Modal = ({ openedModal, closeModal }: ModalProps) => {
   return (
-    openedModal && (
-      <>
-        <ModalBackground onClick={closeModal} />
-        <ModalBox>{openedModal}</ModalBox>
-      </>
-    )
+    <>
+      {openedModal && (
+        <>
+          <ModalBackground onClick={closeModal} />
+          <ModalBox>{openedModal}</ModalBox>
+        </>
+      )}
+    </>
   );
 };
 
@@ -32,8 +34,9 @@ const ModalBox = styled.div`
   left: 0;
   bottom: 0;
   width: 100%;
+  height: auto;
   background: ${colors.white};
-  z-index: 2;
+  z-index: 10;
 `;
 
 export default Modal;

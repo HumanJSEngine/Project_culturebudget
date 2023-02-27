@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { addPost, PostParameter } from '../api/postApi';
@@ -32,7 +32,7 @@ export interface CategoryInfo {
   detailCategorySeq?: number;
   detailCategoryName?: string;
 }
-interface PaymentInfo {
+export interface PaymentInfo {
   paymentSeq: number;
   paymentName: string;
 }
@@ -46,26 +46,37 @@ const Write = () => {
   const [cropImg, setCropImg] = useState<string>('');
   const placeRef = useRef<HTMLInputElement>(null);
   const timeRef = useRef<string>(moment().format('YYYY-MM-DDTHH:mm:ss'));
-  const categoryRef = useRef<CategoryInfo>(null);
+  const categoryRef = useRef<CategoryInfo>({
+    categorySeq: 0,
+    categoryName: '',
+  });
   const contentRef = useRef<HTMLTextAreaElement>(null);
-  const paymentRef = useRef<PaymentInfo>(null);
+  const paymentRef = useRef<PaymentInfo>({
+    paymentSeq: 0,
+    paymentName: '',
+  });
   const payPlaceRef = useRef<HTMLInputElement>(null);
   const [payPrice, setPayPrice] = useState<string>('');
+
   const { isOpenPopup, popupMessage, openPopup, closePopup } = usePopup();
   const { openedModal, openModal, closeModal } = useModal();
   const { isOpenCropper, openImageCropper, closeImageCropper } =
     useImageCropper();
+
   const handleDateSelect = () => {
     openModal(<ModalDate closeModal={closeModal} timeRef={timeRef} />);
   };
+
   const handleCategorySelect = () => {
     openModal(
       <ModalCategory closeModal={closeModal} categoryRef={categoryRef} />
     );
   };
+
   const handlePaymentSelect = () => {
     openModal(<ModalPayment closeModal={closeModal} paymentRef={paymentRef} />);
   };
+
   const postSubmitHandler = async () => {
     setIsLoding(true);
     if (checkValidation()) {
@@ -100,11 +111,16 @@ const Write = () => {
 
     try {
       const res = await addPost(postData);
-      console.log(res);
+      const { status } = res;
+      if (!status) {
+        openPopup('문제가 발생하였습니다. 다시 시도해주세요.');
+        setIsLoding(false);
+        return;
+      }
       setIsLoding(false);
       navigate('/');
     } catch (err) {
-      console.log(err);
+      openPopup('에러가 발생하였습니다. 다시 시도해주세요.');
       setIsLoding(false);
     }
   };
@@ -126,11 +142,11 @@ const Write = () => {
       openPopup('시간을 선택해 주세요.');
       return true;
     }
-    if (!categoryRef.current) {
+    if (categoryRef.current.categorySeq === 0) {
       openPopup('카테고리를 선택해 주세요.');
       return true;
     }
-    if (!paymentRef.current) {
+    if (paymentRef.current.paymentSeq === 0) {
       openPopup('결제 수단을 선택해 주세요.');
       return true;
     }
@@ -188,7 +204,7 @@ const Write = () => {
           <WriteFormSelect
             title={'카테고리'}
             value={
-              !categoryRef.current
+              !categoryRef.current.categoryName
                 ? ''
                 : `${categoryRef.current.categoryName} ${
                     !categoryRef.current.detailCategoryName
