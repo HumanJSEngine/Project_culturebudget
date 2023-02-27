@@ -3,15 +3,19 @@ import styled from 'styled-components';
 import fonts from '../../styles/FontStyle';
 import colors from '../../styles/Theme';
 
-interface AddCateListProps {
+interface AddLocalCateListProps {
   children: React.ReactNode;
-  addCclist?: () => Promise<void>;
-  addCdclist?: () => Promise<void>;
+  addCategory?: () => void;
+  addDetailCategory?: () => void;
 }
 
-const AddCateList = ({ children, addCclist, addCdclist }: AddCateListProps) => {
+const AddLocalCateList = ({
+  children,
+  addCategory,
+  addDetailCategory,
+}: AddLocalCateListProps) => {
   return (
-    <Box onClick={addCclist ? addCclist : addCdclist}>
+    <Box onClick={addCategory ? addCategory : addDetailCategory}>
       <Plus>+</Plus>
       <Catelist>
         <ItemName>{children}</ItemName>
@@ -45,7 +49,6 @@ const Plus = styled.button`
 
 const Catelist = styled.div`
   width: 100%;
-  max-width: 330px;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid ${colors.gray200};
@@ -64,4 +67,4 @@ const ItemName = styled.span`
   justify-content: center;
   align-items: center;
 `;
-export default AddCateList;
+export default AddLocalCateList;

@@ -26,11 +26,11 @@ import fonts from '../styles/FontStyle';
 import Page from '../styles/Page';
 import colors from '../styles/Theme';
 
-interface CategoryInfo {
+export interface CategoryInfo {
   categorySeq: number;
   categoryName: string;
-  detailCategorySeq: number;
-  detailCategoryName: string;
+  detailCategorySeq?: number;
+  detailCategoryName?: string;
 }
 interface PaymentInfo {
   paymentSeq: number;
@@ -56,7 +56,7 @@ const Write = () => {
   const { isOpenCropper, openImageCropper, closeImageCropper } =
     useImageCropper();
   const handleDateSelect = () => {
-    openModal(<ModalDate closeModal={closeModal} timeRef={timeRef.current} />);
+    openModal(<ModalDate closeModal={closeModal} timeRef={timeRef} />);
   };
   const handleCategorySelect = () => {
     openModal(
@@ -182,7 +182,7 @@ const Write = () => {
           <WriteFormText title={'장소'} textRef={placeRef} />
           <WriteFormSelect
             title={'날짜'}
-            value={moment(timeRef.current).format('YYYY/MM/DD a hh : mm')}
+            value={moment(timeRef.current).format('YYYY/MM/DD A hh : mm')}
             selectEvent={handleDateSelect}
           />
           <WriteFormSelect

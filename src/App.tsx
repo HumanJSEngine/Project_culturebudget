@@ -17,6 +17,7 @@ import Write from './pages/Write';
 import SetCategory from './pages/SetCategory';
 import SetPayment from './pages/SetPayment';
 import SettingCdclist from './components/setting/SettingCdclist';
+import SetLocalCategory from './pages/SetLocalCategory';
 
 function App() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
@@ -33,7 +34,7 @@ function App() {
         <Route path={'/stats'} element={<Stats />} />
         <Route path={'/setting'} element={<Setting />} />
         <Route path={'/setpayment'} element={<SetPayment />} />
-        <Route path={'/setcategory'} element={<SetCategory />} />
+        <Route path={'/setcategory'} element={<SetLocalCategory />} />
         <Route path={'/setcategory/:no/:name'} element={<SettingCdclist />} />
         <Route path={'/post'} element={<Post />} />
         <Route path={'/write'} element={<Write />} />

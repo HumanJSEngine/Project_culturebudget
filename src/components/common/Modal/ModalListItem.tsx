@@ -3,9 +3,21 @@ import styled from 'styled-components';
 import fonts from '../../../styles/FontStyle';
 import colors from '../../../styles/Theme';
 
-const ModalListItem = ({ hasDetail, seq, name, selectEvent }) => {
+interface ModlaListItem {
+  hasDetail?: boolean;
+  seq?: number;
+  name: string;
+  selectEvent: () => void;
+}
+
+const ModalListItem = ({
+  hasDetail,
+  seq,
+  name,
+  selectEvent,
+}: ModlaListItem) => {
   return (
-    <Box onClick={() => selectEvent && selectEvent(seq, name, hasDetail)}>
+    <Box onClick={selectEvent}>
       <ItemName>{name}</ItemName>
       {hasDetail && (
         <SelectIcon>

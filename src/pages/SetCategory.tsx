@@ -5,9 +5,9 @@ import Container from '../styles/Container';
 import SettingCateList from '../components/setting/SettingCateList';
 import Header from '../components/common/Header';
 import AddCateList from '../components/setting/AddCateList';
-import axios from 'axios';
 import { useState, useEffect, useCallback } from 'react';
-import { addCategory } from '../api/categoryApi';
+import CategoryStorage from '../api/localApi/CategoryStorage';
+import axios from 'axios';
 
 interface CategoryData {
     ccSeq: number;

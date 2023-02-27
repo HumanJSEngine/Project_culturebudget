@@ -13,3 +13,4 @@ export interface BudgetData {
   ehContent?: string;
   ehImgFile: string;
 }
+

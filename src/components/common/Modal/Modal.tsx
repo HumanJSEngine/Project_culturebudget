@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import colors from '../../../styles/Theme';
 
-const Modal = ({ openedModal, closeModal }) => {
+interface ModalProps {
+  openedModal: React.ReactNode;
+  closeModal: () => void;
+}
+
+const Modal = ({ openedModal, closeModal }: ModalProps) => {
   return (
     openedModal && (
       <>
@@ -18,7 +23,7 @@ const ModalBackground = styled.div`
   height: 0;
   width: 100%;
   height: 100%;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.3);
   z-index: 1;
 `;
 

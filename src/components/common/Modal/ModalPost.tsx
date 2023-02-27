@@ -3,8 +3,13 @@ import Header from '../Header';
 import HeaderCloseButton from '../HeaderCloseButton';
 import ModalListItem from './ModalListItem';
 
-const ModalPost = ({ closeModal, postSeq }) => {
-  const editPostHandler = () => {};
+interface ModalPostProps {
+  closeModal: () => void;
+  postSeq: number;
+}
+
+const ModalPost = ({ closeModal, postSeq }: ModalPostProps) => {
+  // const editPostHandler = () => {};
   const deletePostHandler = () => {};
   return (
     <Box>
@@ -14,7 +19,7 @@ const ModalPost = ({ closeModal, postSeq }) => {
       />
       <ModalContents>
         <ModalList>
-          <ModalListItem name={'수정하기'} selectEvent={editPostHandler} />
+          {/* <ModalListItem name={'수정하기'} selectEvent={editPostHandler} /> */}
           <ModalListItem name={'삭제하기'} selectEvent={deletePostHandler} />
         </ModalList>
       </ModalContents>

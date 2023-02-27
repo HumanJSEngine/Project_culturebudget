@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { MutableRefObject, useState } from 'react';
 import styled from 'styled-components';
 import fonts from '../../../styles/FontStyle';
 import colors from '../../../styles/Theme';
@@ -7,16 +7,16 @@ import HeaderButton from '../HeaderButton';
 
 interface ModalDateProps {
   closeModal: () => void;
-  timeRef: string;
+  timeRef: MutableRefObject<string>;
 }
 
 const ModalDate = ({ closeModal, timeRef }: ModalDateProps) => {
-  const [selectDate, setSelectDate] = useState(timeRef);
-  const onChangeDate = (e) => {
+  const [selectDate, setSelectDate] = useState<string>(timeRef.current);
+  const onChangeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectDate(e.target.value);
   };
   const selectTime = () => {
-    timeRef = selectDate;
+    timeRef.current = selectDate;
     closeModal();
   };
   return (
