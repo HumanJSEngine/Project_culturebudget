@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { addPost, PostParameter } from '../api/postApi';
@@ -21,6 +22,7 @@ import WriteFormTitle from '../components/write/WriteFormTitle';
 import useImageCropper from '../hooks/useImageCropper';
 import useModal from '../hooks/useModal';
 import usePopup from '../hooks/usePopup';
+import { RootState } from '../store/store';
 import Container from '../styles/Container';
 import fonts from '../styles/FontStyle';
 import Page from '../styles/Page';
@@ -57,6 +59,7 @@ const Write = () => {
   });
   const payPlaceRef = useRef<HTMLInputElement>(null);
   const [payPrice, setPayPrice] = useState<string>('');
+  const userInfo = useSelector((state: RootState) => state.user);
 
   const { isOpenPopup, popupMessage, openPopup, closePopup } = usePopup();
   const { openedModal, openModal, closeModal } = useModal();

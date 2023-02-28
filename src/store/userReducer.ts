@@ -1,16 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { MemberData } from '../types/User';
 
-type UserState = Pick<MemberData, 'email' | 'nickName'>;
+type UserState = Omit<MemberData, 'password'>;
 
 const INITIAL_STATE: UserState = {
-  // useruid: '',
+  memberSeq: 0,
   email: '',
   nickName: '',
-  // username: '',
-  // userbirth: '',
-  // usersex: '',
-  // userjob: '',
 };
 
 const userReducer = createSlice({
@@ -18,24 +14,15 @@ const userReducer = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     loginUser: (state, action) => {
-      // const { uid, name, birth, nickname, sex, job, email } = action.payload;
-      const { nickname, email } = action.payload;
-      // state.useruid = uid;
+      const { memberSeq, nickname, email } = action.payload;
+      state.memberSeq = memberSeq;
       state.email = email;
       state.nickName = nickname;
-      // state.username = name;
-      // state.userbirth = birth;
-      // state.usersex = sex;
-      // state.userjob = job;
     },
     clearUser: (state) => {
-      // state.useruid = '';
+      state.memberSeq = 0;
       state.email = '';
       state.nickName = '';
-      // state.username = '';
-      // state.userbirth = '';
-      // state.usersex = '';
-      // state.userjob = '';
     },
     default: (state) => {
       return state;

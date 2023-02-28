@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { memberJoin } from '../api/memberApi';
 import Button from '../components/common/Button';
@@ -26,6 +26,7 @@ interface RegisterFormValue {
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isOpenPopup, popupMessage, openPopup, closePopup } = usePopup();
   const {
     register,
@@ -40,14 +41,11 @@ const Register = () => {
       const joinData = { email, nickName, password };
       try {
         const res = await memberJoin(joinData);
-        const { data, status } = res;
-        console.log(res);
-        if (status === 'CREATED') {
-          console.log(data);
-          dispatch(loginUser(data));
-        } else {
-          return;
-        }
+        const { memberSeq, email, nickname, token, message } = res;
+        // const { accessToken } = token;
+        // dispatch(setAccessToken(accessToken));
+        // localStorage.setItem('accessToken', accessToken);
+        dispatch(loginUser({ memberSeq, email, nickname }));
       } catch (err) {
         console.log(err);
         openPopup('에러가 발생하였습니다. 다시 시도해주세요.');
