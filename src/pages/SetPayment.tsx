@@ -12,15 +12,7 @@ const SetPayment = () => {
 
     return (
         <Page>
-            <Header
-                onClick={() => setAddpayment(!addpayment)}
-                title={'결제 수단 편집'}
-            />
-            {addpayment && (
-                <Modal visible={addpayment}>
-                    <div className='모달창 테스트'></div>
-                </Modal>
-            )}
+            <Header title={'결제 수단 편집'} />
             <Container>
                 <SettingList>
                     <AddPType title={'결제 수단 추가'} />
