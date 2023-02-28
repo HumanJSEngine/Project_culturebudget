@@ -6,21 +6,13 @@ import Header from '../common/Header';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import PTypelist from './PTypelist';
+import AddPayment from './AddPayment';
+import { useSelector } from 'react-redux';
+import HeaderGoBackButton from '../common/HeaderGoBackButton';
 
 const PType = () => {
     const name: string = useParams().name;
     const [plists, setPlists] = useState([]);
-
-    // const pName = (name: string) => {
-    //     switch (name) {
-    //         case '카드':
-    //             return '카드';
-    //         case '은행':
-    //             return '은행';
-    //         case '현금':
-    //             return '현금';
-    //     }
-    // };
 
     const fetchData = async (name: string) => {
         try {
@@ -45,16 +37,18 @@ const PType = () => {
         }
     };
 
-    console.log(plists);
     useEffect(() => {
         fetchData(name);
     }, []);
 
     return (
         <Page>
-            <Header title={name} />
+            <Header title={name} HeaderLeft={<HeaderGoBackButton />} />
             <Container>
                 <SettingList>
+                    <AddPayment name={name} fetchData={fetchData}>
+                        결제 수단 추가
+                    </AddPayment>
                     {name &&
                         plists.map(({ piSeq, piType, piName }, idx) => (
                             <PTypelist

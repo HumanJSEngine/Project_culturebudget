@@ -21,18 +21,13 @@ const PTypelist = ({
 }: PTypelistProps) => {
     const delPlist = async (piSeq) => {
         try {
-            await axios
-                .delete(
-                    `http://haeji.mawani.kro.kr:8585/api/payment/delete/${piSeq}`
-                )
-                .then((res) => {
-                    if (res.data.status) {
-                        alert(res.data.message);
-                        fetchData(name);
-                    } else {
-                        alert('카테고리 삭제 실패');
-                    }
-                });
+            const res = await axios.delete(
+                `http://haeji.mawani.kro.kr:8585/api/payment/delete/${piSeq}`
+            );
+            if (res.data.status) {
+                alert(res.data.message);
+                fetchData(name);
+            }
         } catch (error) {
             console.log(error);
         }

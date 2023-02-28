@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Page from '../styles/Page';
 import Header from '../components/common/Header';
 import Container from '../styles/Container';
 import SetPaymentList from '../components/setting/SetPaymentList';
-import AddPType from '../components/setting/AddPType';
-import Modal from '../components/common/Modal/AddPaymentModal';
+import HeaderGoBackButton from '../components/common/HeaderGoBackButton';
 
 const SetPayment = () => {
-    const [addpayment, setAddpayment] = useState(true);
-
+    const goBack = <HeaderGoBackButton />;
     return (
         <Page>
-            <Header title={'결제 수단 편집'} />
+            <Header title={'결제 수단 편집'} HeaderLeft={goBack} />
             <Container>
                 <SettingList>
-                    <AddPType title={'결제 수단 추가'} />
                     <SetPaymentList
                         title={'카드'}
                         to={'/ptype/카드'}
