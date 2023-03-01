@@ -7,14 +7,12 @@ interface AddCateListProps {
     children: React.ReactNode;
     addCclist?: () => Promise<void>;
     addCdclist?: () => Promise<void>;
-    name: string;
 }
 
 const AddCateList = ({
     children,
     addCclist,
     addCdclist,
-    name,
 }: AddCateListProps) => {
     return (
         <Box onClick={addCclist ? addCclist : addCdclist}>

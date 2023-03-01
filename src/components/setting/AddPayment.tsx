@@ -11,8 +11,7 @@ interface AddPaymentProps {
     fetchData: (name: string) => void;
 }
 const AddPayment = ({ children, name, fetchData }: AddPaymentProps) => {
-    const email = useSelector((state) => state.user.email);
-    console.log(email);
+    // const email = useSelector((state) => state.user.email);
     const typeName = (name: string) => {
         switch (name) {
             case '카드':

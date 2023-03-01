@@ -1,4 +1,6 @@
-import React from 'react';
+/** @format */
+
+import React,{Suspense} from 'react';
 import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -21,36 +23,38 @@ import SetListType from './pages/SetListType';
 import SetLocalCategory from './pages/SetLocalCategory';
 import PType from './components/setting/PType';
 import Post from './pages/Post';
+import { RecoilRoot } from 'recoil';
 
 function App() {
-    const [isLogin, setIsLogin] = useState<boolean>(true);
-    return (
-        <ThemeProvider theme={theme}>
-            <GlobalStyle />
-            <Routes>
-                {!isLogin && <Route index element={<Auth />} />}
-                {isLogin && <Route index element={<List />} />}
-                <Route path={'/auth'} element={<Auth />} />
-                <Route path={'/auth/kakao'} element={<KakaoLogin />} />
-                <Route path={'/register'} element={<Register />} />
-                <Route path={'/login'} element={<Login />} />
-                <Route path={'/calendar'} element={<Calendar />} />
-                <Route path={'/stats'} element={<Stats />} />
-                <Route path={'/setting'} element={<Setting />} />
-                <Route path={'/setlisttype'} element={<SetListType />} />
-                <Route path={'/setpayment'} element={<SetPayment />} />
-                <Route path={'/ptype/:name'} element={<PType />} />
-                <Route path={'/setcategory'} element={<SetCategory />} />
-                <Route
-                    path={'/setcategory/:no/:name'}
-                    element={<SettingCdclist />}
-                />
-                <Route path={'/post'} element={<Post />} />
+  const [isLogin, setIsLogin] = useState<boolean>(true);
+  return (
+    <RecoilRoot>
+      <Suspense fallback={<div>Loading...</div>}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Routes>
+          {!isLogin && <Route index element={<Auth />} />}
+          {isLogin && <Route index element={<List />} />}
+          <Route path={'/auth'} element={<Auth />} />
+          <Route path={'/auth/kakao'} element={<KakaoLogin />} />
+          <Route path={'/register'} element={<Register />} />
+          <Route path={'/login'} element={<Login />} />
+          <Route path={'/calendar'} element={<Calendar />} />
+          <Route path={'/stats'} element={<Stats />} />
+          <Route path={'/setting'} element={<Setting />} />
+          <Route path={'/setlisttype'} element={<SetListType />} />
+          <Route path={'/setpayment'} element={<SetPayment />} />
+          <Route path={'/ptype/:name'} element={<PType />} />
+          <Route path={'/setcategory'} element={<SetCategory />} />
+          <Route path={'/setcategory/:no/:name'} element={<SettingCdclist />} />
+          <Route path={'/post'} element={<Post />} />
 
-                <Route path={'/write'} element={<Write />} />
-                <Route path={'*'} element={<Navigate to='/' />} />
-            </Routes>
-        </ThemeProvider>
-    );
+          <Route path={'/write'} element={<Write />} />
+          <Route path={'*'} element={<Navigate to="/" />} />
+        </Routes>
+      </ThemeProvider>
+      </Suspense>
+    </RecoilRoot>
+  );
 }
 export default App;
