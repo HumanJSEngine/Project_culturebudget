@@ -1,4 +1,4 @@
-import { setToken } from './../utils/setToken';
+import { removeToken, setToken } from './../utils/setToken';
 import { MemberData } from '../types/User';
 import authClient from './authClient';
 
@@ -34,5 +34,15 @@ export const kakaoLogin = async (code: string) => {
     code: code,
   };
   const res = await authClient.get('/oauth/kakao', { params });
+  return res.data;
+};
+
+export const memberLogut = async () => {
+  removeToken();
+  return 'Logout';
+};
+
+export const deleteMember = async (memberNumber: number) => {
+  const res = await authClient.delete(`/api/members/delete/${memberNumber}`);
   return res.data;
 };

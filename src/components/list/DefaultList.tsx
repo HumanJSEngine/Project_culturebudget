@@ -66,13 +66,7 @@ const DefaultList = ({ list, openPost }: DefaultListProps) => {
     return component;
   };
 
-  console.log(getList());
-
-  return (
-    <Expenditures>
-      <>{getList()}</>
-    </Expenditures>
-  );
+  return <Expenditures>{list && <>{getList()}</>}</Expenditures>;
 };
 
 const Expenditures = styled.div`
