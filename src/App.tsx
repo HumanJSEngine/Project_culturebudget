@@ -1,10 +1,9 @@
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/Theme';
 import GlobalStyle from './styles/GlobalStyle';
-import { useState } from 'react';
 import List from './pages/List';
 import Auth from './pages/Auth';
 import Register from './pages/Register';

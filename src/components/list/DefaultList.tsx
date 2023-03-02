@@ -11,9 +11,9 @@ import TitleList from '../calendar/TitleList';
 import DateListTotal from './DateListTotal';
 
 interface DefaultListProps {
-  list: BudgetData[];
-  openPost: (postData: BudgetData) => void;
-  month: number;
+    list: BudgetData[];
+    openPost: (postData: BudgetData) => void;
+    month: number;
 }
 
 interface ListFilterData {

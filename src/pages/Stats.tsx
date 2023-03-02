@@ -16,9 +16,11 @@ import Header from '../components/Layout/Header';
 import useFetch from '../hooks/useFetch';
 import Container from '../styles/Container';
 import ConvertPercent from '../utils/ConvertPercent';
-import { BudgetData } from '../types/Budget';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { dataState } from '../state/atoms/DataState';
+import { categoryList, dataList } from '../state/selectors/Selector';
+
+type fetchData = useCallback<() => Promise<void>, []>;
 
 const Stats = () => {
     // const statdata: Array<BudgetData> = useFetch(
@@ -27,29 +29,29 @@ const Stats = () => {
     // );
 
     const [statdata, setStatdata] = useRecoilState(dataState);
-    const [month, setMonth] = useState(1);
+    const [month, setMonth] = useState(2);
     const [year, setYear] = useState(2022);
-    console.log(month);
-    console.log(year);
 
-    const fetchData = useCallback(
+    const statdata2 = useRecoilValue(dataList);
+
+    const fetchData: fetchData = useCallback(
         async (year: number, month: number) => {
             try {
                 const result = await axios.get(
-                    `http://haeji.mawani.kro.kr:8585/api/expense/history/monthly/list2?member=1&dt=${year}-${month}&page=0&size=10`
+                    `http://haeji.mawani.kro.kr:8585/api/expense/history/monthly/list2?member=4&dt=${year}-${month}&page=0&size=10`
                 );
                 setStatdata(result.data.list);
             } catch (error) {
                 console.log(error);
             }
         },
-        [year, month]
+        []
     );
 
-    useEffect(() => {
-        console.log('month: ', month);
-        fetchData(year, month);
-    }, [year, month]);
+    // useEffect(() => {
+    //     console.log('month: ', month);
+    //     fetchData(year, month);
+    // }, [year, month]);
 
     return (
         <Page>
@@ -69,7 +71,7 @@ const Stats = () => {
                     <Monthprice ccSeq={'대분류'} />
                     <Chart statdata={statdata} />
                     <Expcatelist>
-                        {statdata.map((item) => (
+                        {statdata.map((item: any) => (
                             <List key={item.ehSeq}>
                                 <Leftlist
                                     part={item.ehTitle}

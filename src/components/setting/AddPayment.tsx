@@ -7,12 +7,12 @@ import { useSelector } from 'react-redux';
 
 interface AddPaymentProps {
     children: React.ReactNode;
-    name: string;
-    fetchData: (name: string) => void;
+    name: string | undefined;
+    fetchData: (name: string | undefined) => void;
 }
 const AddPayment = ({ children, name, fetchData }: AddPaymentProps) => {
     // const email = useSelector((state) => state.user.email);
-    const typeName = (name: string) => {
+    const typeName = (name: string | undefined) => {
         switch (name) {
             case '카드':
                 return '1';
@@ -32,7 +32,7 @@ const AddPayment = ({ children, name, fetchData }: AddPaymentProps) => {
 
         try {
             const res = await axios.post(
-                `http://haeji.mawani.kro.kr:8585/api/payment/add/user10@email.com`,
+                `http://haeji.mawani.kro.kr:8585/api/payment/add/user1@email.com`,
                 body
             );
             if (res.data.status) {

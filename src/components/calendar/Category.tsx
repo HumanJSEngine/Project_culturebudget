@@ -4,10 +4,10 @@ import colors from '../../styles/Theme';
 import fonts from '../../styles/FontStyle';
 
 interface CategoryProps {
-  culture: string;
-  place: string;
-  payment: string;
-  culture2?: string;
+    culture: string;
+    place: string;
+    payment: string;
+    culture2: string | undefined;
 }
 
 const Category = ({ culture, culture2, place, payment }: CategoryProps) => {
@@ -27,12 +27,6 @@ const Category = ({ culture, culture2, place, payment }: CategoryProps) => {
 };
 
 const Categories = styled.ul`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-  gap: 8px;
-  li {
     display: flex;
     position: relative;
     max-width: 40%;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import colors from '../../styles/Theme';
 
 const Expenditure = ({ children }) => {
-  return <Expenditures>{children}</Expenditures>;
+    return <Expenditures>{children}</Expenditures>;
 };
 
 const Expenditures = styled.div`
