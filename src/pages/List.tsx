@@ -25,68 +25,56 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { useNavigate } from 'react-router';
 
 const List = () => {
-    const listType = useSelector((state: RootState) => state.setting?.listType);
-    const [postList, setPostList] = useState<BudgetData[]>([]);
-    const [postData, setPostData] = useState<BudgetData | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const memberNumber = GetMemberNumber();
+  const listType = useSelector((state: RootState) => state.setting?.listType);
+  const [postList, setPostList] = useState<BudgetData[]>([]);
+  const [postData, setPostData] = useState<BudgetData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const memberNumber = GetMemberNumber();
   const navigate = useNavigate();
   const onWriteHandler = () => {
     navigate('/write');
   };
-    const [month, setMonth] = useState(1);
-    const [year, setYear] = useState(2022);
-    
-    const getPostList = async () => {
+  const [month, setMonth] = useState(1);
+  const [year, setYear] = useState(2022);
+
+  const getPostList = async () => {
     setIsLoading(true);
     try {
-      const res = await getPost(memberNumber);
-      const { currentPage, list, total, totalPage } = res;
-      // setPostList(res.expense);
-      setPostList(list);
+      const res = await getPost(memberNumber, year, month);
+      setPostList(res.list);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
       setIsLoading(false);
     }
   };
-
-    const getPostList = async (year: number, month: number) => {
-        setIsLoading(true);
-        try {
-            const res = await getPost(year, month);
-            setPostList(res.list);
-            setIsLoading(false);
-        } catch (err) {
-            console.log(err);
-            setIsLoading(false);
-        }
-    };
-    useEffect(() => {
-        getPostList(year, month);
-    }, []);
-    const openPost = (postData: BudgetData) => {
-        setPostData(postData);
-    };
-    const closePost = () => {
-        setPostData(null);
-    };
-     const list = () => {
+  useEffect(() => {
+    getPostList();
+  }, []);
+  const openPost = (postData: BudgetData) => {
+    setPostData(postData);
+  };
+  const closePost = () => {
+    setPostData(null);
+  };
+  const list = () => {
     if (postList.length === 0) {
       // if (!postList) {
       return <NoListItem onWriteHandler={onWriteHandler} />;
     } else {
       if (listType === 'default') {
-        return <DefaultList list={postList} openPost={openPost} />;
+        return (
+          <DefaultList list={postList} openPost={openPost} month={month} />
+        );
       }
       if (listType === 'gallery') {
         return <GalleryList list={postList} openPost={openPost} />;
       }
     }
   };
-    return (
-        <Page>
-         <Header
+  return (
+    <Page>
+      <Header
         HeaderLeft={
           <Monthwrapper>
             <HeaderBackButton />
@@ -100,22 +88,22 @@ const List = () => {
           </HeaderButton>
         }
       />
-            <Header
-                month={month}
-                year={year}
-                setMonth={setMonth}
-                setYear={setYear}
-                getPostList={getPostList}
-            />
-            <Container>
-                {isLoading && <Loading />}
-                <>{list()}</>
-            </Container>
-            <WriteButton />
-            <BottomNavigation />
-            <Post postData={postData} closePost={closePost} />
-        </Page>
-    );
+      <Header
+        month={month}
+        year={year}
+        setMonth={setMonth}
+        setYear={setYear}
+        getPostList={getPostList}
+      />
+      <Container>
+        {isLoading && <Loading />}
+        <>{list()}</>
+      </Container>
+      <WriteButton />
+      <BottomNavigation />
+      <Post postData={postData} closePost={closePost} />
+    </Page>
+  );
 };
 
 export default List;
