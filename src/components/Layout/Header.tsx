@@ -8,32 +8,44 @@ import Monthwrapper from './Monthwrapper';
 
 interface HeaderProps {
     month: number;
-    setMonth: () => void;
     year: number;
+    setMonth: () => void;
     setYear: () => void;
     fetchData: () => Promise<Function>;
+    getPostList: () => Promise<Function>;
 }
 
-const Header = ({ month, setMonth, year, setYear, fetchData }: HeaderProps) => {
+const Header = ({
+    month,
+    setMonth,
+    year,
+    setYear,
+    fetchData,
+    getPostList,
+}: HeaderProps) => {
     // const [viewSearch, setViewSearch] = useState(false);
     // console.log(month);
 
     const up = () => {
-        if (month === 13) {
+        let temp = month + 1;
+        if (temp >= 13) {
+            temp = 1;
             setYear(year + 1);
-            setMonth((month = 1));
         }
-        setMonth(month + 1);
-        fetchData(year, month);
+        setMonth(temp);
+        fetchData && fetchData(year, month);
+        getPostList && getPostList(year, month);
     };
 
     const down = () => {
-        if (month === 0) {
+        let temp = month - 1;
+        if (temp <= 0) {
+            temp = 12;
             setYear(year - 1);
-            setMonth((month = 12));
         }
-        setMonth(month - 1);
-        fetchData(year, month);
+        setMonth(temp);
+        fetchData && fetchData(year, month);
+        getPostList && getPostList(year, month);
     };
 
     return (

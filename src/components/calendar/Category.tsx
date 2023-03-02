@@ -4,16 +4,20 @@ import colors from '../../styles/Theme';
 import fonts from '../../styles/FontStyle';
 
 interface CategoryProps {
-    culture: number;
+    culture: string;
     place: string;
-    payment: number;
+    payment: string;
+    culture2: string;
 }
 
-const Category = ({ culture, place, payment }: CategoryProps) => {
+const Category = ({ culture, culture2, place, payment }: CategoryProps) => {
     return (
         <Categories>
             <li>
                 <span>{culture}</span>
+            </li>
+            <li>
+                <span>{culture2}</span>
             </li>
             <li>
                 <span>{place}</span>
@@ -43,14 +47,14 @@ const Categories = styled.ul`
             text-overflow: ellipsis;
             word-break: break-all;
         }
-        &:nth-child(-n + 2)::after {
+        &:nth-child(-n + 3)::after {
             content: '';
             position: absolute;
             right: -4px;
             top: 4px;
             display: block;
             width: 1px;
-            height: 6px;
+            height: 11px;
             background: ${colors.gray700};
         }
     }

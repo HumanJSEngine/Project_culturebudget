@@ -16,49 +16,62 @@ import { BudgetData } from '../types/Budget';
 import Post from './Post';
 
 const List = () => {
-  const listType = useSelector((state: RootState) => state.setting?.listType);
-  const [postList, setPostList] = useState<BudgetData[]>([]);
-  const [postData, setPostData] = useState<BudgetData | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const getPostList = async () => {
-    setIsLoading(true);
-    try {
-      const res = await getPost();
-      setPostList(res.expense);
-      setIsLoading(false);
-    } catch (err) {
-      console.log(err);
-      setIsLoading(false);
-    }
-  };
-  useEffect(() => {
-    getPostList();
-  }, []);
-  const openPost = (postData: BudgetData) => {
-    setPostData(postData);
-  };
-  const closePost = () => {
-    setPostData(null);
-  };
-  return (
-    <Page>
-      <Header />
-      <Container>
-        {isLoading && <Loading />}
-        <>
-          {listType === 'default' && (
-            <DefaultList list={postList} openPost={openPost} />
-          )}
-          {listType === 'gallery' && (
-            <GalleryList list={postList} openPost={openPost} />
-          )}
-        </>
-      </Container>
-      <WriteButton />
-      <BottomNavigation />
-      <Post postData={postData} closePost={closePost} />
-    </Page>
-  );
+    const listType = useSelector((state: RootState) => state.setting?.listType);
+    const [postList, setPostList] = useState<BudgetData[]>([]);
+    const [postData, setPostData] = useState<BudgetData | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [month, setMonth] = useState(1);
+    const [year, setYear] = useState(2022);
+
+    const getPostList = async (year: number, month: number) => {
+        setIsLoading(true);
+        try {
+            const res = await getPost(year, month);
+            setPostList(res.list);
+            setIsLoading(false);
+        } catch (err) {
+            console.log(err);
+            setIsLoading(false);
+        }
+    };
+    useEffect(() => {
+        getPostList(year, month);
+    }, []);
+    const openPost = (postData: BudgetData) => {
+        setPostData(postData);
+    };
+    const closePost = () => {
+        setPostData(null);
+    };
+    return (
+        <Page>
+            <Header
+                month={month}
+                year={year}
+                setMonth={setMonth}
+                setYear={setYear}
+                getPostList={getPostList}
+            />
+            <Container>
+                {isLoading && <Loading />}
+                <>
+                    {listType === 'default' && (
+                        <DefaultList
+                            list={postList}
+                            openPost={openPost}
+                            month={month}
+                        />
+                    )}
+                    {listType === 'gallery' && (
+                        <GalleryList list={postList} openPost={openPost} />
+                    )}
+                </>
+            </Container>
+            <WriteButton />
+            <BottomNavigation />
+            <Post postData={postData} closePost={closePost} />
+        </Page>
+    );
 };
 
 export default List;
