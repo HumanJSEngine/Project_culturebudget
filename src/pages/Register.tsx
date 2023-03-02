@@ -25,7 +25,6 @@ interface RegisterFormValue {
 }
 
 const Register = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isOpenPopup, popupMessage, openPopup, closePopup } = usePopup();
   const {
@@ -40,15 +39,19 @@ const Register = () => {
     async ({ email, nickName, password }) => {
       const joinData = { email, nickName, password };
       try {
-        const res = await memberJoin(joinData);
-        const { memberSeq, email, nickname, token, message } = res;
-        dispatch(loginUser({ memberSeq, email, nickname }));
+        await memberJoin(joinData);
+        openPopup('회원 가입이 완료되었습니다.');
       } catch (err) {
         console.log(err);
         openPopup('에러가 발생하였습니다. 다시 시도해주세요.');
       }
     }
   );
+
+  const submitPopup = () => {
+    closePopup();
+    navigate('/login');
+  };
 
   return (
     <Page>
@@ -114,7 +117,7 @@ const Register = () => {
       </Container>
       <Popup
         isOpenPopup={isOpenPopup}
-        closePopup={closePopup}
+        closePopup={submitPopup}
         message={popupMessage.current}
         buttonText={'확인'}
       />

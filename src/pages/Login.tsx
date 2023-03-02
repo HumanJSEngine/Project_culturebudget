@@ -38,10 +38,9 @@ const Login = () => {
     const loginData = { email, password };
     try {
       const res = await memberLogin(loginData);
-      console.log(res);
-      const { memberSeq, email, nickname, token, message } = res;
-      // dispatch(loginUser({ memberSeq, email, nickname }));
-      // navigate('/');
+      const { seq, email, nickname } = res;
+      dispatch(loginUser({ seq, email, nickname }));
+      navigate('/');
     } catch (err) {
       console.log(err);
       openPopup('에러가 발생하였습니다. 다시 시도해주세요.');

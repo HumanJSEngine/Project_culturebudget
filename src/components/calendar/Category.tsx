@@ -16,11 +16,6 @@ const Category = ({ culture, culture2, place, payment }: CategoryProps) => {
       <li>
         <span>{culture}</span>
       </li>
-      {culture2 && (
-        <li>
-          <span>{culture2}</span>
-        </li>
-      )}
       <li>
         <span>{place}</span>
       </li>
@@ -40,7 +35,7 @@ const Categories = styled.ul`
   li {
     display: flex;
     position: relative;
-    max-width: 35%;
+    max-width: 40%;
     & span {
       color: ${colors.gray700};
       font: ${fonts.score12Regular};
@@ -49,15 +44,18 @@ const Categories = styled.ul`
       text-overflow: ellipsis;
       word-break: break-all;
     }
-    &:nth-child(-n + 3)::after {
+    &::after {
       content: '';
       position: absolute;
       right: -4px;
       top: 4px;
       display: block;
       width: 1px;
-      height: 11px;
+      height: 6px;
       background: ${colors.gray700};
+    }
+    &:last-child::after {
+      display: none;
     }
   }
 `;

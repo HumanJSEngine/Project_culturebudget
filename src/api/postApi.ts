@@ -28,7 +28,7 @@ export const getPost = async (
   month: number
 ) => {
   const res = await apiClient.get(
-    `/api/expense/history/monthly/list2?member=${memberNumber}&dt=${year}-${month}&page=0&size=10`
+    `/api/expense/history/monthly/list2?member=${memberNumber}&dt=${year}-${month}&page=0&size=20`
   );
   return res.data;
 };
