@@ -9,10 +9,14 @@ interface AddCateListProps {
     addCdclist?: () => Promise<void>;
 }
 
-const AddCateList = ({ children, addCclist, addCdclist }: AddCateListProps) => {
+const AddCateList = ({
+    children,
+    addCclist,
+    addCdclist,
+}: AddCateListProps) => {
     return (
         <Box onClick={addCclist ? addCclist : addCdclist}>
-            {addCclist && <Plus>+</Plus>}
+            <Plus>+</Plus>
             <Catelist>
                 <ItemName>{children}</ItemName>
             </Catelist>

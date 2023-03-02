@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Page from '../styles/Page';
 import Header from '../components/common/Header';
 import Container from '../styles/Container';
 import SetPaymentList from '../components/setting/SetPaymentList';
+import HeaderGoBackButton from '../components/common/HeaderGoBackButton';
 
 const SetPayment = () => {
-    const [payments, setPayments] = useState([]);
-
+    const goBack = <HeaderGoBackButton />;
     return (
         <Page>
-            <Header title={'결제 수단 추가'} />
+            <Header title={'결제 수단 편집'} HeaderLeft={goBack} />
             <Container>
                 <SettingList>
                     <SetPaymentList

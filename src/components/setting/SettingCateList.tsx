@@ -1,9 +1,13 @@
+/** @format */
+
 import { SlArrowRight } from 'react-icons/sl';
 import { Link, To } from 'react-router-dom';
 import styled from 'styled-components';
 import fonts from '../../styles/FontStyle';
 import colors from '../../styles/Theme';
 import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { catedataState } from '../../state/atoms/DataState';
 
 interface SettingCateListProps {
   children?: React.ReactNode;
@@ -18,27 +22,24 @@ const SettingCateList = ({
   to,
   ccSeq,
   cdcSeq,
-  fetchData,
+  fetchData
 }: SettingCateListProps) => {
   console.log('대분류번호', ccSeq);
   console.log('소분류번호', cdcSeq);
+  const [cclist, setCclist] = useRecoilState(catedataState)
+ 
 
   const delCate = async () => {
     try {
-      await axios
-        .get(
-          ccSeq
-            ? `http://haeji.mawani.kro.kr:8585/api/category/delete?no=${ccSeq}`
-            : `http://haeji.mawani.kro.kr:8585/api/category/detail/delete?no=${cdcSeq}`
-        )
-        .then((res) => {
-          if (res) {
-            alert(res.data.message);
-            fetchData();
-          } else {
-            alert('카테고리 삭제 실패');
-          }
-        });
+      const res = await axios.get(
+        ccSeq
+          ? `http://haeji.mawani.kro.kr:8585/api/category/delete?no=${ccSeq}`
+          : `http://haeji.mawani.kro.kr:8585/api/category/detail/delete?no=${cdcSeq}`
+      );
+      if (res) {
+        alert(res.data.message);
+        fetchData();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -46,22 +47,16 @@ const SettingCateList = ({
 
   const updateCate = async () => {
     let catename = prompt('수정할 카테고리명을 입력하세요');
-
     try {
-      await axios
-        .post(
-          ccSeq
-            ? `http://haeji.mawani.kro.kr:8585/api/category/update?no=${ccSeq}&name=${catename}`
-            : `http://haeji.mawani.kro.kr:8585/api/category/detail/update?no=${cdcSeq}&name=${catename}`
-        )
-        .then((res) => {
-          if (res) {
-            alert(res.data.message);
-            fetchData();
-          } else {
-            alert('카테고리 삭제 실패');
-          }
-        });
+      const res = await axios.post(
+        ccSeq
+          ? `http://haeji.mawani.kro.kr:8585/api/category/update?no=${ccSeq}&name=${catename}`
+          : `http://haeji.mawani.kro.kr:8585/api/category/detail/update?no=${cdcSeq}&name=${catename}`
+      );
+      if (res) {
+        alert(res.data.message);
+        fetchData();
+      }
     } catch (error) {
       console.log(error);
     }
