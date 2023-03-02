@@ -10,34 +10,41 @@ import TitleList from '../calendar/TitleList';
 import DateListTotal from './DateListTotal';
 
 interface DefaultListProps {
-  list: BudgetData[];
-  openPost: (postData: BudgetData) => void;
+    list: BudgetData[];
+    openPost: (postData: BudgetData) => void;
+    month: number;
 }
 
-const DefaultList = ({ list, openPost }: DefaultListProps) => {
-  return (
-    <Expenditure>
-      <>
-        <DateListTotal
-          date={'16일 월요일'}
-          price={GetTotal(list).toLocaleString()}
-        />
-        {list.map((listItem) => (
-          <ExpendList key={listItem.ehSeq} onClick={() => openPost(listItem)}>
-            <TitleList>
-              <Title title={listItem.ehTitle} />
-              <Category
-                culture={listItem.ccName}
-                place={listItem.ehStoreName}
-                payment={listItem.piName}
-              ></Category>
-            </TitleList>
-            <Price price={listItem.ehPrice} />
-          </ExpendList>
-        ))}
-      </>
-    </Expenditure>
-  );
+const DefaultList = ({ list, month, openPost }: DefaultListProps) => {
+    console.log('리스트', list);
+    return (
+        <Expenditure>
+            <>
+                <DateListTotal
+                    list={list}
+                    price={GetTotal(list).toLocaleString()}
+                    month={month}
+                />
+                {list.map((listItem) => (
+                    <ExpendList
+                        key={listItem.ehSeq}
+                        onClick={() => openPost(listItem)}
+                    >
+                        <TitleList>
+                            <Title title={listItem.ehTitle} />
+                            <Category
+                                culture={listItem.ccName}
+                                culture2={listItem.cdcName}
+                                place={listItem.ehLocation}
+                                payment={listItem.piName}
+                            ></Category>
+                        </TitleList>
+                        <Price price={listItem.ehPrice} />
+                    </ExpendList>
+                ))}
+            </>
+        </Expenditure>
+    );
 };
 
 export default DefaultList;

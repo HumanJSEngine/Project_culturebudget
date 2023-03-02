@@ -25,16 +25,19 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { useNavigate } from 'react-router';
 
 const List = () => {
-  const listType = useSelector((state: RootState) => state.setting?.listType);
-  const [postList, setPostList] = useState<BudgetData[]>([]);
-  const [postData, setPostData] = useState<BudgetData | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const memberNumber = GetMemberNumber();
+    const listType = useSelector((state: RootState) => state.setting?.listType);
+    const [postList, setPostList] = useState<BudgetData[]>([]);
+    const [postData, setPostData] = useState<BudgetData | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const memberNumber = GetMemberNumber();
   const navigate = useNavigate();
   const onWriteHandler = () => {
     navigate('/write');
   };
-  const getPostList = async () => {
+    const [month, setMonth] = useState(1);
+    const [year, setYear] = useState(2022);
+    
+    const getPostList = async () => {
     setIsLoading(true);
     try {
       const res = await getPost(memberNumber);
@@ -46,16 +49,28 @@ const List = () => {
       setIsLoading(false);
     }
   };
-  useEffect(() => {
-    getPostList();
-  }, []);
-  const openPost = (postData: BudgetData) => {
-    setPostData(postData);
-  };
-  const closePost = () => {
-    setPostData(null);
-  };
-  const list = () => {
+
+    const getPostList = async (year: number, month: number) => {
+        setIsLoading(true);
+        try {
+            const res = await getPost(year, month);
+            setPostList(res.list);
+            setIsLoading(false);
+        } catch (err) {
+            console.log(err);
+            setIsLoading(false);
+        }
+    };
+    useEffect(() => {
+        getPostList(year, month);
+    }, []);
+    const openPost = (postData: BudgetData) => {
+        setPostData(postData);
+    };
+    const closePost = () => {
+        setPostData(null);
+    };
+     const list = () => {
     if (postList.length === 0) {
       return <NoListItem onWriteHandler={onWriteHandler} />;
     } else {
@@ -67,9 +82,9 @@ const List = () => {
       }
     }
   };
-  return (
-    <Page>
-      <Header
+    return (
+        <Page>
+         <Header
         HeaderLeft={
           <Monthwrapper>
             <HeaderBackButton />
@@ -83,14 +98,22 @@ const List = () => {
           </HeaderButton>
         }
       />
-      <Container>
-        {isLoading && <Loading />}
-        <>{list()}</>
-      </Container>
-      <BottomNavigation />
-      <Post postData={postData} closePost={closePost} />
-    </Page>
-  );
+            <Header
+                month={month}
+                year={year}
+                setMonth={setMonth}
+                setYear={setYear}
+                getPostList={getPostList}
+            />
+            <Container>
+                {isLoading && <Loading />}
+                <>{list()}</>
+            </Container>
+            <WriteButton />
+            <BottomNavigation />
+            <Post postData={postData} closePost={closePost} />
+        </Page>
+    );
 };
 
 export default List;

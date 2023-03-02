@@ -4,25 +4,29 @@ import colors from '../../styles/Theme';
 import fonts from '../../styles/FontStyle';
 
 interface CategoryProps {
-  culture: string;
-  place: string;
-  payment: string;
+    culture: string;
+    place: string;
+    payment: string;
+    culture2: string;
 }
 
-const Category = ({ culture, place, payment }: CategoryProps) => {
-  return (
-    <Categories>
-      <li>
-        <span>{culture}</span>
-      </li>
-      <li>
-        <span>{place}</span>
-      </li>
-      <li>
-        <span>{payment}</span>
-      </li>
-    </Categories>
-  );
+const Category = ({ culture, culture2, place, payment }: CategoryProps) => {
+    return (
+        <Categories>
+            <li>
+                <span>{culture}</span>
+            </li>
+            <li>
+                <span>{culture2}</span>
+            </li>
+            <li>
+                <span>{place}</span>
+            </li>
+            <li>
+                <span>{payment}</span>
+            </li>
+        </Categories>
+    );
 };
 
 const Categories = styled.ul`
@@ -42,17 +46,17 @@ const Categories = styled.ul`
       white-space: nowrap;
       text-overflow: ellipsis;
       word-break: break-all;
-    }
-    &:nth-child(-n + 2)::after {
-      content: '';
-      position: absolute;
-      right: -4px;
-      top: 4px;
-      display: block;
-      width: 1px;
-      height: 6px;
-      background: ${colors.gray700};
-    }
+      }
+        &:nth-child(-n + 3)::after {
+            content: '';
+            position: absolute;
+            right: -4px;
+            top: 4px;
+            display: block;
+            width: 1px;
+            height: 11px;
+            background: ${colors.gray700};
+        }
   }
 `;
 export default Category;
