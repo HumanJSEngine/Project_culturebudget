@@ -1,4 +1,4 @@
-import { setCookie } from './Cookies';
+import { removeCookie, setCookie } from './Cookies';
 
 type tokenType = {
   accessToken: string;
@@ -11,4 +11,9 @@ export const setToken = (token: tokenType): void => {
     HttpOnly: true,
     Secure: true,
   });
+};
+
+export const removeToken = (): void => {
+  localStorage.removeItem('accessToken');
+  removeCookie('refreshToken');
 };

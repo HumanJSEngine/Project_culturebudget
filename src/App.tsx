@@ -20,6 +20,7 @@ import SetListType from './pages/SetListType';
 import PType from './components/setting/PType';
 import PrivateRoute from './PrivateRoute';
 import { RecoilRoot } from 'recoil';
+import UserInfo from './pages/UserInfo';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
                 element={<SettingCdclist />}
               />
               <Route path={'/write'} element={<Write />} />
+              <Route path={'/userinfo'} element={<UserInfo />} />
               <Route path={'*'} element={<Navigate to='/' />} />
             </Route>
           </Routes>
