@@ -26,28 +26,6 @@ import { RecoilRoot } from 'recoil';
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <Routes>
-
-
-        <Route path={'/'} element={<List />} />
-        <Route path={'/calendar'} element={<Calendar />} />
-        <Route path={'/stats'} element={<Stats />} />
-        <Route path={'/setting'} element={<Setting />} />
-        <Route path={'/setlisttype'} element={<SetListType />} />
-        <Route path={'/setpayment'} element={<SetPayment />} />
-        <Route path={'/ptype/:name'} element={<PType />} />
-        <Route path={'/setcategory'} element={<SetCategory />} />
-        <Route path={'/setcategory/:no/:name'} element={<SettingCdclist />} />
-        <Route path={'/write'} element={<Write />} />
-        <Route path={'*'} element={<Navigate to='/' />} />
-
-      </Routes>
-    </ThemeProvider>
-  );
-}
-
     <RecoilRoot>
       <Suspense fallback={<div>Loading...</div>}>
       <ThemeProvider theme={theme}>
