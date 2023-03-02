@@ -23,14 +23,14 @@ export const addPost = async (postData: PostParameter) => {
 };
 
 export const getPost = async (
-  memberNumber: number,
-  year: number,
-  month: number
+    memberNumber: number,
+    year: number,
+    month: number
 ) => {
-  const res = await apiClient.get(
-    `/api/expense/history/monthly/list2?member=${memberNumber}&dt=${year}-${month}&page=0&size=20`
-  );
-  return res.data;
+    const res = await apiClient.get(
+        `/api/expense/history/monthly/list2?member=${memberNumber}&dt=${year}-${month}&page=0&size=20`
+    );
+    return res.data;
 };
 
 // export const getPost = async (year, month) => {
@@ -39,3 +39,10 @@ export const getPost = async (
 //     );
 //     return res.data;
 // };
+
+export const getCal = async (memberNumber: number) => {
+    const res = await apiClient.get(
+        `http://haeji.mawani.kro.kr:8585/api/expense/page?ehMiSeq=${memberNumber}&page=0&size=20`
+    );
+    return res.data.list;
+};

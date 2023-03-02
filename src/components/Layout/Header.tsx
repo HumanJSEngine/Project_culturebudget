@@ -3,6 +3,7 @@ import colors from '../../styles/Theme';
 import { AiFillCaretLeft } from 'react-icons/ai';
 import { AiFillCaretRight } from 'react-icons/ai';
 import Monthwrapper from './Monthwrapper';
+import moment from 'moment';
 
 interface HeaderProps {
     month: number;
@@ -40,7 +41,8 @@ const Header = ({ month, year, setMonth, setYear, fetchData }: HeaderProps) => {
                     <AiFillCaretLeft />
                 </IconButton>
                 <Month>
-                    {year && year}년 {month && month}월
+                    {year !== moment().year() && `${year}년 `} {month && month}
+                    월
                 </Month>
                 <IconButton onClick={() => up()}>
                     <AiFillCaretRight />

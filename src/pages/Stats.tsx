@@ -56,6 +56,18 @@ const Stats = () => {
     //     fetchData(year, month);
     // }, [year, month]);
 
+    const result = statdata.reduce((ac, cu) => {
+        const index: number = ac.findIndex((item) => item.ccName === cu.ccName);
+        if (index >= 0) {
+            ac[index].ehPrice + cu.ehPrice;
+        } else if (index === -1) {
+            ac.push(cu);
+        }
+        return ac;
+    }, []);
+
+    console.log('분류', result);
+
     return (
         <Page>
             <Header
@@ -68,18 +80,18 @@ const Stats = () => {
             <Container>
                 <Exppermonth
                     month={month}
-                    monthprice={ConvertPercent(statdata)}
+                    monthprice={ConvertPercent(result)}
                 />
                 <Category>
                     <Monthprice ccSeq={'대분류'} />
-                    <Chart statdata={statdata} />
+                    <Chart statdata={result} />
                     <Expcatelist>
-                        {statdata.map((item: any, idx: number) => (
+                        {result.map((item: any, idx: number) => (
                             <List key={idx}>
                                 <Leftlist
                                     part={item.ccName}
                                     price={item.ehPrice}
-                                    percent={ConvertPercent(statdata)}
+                                    percent={ConvertPercent(result)}
                                     color={'#6C80FF'}
                                 />
                                 <Rightlist price={item.ehPrice} />
