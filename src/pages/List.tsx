@@ -105,7 +105,6 @@ const List = () => {
                 }
             />
             <Header
-                year={year}
                 setMonth={setMonth}
                 setYear={setYear}
                 getPostList={getPostList}

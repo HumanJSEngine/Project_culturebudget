@@ -1,7 +1,7 @@
 import { BudgetData } from '../types/Budget';
 
 interface Newstatdata {
-    id: string;
+    id: number;
     label: string;
     value: number;
     color: string;
@@ -18,9 +18,9 @@ const ConvertStatData = (items: Array<BudgetData>) => {
     let statdata: Newstatdata[] = [];
     let priceTotal: number = 0;
     items.forEach((item) => (priceTotal += item.ehPrice));
-    items.forEach((item) =>
+    items.forEach((item, idx) =>
         statdata.push({
-            id: item.ccName,
+            id: idx,
             label: item.ccName,
             value: Math.round((item.ehPrice / priceTotal) * 1000),
             color: color[Math.floor(Math.random() * 4 + 1)],
