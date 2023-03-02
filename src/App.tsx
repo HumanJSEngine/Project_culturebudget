@@ -21,6 +21,7 @@ import KakaoLogin from './pages/KakaoLogin';
 import SetListType from './pages/SetListType';
 import PType from './components/setting/PType';
 import PrivateRoute from './PrivateRoute';
+import { RecoilRoot } from 'recoil';
 
 function App() {
     return (

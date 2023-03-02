@@ -8,6 +8,7 @@ interface ChartProps {
 }
 
 const Chart = ({ statdata }: ChartProps) => {
+    console.log(statdata);
     console.log(ConvertStatData(statdata));
     return (
         <div style={{ width: '100%', height: '400px', objectFit: 'contain' }}>
@@ -61,15 +62,15 @@ const Chart = ({ statdata }: ChartProps) => {
                         anchor: 'bottom',
                         direction: 'row',
                         justify: false,
-                        translateX: 200,
-                        translateY: 54,
-                        itemsSpacing: 4,
-                        itemWidth: 67,
-                        itemHeight: 10,
+                        translateX: 0,
+                        translateY: 56,
+                        itemsSpacing: 0,
+                        itemWidth: 100,
+                        itemHeight: 18,
                         itemTextColor: '#999',
-                        itemDirection: 'right-to-left',
+                        itemDirection: 'left-to-right',
                         itemOpacity: 1,
-                        symbolSize: 24,
+                        symbolSize: 18,
                         symbolShape: 'circle',
                         effects: [
                             {

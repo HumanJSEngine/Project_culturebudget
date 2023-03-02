@@ -8,7 +8,7 @@ interface PTypelistProps {
     piSeq: number;
     piType: number;
     piName: string;
-    fetchData: () => void;
+    fetchData: (name: string) => Promise<Function>;
     name: string;
 }
 
@@ -19,7 +19,7 @@ const PTypelist = ({
     fetchData,
     name,
 }: PTypelistProps) => {
-    const delPlist = async (piSeq) => {
+    const delPlist = async (piSeq: number) => {
         try {
             const res = await axios.delete(
                 `http://haeji.mawani.kro.kr:8585/api/payment/delete/${piSeq}`

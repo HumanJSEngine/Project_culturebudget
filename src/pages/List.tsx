@@ -48,20 +48,22 @@ const List = () => {
         }
     };
 
-    const getPostList = async (year: number, month: number) => {
-        setIsLoading(true);
-        try {
-            const res = await getPost(year, month);
-            setPostList(res.list);
-            setIsLoading(false);
-        } catch (err) {
-            console.log(err);
-            setIsLoading(false);
-        }
-    };
+    // const getPostList = async (year: number, month: number) => {
+    //     setIsLoading(true);
+    //     try {
+    //         const res = await getPost(year, month);
+    //         setPostList(res.list);
+    //         setIsLoading(false);
+    //     } catch (err) {
+    //         console.log(err);
+    //         setIsLoading(false);
+    //     }
+    // };
+
     useEffect(() => {
-        getPostList(year, month);
+        getPostList();
     }, []);
+
     const openPost = (postData: BudgetData) => {
         setPostData(postData);
     };
@@ -73,7 +75,13 @@ const List = () => {
             return <NoListItem onWriteHandler={onWriteHandler} />;
         } else {
             if (listType === 'default') {
-                return <DefaultList list={postList} openPost={openPost} />;
+                return (
+                    <DefaultList
+                        list={postList}
+                        openPost={openPost}
+                        month={month}
+                    />
+                );
             }
             if (listType === 'gallery') {
                 return <GalleryList list={postList} openPost={openPost} />;
@@ -83,13 +91,13 @@ const List = () => {
     return (
         <Page>
             <Header
-                HeaderLeft={
-                    <Monthwrapper>
-                        <HeaderBackButton />
-                        <Month>2월</Month>
-                        <HeaderFrontButton />
-                    </Monthwrapper>
-                }
+                // HeaderLeft={
+                //     <Monthwrapper>
+                //         <HeaderBackButton />
+                //         <Month>2월</Month>
+                //         <HeaderFrontButton />
+                //     </Monthwrapper>
+                // }
                 HeaderRight={
                     <HeaderButton onClick={onWriteHandler}>
                         <AiOutlinePlus size={20} />
@@ -97,7 +105,6 @@ const List = () => {
                 }
             />
             <Header
-                month={month}
                 year={year}
                 setMonth={setMonth}
                 setYear={setYear}

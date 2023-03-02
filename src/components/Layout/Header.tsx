@@ -11,17 +11,9 @@ interface HeaderProps {
     setMonth: (month: number) => void;
     setYear: (year: number) => void;
     fetchData: (month: number, year: number) => Promise<Function>;
-    getPostList: (month: number, year: number) => Promise<Function>;
 }
 
-const Header = ({
-    month,
-    year,
-    setMonth,
-    setYear,
-    fetchData,
-    getPostList,
-}: HeaderProps) => {
+const Header = ({ month, year, setMonth, setYear, fetchData }: HeaderProps) => {
     const up = () => {
         let temp = month + 1;
         if (temp >= 13) {
@@ -30,7 +22,6 @@ const Header = ({
         }
         setMonth(temp);
         fetchData && fetchData(year, month);
-        getPostList && getPostList(year, month);
     };
 
     const down = () => {
@@ -41,7 +32,6 @@ const Header = ({
         }
         setMonth(temp);
         fetchData && fetchData(year, month);
-        getPostList && getPostList(year, month);
     };
 
     return (
