@@ -16,27 +16,24 @@ import { BudgetData } from '../types/Budget';
 import Post from './Post';
 import GetMemberNumber from '../utils/GetMemberNumber';
 import NoListItem from '../components/list/NoListItem';
-import Monthwrapper from '../components/Layout/Monthwrapper';
-import HeaderBackButton from '../components/ui/HeaderBackButton';
-import { Month } from '../components/Layout/Header';
-import HeaderFrontButton from '../components/ui/HeaderFrontButton';
 import HeaderButton from '../components/common/HeaderButton';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useNavigate } from 'react-router';
+import moment from 'moment';
+import MonthBar from '../components/common/MonthBar';
 
 const List = () => {
   const listType = useSelector((state: RootState) => state.setting?.listType);
   const [postList, setPostList] = useState<BudgetData[]>([]);
   const [postData, setPostData] = useState<BudgetData | null>(null);
+  const [month, setMonth] = useState(moment().month() + 1);
+  const [year, setYear] = useState(moment().year());
   const [isLoading, setIsLoading] = useState(false);
   const memberNumber = GetMemberNumber();
   const navigate = useNavigate();
   const onWriteHandler = () => {
     navigate('/write');
   };
-  const [month, setMonth] = useState(1);
-  const [year, setYear] = useState(2022);
-
   const getPostList = async () => {
     setIsLoading(true);
     try {
@@ -50,7 +47,7 @@ const List = () => {
   };
   useEffect(() => {
     getPostList();
-  }, []);
+  }, [year, month]);
   const openPost = (postData: BudgetData) => {
     setPostData(postData);
   };
@@ -76,24 +73,18 @@ const List = () => {
     <Page>
       <Header
         HeaderLeft={
-          <Monthwrapper>
-            <HeaderBackButton />
-            <Month>2월</Month>
-            <HeaderFrontButton />
-          </Monthwrapper>
+          <MonthBar
+            year={year}
+            month={month}
+            onChangeYear={setYear}
+            onChangeMonth={setMonth}
+          />
         }
         HeaderRight={
           <HeaderButton onClick={onWriteHandler}>
             <AiOutlinePlus size={20} />
           </HeaderButton>
         }
-      />
-      <Header
-        month={month}
-        year={year}
-        setMonth={setMonth}
-        setYear={setYear}
-        getPostList={getPostList}
       />
       <Container>
         {isLoading && <Loading />}
