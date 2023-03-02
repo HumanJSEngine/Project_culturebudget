@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import colors from '../styles/Theme';
 import Page from '../styles/Page';
@@ -10,7 +10,6 @@ import HeaderGoBackButton from '../components/common/HeaderGoBackButton';
 import Button from '../components/common/Button';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { memberLogin } from '../api/memberApi';
 import Popup from '../components/common/Popup/Popup';
 import usePopup from '../hooks/usePopup';
@@ -25,6 +24,7 @@ interface LoginFormVlaue {
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isOpenPopup, popupMessage, openPopup, closePopup } = usePopup();
   const {
     register,
@@ -38,13 +38,9 @@ const Login = () => {
     const loginData = { email, password };
     try {
       const res = await memberLogin(loginData);
-      console.log(res);
-      const { data, status, message } = res;
-      if (!status) {
-        openPopup(message);
-        return;
-      }
-      dispatch(loginUser(data));
+      const { memberSeq, email, nickname, token, message } = res;
+      dispatch(loginUser({ memberSeq, email, nickname }));
+      navigate('/');
     } catch (err) {
       console.log(err);
       openPopup('에러가 발생하였습니다. 다시 시도해주세요.');

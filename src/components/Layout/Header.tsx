@@ -75,7 +75,7 @@ const Block = styled.header`
     justify-content: space-between;
 `;
 
-const Month = styled.p`
+export const Month = styled.p`
     width: 100%;
     color: ${colors.gray900};
     text-align: center;

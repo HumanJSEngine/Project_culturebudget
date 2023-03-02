@@ -21,7 +21,8 @@ interface PostProps {
 const Post = ({ postData, closePost }: PostProps) => {
   const { openedModal, openModal, closeModal } = useModal();
   const handlePostMore = () => {
-    openModal(<ModalPost closeModal={closeModal} postSeq={1} />);
+    postData &&
+      openModal(<ModalPost closeModal={closeModal} postSeq={postData.ehSeq} />);
   };
   const { VITE_IMAGE_URL } = import.meta.env;
   return (
@@ -40,7 +41,10 @@ const Post = ({ postData, closePost }: PostProps) => {
           />
           <Container>
             <PhotoArea>
-              <img src={`${VITE_IMAGE_URL}/${postData.ehImgFile}`} alt='' />
+              <img
+                src={`${VITE_IMAGE_URL}/${postData.ehImgFile}`}
+                alt={postData.ehTitle}
+              />
               <ContentsInfo>
                 <ContentsInfoItem>{postData.ehLocation}</ContentsInfoItem>
                 <ContentsInfoItem>
@@ -50,7 +54,11 @@ const Post = ({ postData, closePost }: PostProps) => {
             </PhotoArea>
             <ContentsArea>
               <MainContents>
-                {/* <Category>{category} {'>'} {detailCategory}</Category> */}
+                <Category>
+                  {`${postData.ccName} ${
+                    postData.cdcName ? ` > ${postData.cdcName}` : ''
+                  }`}
+                </Category>
                 <Title>{postData.ehTitle}</Title>
                 <MainText>{postData.ehContent}</MainText>
               </MainContents>
@@ -58,7 +66,7 @@ const Post = ({ postData, closePost }: PostProps) => {
                 <BudgetPrice>{`${postData.ehPrice.toLocaleString()}원`}</BudgetPrice>
                 <BudgetInfo>
                   <BudgetInfoItem>{postData.ehStoreName}</BudgetInfoItem>
-                  <BudgetInfoItem>결제 수단</BudgetInfoItem>
+                  <BudgetInfoItem>{postData.piName}</BudgetInfoItem>
                 </BudgetInfo>
               </BudgetContents>
             </ContentsArea>

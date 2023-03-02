@@ -1,4 +1,5 @@
 export interface BudgetData {
+    miSeq:number;
     ehSeq: number;
     ehTitle: string;
     ehDate: string;
@@ -13,8 +14,11 @@ export interface BudgetData {
     ehContent?: string;
     ehImgFile: string;
     ccName: string;
-    cdcName: string;
+    cdcName?: string;
+    cdcSeq?: number;
     piName: string;
+    piType: number;
+
 }
 
 export interface PaymentData {
