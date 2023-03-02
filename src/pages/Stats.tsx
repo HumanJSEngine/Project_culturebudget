@@ -31,15 +31,17 @@ const Stats = () => {
 
     const [statdata, setStatdata] = useRecoilState(dataState);
     const [month, setMonth] = useState(2);
-    const [year, setYear] = useState(2022);
-
+    const [year, setYear] = useState(2023);
     const statdata2 = useRecoilValue(dataList);
+    let memberNum = GetMemberNumber();
+    console.log('유저번호', memberNum);
+    console.log('데이터', statdata);
 
     const fetchData: fetchData = useCallback(
         async (year: number, month: number) => {
             try {
                 const result = await axios.get(
-                    `http://haeji.mawani.kro.kr:8585/api/expense/history/monthly/list2?member=${GetMemberNumber}&dt=${year}-${month}&page=0&size=10`
+                    `http://haeji.mawani.kro.kr:8585/api/expense/history/monthly/list2?member=${memberNum}&dt=${year}-${month}&page=0&size=10`
                 );
                 setStatdata(result.data.list);
             } catch (error) {
@@ -72,10 +74,10 @@ const Stats = () => {
                     <Monthprice ccSeq={'대분류'} />
                     <Chart statdata={statdata} />
                     <Expcatelist>
-                        {statdata.map((item: any) => (
-                            <List key={item.ehSeq}>
+                        {statdata.map((item: any, idx: number) => (
+                            <List key={idx}>
                                 <Leftlist
-                                    part={item.ehTitle}
+                                    part={item.ccName}
                                     price={item.ehPrice}
                                     percent={ConvertPercent(statdata)}
                                     color={'#6C80FF'}
