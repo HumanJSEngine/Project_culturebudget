@@ -4,7 +4,7 @@ import colors from '../../styles/Theme';
 import fonts from '../../styles/FontStyle';
 
 interface ExppermonthProps {
-    month: string;
+    month: number;
     monthprice: number;
 }
 

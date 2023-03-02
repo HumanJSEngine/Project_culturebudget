@@ -16,9 +16,9 @@ import Header from '../components/Layout/Header';
 import useFetch from '../hooks/useFetch';
 import Container from '../styles/Container';
 import ConvertPercent from '../utils/ConvertPercent';
-import { BudgetData } from '../types/Budget';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { dataState } from '../state/atoms/DataState';
+import { categoryList, dataList } from '../state/selectors/Selector';
 
 const Stats = () => {
     // const statdata: Array<BudgetData> = useFetch(
@@ -31,12 +31,15 @@ const Stats = () => {
     const [year, setYear] = useState(2022);
     console.log(month);
     console.log(year);
+    console.log('리코일', statdata);
+    const statdata2 = useRecoilValue(dataList);
+    console.log(statdata2);
 
     const fetchData = useCallback(
         async (year: number, month: number) => {
             try {
                 const result = await axios.get(
-                    `http://haeji.mawani.kro.kr:8585/api/expense/history/monthly/list2?member=1&dt=${year}-${month}&page=0&size=10`
+                    `http://haeji.mawani.kro.kr:8585/api/expense/history/monthly/list10?member=1&dt=${year}-${month}&page=0&size=10`
                 );
                 setStatdata(result.data.list);
             } catch (error) {
@@ -63,13 +66,13 @@ const Stats = () => {
             <Container>
                 <Exppermonth
                     month={month}
-                    monthprice={ConvertPercent(statdata)}
+                    monthprice={ConvertPercent(statdata2)}
                 />
                 <Category>
                     <Monthprice ccSeq={'대분류'} />
                     <Chart statdata={statdata} />
                     <Expcatelist>
-                        {statdata.map((item) => (
+                        {statdata2.map((item: any) => (
                             <List key={item.ehSeq}>
                                 <Leftlist
                                     part={item.ehTitle}
