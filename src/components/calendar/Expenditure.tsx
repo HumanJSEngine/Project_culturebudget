@@ -7,11 +7,11 @@ const Expenditure = ({ children }) => {
 };
 
 const Expenditures = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 32px 0;
-    background: ${colors.white};
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 32px;
+  background: ${colors.white};
 `;
 
 export default Expenditure;

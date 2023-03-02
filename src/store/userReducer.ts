@@ -14,8 +14,8 @@ const userReducer = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     loginUser: (state, action) => {
-      const { memberSeq, nickname, email } = action.payload;
-      state.memberSeq = memberSeq;
+      const { seq, nickname, email } = action.payload;
+      state.memberSeq = seq;
       state.email = email;
       state.nickName = nickname;
     },
