@@ -1,6 +1,4 @@
-/** @format */
-
-import React,{Suspense} from 'react';
+import React from 'react';
 import './App.css';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -22,7 +20,6 @@ import KakaoLogin from './pages/KakaoLogin';
 import SetListType from './pages/SetListType';
 import PType from './components/setting/PType';
 import PrivateRoute from './PrivateRoute';
-import { RecoilRoot } from 'recoil';
 
 function App() {
   return (
@@ -56,4 +53,5 @@ function App() {
     </RecoilRoot>
   );
 }
+
 export default App;

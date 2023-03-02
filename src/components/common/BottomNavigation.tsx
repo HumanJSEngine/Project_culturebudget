@@ -14,6 +14,7 @@ const BottomNavigation = () => {
 
 const Box = styled.div`
   display: flex;
+  flex-shrink: 0;
   width: 100%;
   height: 56px;
 `;

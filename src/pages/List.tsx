@@ -16,81 +16,69 @@ import { BudgetData } from '../types/Budget';
 import Post from './Post';
 import GetMemberNumber from '../utils/GetMemberNumber';
 import NoListItem from '../components/list/NoListItem';
-import Monthwrapper from '../components/Layout/Monthwrapper';
-import HeaderBackButton from '../components/ui/HeaderBackButton';
-import { Month } from '../components/Layout/Header';
-import HeaderFrontButton from '../components/ui/HeaderFrontButton';
 import HeaderButton from '../components/common/HeaderButton';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { useNavigate } from 'react-router';
+import moment from 'moment';
+import MonthBar from '../components/common/MonthBar';
 
 const List = () => {
-    const listType = useSelector((state: RootState) => state.setting?.listType);
-    const [postList, setPostList] = useState<BudgetData[]>([]);
-    const [postData, setPostData] = useState<BudgetData | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const memberNumber = GetMemberNumber();
+  const listType = useSelector((state: RootState) => state.setting?.listType);
+  const [postList, setPostList] = useState<BudgetData[]>([]);
+  const [postData, setPostData] = useState<BudgetData | null>(null);
+  const [month, setMonth] = useState(moment().month() + 1);
+  const [year, setYear] = useState(moment().year());
+  const [isLoading, setIsLoading] = useState(false);
+  const memberNumber = GetMemberNumber();
   const navigate = useNavigate();
   const onWriteHandler = () => {
     navigate('/write');
   };
-    const [month, setMonth] = useState(1);
-    const [year, setYear] = useState(2022);
-    
-    const getPostList = async () => {
+  const getPostList = async () => {
     setIsLoading(true);
     try {
-      const res = await getPost(memberNumber);
-      const { currentPage, list, total, totalPage } = res;
-      setPostList(list);
+      const res = await getPost(memberNumber, year, month);
+      setPostList(res.list);
       setIsLoading(false);
     } catch (err) {
       console.log(err);
       setIsLoading(false);
     }
   };
-
-    const getPostList = async (year: number, month: number) => {
-        setIsLoading(true);
-        try {
-            const res = await getPost(year, month);
-            setPostList(res.list);
-            setIsLoading(false);
-        } catch (err) {
-            console.log(err);
-            setIsLoading(false);
-        }
-    };
-    useEffect(() => {
-        getPostList(year, month);
-    }, []);
-    const openPost = (postData: BudgetData) => {
-        setPostData(postData);
-    };
-    const closePost = () => {
-        setPostData(null);
-    };
-     const list = () => {
+  useEffect(() => {
+    getPostList();
+  }, [year, month]);
+  const openPost = (postData: BudgetData) => {
+    setPostData(postData);
+  };
+  const closePost = () => {
+    setPostData(null);
+  };
+  const list = () => {
     if (postList.length === 0) {
+      // if (!postList) {
       return <NoListItem onWriteHandler={onWriteHandler} />;
     } else {
       if (listType === 'default') {
-        return <DefaultList list={postList} openPost={openPost} />;
+        return (
+          <DefaultList list={postList} openPost={openPost} month={month} />
+        );
       }
       if (listType === 'gallery') {
         return <GalleryList list={postList} openPost={openPost} />;
       }
     }
   };
-    return (
-        <Page>
-         <Header
+  return (
+    <Page>
+      <Header
         HeaderLeft={
-          <Monthwrapper>
-            <HeaderBackButton />
-            <Month>2월</Month>
-            <HeaderFrontButton />
-          </Monthwrapper>
+          <MonthBar
+            year={year}
+            month={month}
+            onChangeYear={setYear}
+            onChangeMonth={setMonth}
+          />
         }
         HeaderRight={
           <HeaderButton onClick={onWriteHandler}>
@@ -98,22 +86,15 @@ const List = () => {
           </HeaderButton>
         }
       />
-            <Header
-                month={month}
-                year={year}
-                setMonth={setMonth}
-                setYear={setYear}
-                getPostList={getPostList}
-            />
-            <Container>
-                {isLoading && <Loading />}
-                <>{list()}</>
-            </Container>
-            <WriteButton />
-            <BottomNavigation />
-            <Post postData={postData} closePost={closePost} />
-        </Page>
-    );
+      <Container>
+        {isLoading && <Loading />}
+        <>{list()}</>
+      </Container>
+      <WriteButton />
+      <BottomNavigation />
+      <Post postData={postData} closePost={closePost} />
+    </Page>
+  );
 };
 
 export default List;
