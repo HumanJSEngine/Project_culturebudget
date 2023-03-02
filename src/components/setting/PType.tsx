@@ -9,7 +9,6 @@ import axios from 'axios';
 import { useParams } from 'react-router';
 import PTypelist from './PTypelist';
 import AddPayment from './AddPayment';
-import { useSelector } from 'react-redux';
 import HeaderGoBackButton from '../common/HeaderGoBackButton';
 
 const PType = () => {
@@ -41,7 +40,7 @@ const PType = () => {
 
     useEffect(() => {
         fetchData(name);
-    }, []);
+    }, [name]);
 
     return (
         <Page>

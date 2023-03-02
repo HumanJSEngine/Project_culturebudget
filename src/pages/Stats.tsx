@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import axios from 'axios';
 import BottomNavigation from '../components/common/BottomNavigation';
 import Page from '../styles/Page';
@@ -13,14 +13,15 @@ import Rightlist from '../components/stats/Rightlist';
 import Leftlist from '../components/stats/Leftlist';
 import Monthprice from '../components/stats/Monthprice';
 import Header from '../components/Layout/Header';
-import useFetch from '../hooks/useFetch';
 import Container from '../styles/Container';
 import ConvertPercent from '../utils/ConvertPercent';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { dataState } from '../state/atoms/DataState';
-import { categoryList, dataList } from '../state/selectors/Selector';
+import { dataList } from '../state/selectors/Selector';
+import GetMemberNumber from '../utils/GetMemberNumber';
 
-type fetchData = useCallback<() => Promise<void>, []>;
+// type fetchData =<() => Promise<void>, []>;
+type fetchData = (year: number, month: number) => Promise<void>;
 
 const Stats = () => {
     // const statdata: Array<BudgetData> = useFetch(
@@ -38,14 +39,14 @@ const Stats = () => {
         async (year: number, month: number) => {
             try {
                 const result = await axios.get(
-                    `http://haeji.mawani.kro.kr:8585/api/expense/history/monthly/list2?member=4&dt=${year}-${month}&page=0&size=10`
+                    `http://haeji.mawani.kro.kr:8585/api/expense/history/monthly/list2?member=${GetMemberNumber}&dt=${year}-${month}&page=0&size=10`
                 );
                 setStatdata(result.data.list);
             } catch (error) {
                 console.log(error);
             }
         },
-        []
+        [setStatdata]
     );
 
     // useEffect(() => {
