@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import fonts from '../../styles/FontStyle';
 import colors from '../../styles/Theme';
@@ -8,7 +7,7 @@ interface PTypelistProps {
     piSeq: number;
     piType: number;
     piName: string;
-    fetchData: (name: string) => Promise<Function>;
+    fetchData: (name: string) => Promise<void>;
     name: string;
 }
 

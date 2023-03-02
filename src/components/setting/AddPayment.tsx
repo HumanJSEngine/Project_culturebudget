@@ -32,7 +32,7 @@ const AddPayment = ({ children, name, fetchData }: AddPaymentProps) => {
 
         try {
             const res = await axios.post(
-                `http://haeji.mawani.kro.kr:8585/api/payment/add/user1@email.com`,
+                `http://haeji.mawani.kro.kr:8585/api/payment/add/user04@gmail.com`,
                 body
             );
             if (res.data.status) {

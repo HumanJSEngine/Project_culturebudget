@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/Theme';
 import { AiFillCaretLeft } from 'react-icons/ai';
@@ -10,7 +9,7 @@ interface HeaderProps {
     year: number;
     setMonth: (month: number) => void;
     setYear: (year: number) => void;
-    fetchData: (month: number, year: number) => Promise<Function>;
+    fetchData: (month: number, year: number) => Promise<void>;
 }
 
 const Header = ({ month, year, setMonth, setYear, fetchData }: HeaderProps) => {
