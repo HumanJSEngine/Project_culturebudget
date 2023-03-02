@@ -1,11 +1,8 @@
-import React from 'react';
 import BottomNavigation from '../components/common/BottomNavigation';
 import Page from '../styles/Page';
 import Container from '../styles/Container';
 import Header from '../components/common/Header';
-import WriteButton from '../components/common/WriteButton';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getPost } from '../api/postApi';
 import { useSelector } from 'react-redux';
 import DefaultList from '../components/list/DefaultList';
