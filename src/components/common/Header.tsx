@@ -1,9 +1,7 @@
-import { Component } from 'react';
 import styled from 'styled-components';
 import fonts from '../../styles/FontStyle';
 import colors from '../../styles/Theme';
 
-type titlePosition = 'left' | 'right';
 type border = boolean;
 
 interface HeaderProps {

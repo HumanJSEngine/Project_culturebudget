@@ -27,6 +27,7 @@ import Container from '../styles/Container';
 import fonts from '../styles/FontStyle';
 import Page from '../styles/Page';
 import colors from '../styles/Theme';
+import GetMemberNumber from '../utils/GetMemberNumber';
 
 export interface CategoryInfo {
   categorySeq: number;
@@ -59,8 +60,7 @@ const Write = () => {
   });
   const payPlaceRef = useRef<HTMLInputElement>(null);
   const [payPrice, setPayPrice] = useState<string>('');
-  const userInfo = useSelector((state: RootState) => state.user);
-
+  const memberNumber = GetMemberNumber();
   const { isOpenPopup, popupMessage, openPopup, closePopup } = usePopup();
   const { openedModal, openModal, closeModal } = useModal();
   const { isOpenCropper, openImageCropper, closeImageCropper } =
@@ -100,7 +100,7 @@ const Write = () => {
     const postData: PostParameter = {
       ehTitle: titleRef.current!.value,
       ehDate: timeRef.current,
-      ehMiSeq: 1,
+      ehMiSeq: memberNumber,
       ehPiSeq: paymentRef.current?.paymentSeq,
       ehPrice: Number(payPrice.replace(/,/g, '')),
       ehStoreName: payPlaceRef.current?.value,

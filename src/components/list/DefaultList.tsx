@@ -27,9 +27,9 @@ const DefaultList = ({ list, openPost }: DefaultListProps) => {
             <TitleList>
               <Title title={listItem.ehTitle} />
               <Category
-                culture={listItem.ehCcSeq}
+                culture={listItem.ccName}
                 place={listItem.ehStoreName}
-                payment={listItem.ehPiSeq}
+                payment={listItem.piName}
               ></Category>
             </TitleList>
             <Price price={listItem.ehPrice} />

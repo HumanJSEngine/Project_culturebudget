@@ -19,8 +19,11 @@ import colors from '../styles/Theme';
 import { BudgetData } from '../types/Budget';
 import { getPost } from '../api/postApi';
 import Loading from '../components/common/Loading';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store/store';
 
 const Calendar = () => {
+  const userInfo = useSelector((state: RootState) => state.user);
   const [result, setResult] = useState<BudgetData[]>([]);
   const [item, setItem] = useState<BudgetData[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -28,7 +31,7 @@ const Calendar = () => {
   const getFetchData = async () => {
     setIsLoading(true);
     try {
-      const res = await getPost();
+      const res = await getPost(userInfo.memberSeq);
       const { expense } = res;
       setResult(expense.slice(0, 5));
       const sliceData = expense.slice(5);

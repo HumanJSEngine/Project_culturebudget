@@ -42,9 +42,6 @@ const Register = () => {
       try {
         const res = await memberJoin(joinData);
         const { memberSeq, email, nickname, token, message } = res;
-        // const { accessToken } = token;
-        // dispatch(setAccessToken(accessToken));
-        // localStorage.setItem('accessToken', accessToken);
         dispatch(loginUser({ memberSeq, email, nickname }));
       } catch (err) {
         console.log(err);

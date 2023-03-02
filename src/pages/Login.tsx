@@ -38,12 +38,9 @@ const Login = () => {
     const loginData = { email, password };
     try {
       const res = await memberLogin(loginData);
-      // const { memberSeq, email, nickname, token, message } = res;
-      // const { accessToken } = token;
-      // dispatch(setAccessToken(accessToken));
-      // localStorage.setItem('accessToken', accessToken);
-      // dispatch(loginUser({ memberSeq, email, nickname }));
-      // navigate('/');
+      const { memberSeq, email, nickname, token, message } = res;
+      dispatch(loginUser({ memberSeq, email, nickname }));
+      navigate('/');
     } catch (err) {
       console.log(err);
       openPopup('에러가 발생하였습니다. 다시 시도해주세요.');

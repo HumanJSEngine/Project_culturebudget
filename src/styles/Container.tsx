@@ -6,7 +6,6 @@ const Container = styled.div`
   flex-direction: column;
   flex-grow: 1;
   width: 100%;
-  height: 100%;
   overflow-y: auto;
 `;
 

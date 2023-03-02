@@ -11,7 +11,6 @@ export const memberJoin = async (joinData: Omit<MemberData, 'memberSeq'>) => {
   };
   const res = await authClient.post('/api/members/join', params);
   const { token } = res.data;
-  console.log();
   setToken(token);
   return res.data;
 };
@@ -25,9 +24,9 @@ export const memberLogin = async (
     pwd: password,
   };
   const res = await authClient.post('/api/members/login', params);
-  console.log(res.headers.authorization);
-  // setToken(token);
-  // return res.data;
+  const { token } = res.data;
+  setToken(token);
+  return res.data;
 };
 
 export const kakaoLogin = async (code: string) => {

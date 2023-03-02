@@ -1,17 +1,19 @@
 export interface BudgetData {
+  miSeq: number;
   ehSeq: number;
-  ehTitle: string;
   ehDate: string;
-  ehMiSeq: number;
-  ehPiSeq: number;
-  ehPrice: number;
-  ehStoreName: string;
-  ehLocation: string;
-  ehBalance: number;
-  ehCcSeq: number;
-  ehCdcSeq: number;
+  ehTitle: string;
   ehContent?: string;
+  ehPrice: number;
+  ehLocation: string;
+  ehStoreName: string;
   ehImgFile: string;
+  ccSeq: number;
+  ccName: string;
+  cdcSeq?: number;
+  cdcName?: string;
+  piType: number;
+  piName: string;
 }
 
 export interface PaymentData {
