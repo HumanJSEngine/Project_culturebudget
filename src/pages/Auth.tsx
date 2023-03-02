@@ -26,9 +26,7 @@ const Page = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  max-width: 360px;
   height: 100%;
-  max-height: 800px;
 `;
 
 const ButtonArea = styled.div`

@@ -39,8 +39,9 @@ const BottomNavigationTab = ({ children, type }: BottomNavigationTabProps) => {
 const NavStyle = styled(NavLink)`
   display: flex;
   justify-content: center;
+  flex-shrink: 0;
   width: 25%;
-  height: 55px;
+  height: 56px;
   color: ${colors.gray600};
   border-top: 1px solid ${colors.gray600};
   background: ${colors.white};
