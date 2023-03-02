@@ -28,6 +28,7 @@ export const getPost = async (member: number) => {
     dt: '2023-02',
     size: 100,
   };
+  // const res = await apiClient.get('/api/expense/list');
   const res = await apiClient.get('/api/expense/history/monthly/list2', {
     params,
   });

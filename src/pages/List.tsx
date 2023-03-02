@@ -42,6 +42,7 @@ const List = () => {
     try {
       const res = await getPost(memberNumber);
       const { currentPage, list, total, totalPage } = res;
+      // setPostList(res.expense);
       setPostList(list);
       setIsLoading(false);
     } catch (err) {
@@ -72,6 +73,7 @@ const List = () => {
     };
      const list = () => {
     if (postList.length === 0) {
+      // if (!postList) {
       return <NoListItem onWriteHandler={onWriteHandler} />;
     } else {
       if (listType === 'default') {
