@@ -6,8 +6,6 @@ import fonts from '../../styles/FontStyle';
 
 interface DateListTotalProps {
   day: string;
-  //   month: number;
-  // list: BudgetData[];
   count: number;
   price: string;
 }
@@ -16,7 +14,6 @@ const DateListTotal = ({ day, price, count }: DateListTotalProps) => {
   return (
     <DateTotal>
       <span>
-        {/* {month}월 {list.length}건 */}
         {day}일 {count}건
       </span>
       {price ? <span>+{price}원</span> : <span>지출금액 없음</span>}

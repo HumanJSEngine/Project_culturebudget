@@ -1,18 +1,18 @@
+import moment from 'moment';
 import styled from 'styled-components';
 import colors from '../../styles/Theme';
-import Button from '../common/Button';
 
 interface NoListItemProps {
-  onWriteHandler: () => void;
+  year: number;
+  month: number;
 }
 
-const NoListItem = ({ onWriteHandler }: NoListItemProps) => {
+const NoListItem = ({ year, month }: NoListItemProps) => {
   return (
     <Box>
-      <span>내역이 없어요. 추가하시겠어요?</span>
-      <Button onClick={onWriteHandler} variant='transparent'>
-        네. 추가할게요.
-      </Button>
+      <span>
+        {year === moment().year() ? '' : `${year}년`} {month}월의 내역이 없어요.
+      </span>
     </Box>
   );
 };

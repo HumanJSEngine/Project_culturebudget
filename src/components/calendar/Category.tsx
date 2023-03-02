@@ -4,10 +4,10 @@ import colors from '../../styles/Theme';
 import fonts from '../../styles/FontStyle';
 
 interface CategoryProps {
-    culture: string;
-    place: string;
-    payment: string;
-    culture2: string | undefined;
+  culture: string;
+  place: string;
+  payment: string;
+  culture2: string | undefined;
 }
 
 const Category = ({ culture, culture2, place, payment }: CategoryProps) => {
@@ -27,30 +27,29 @@ const Category = ({ culture, culture2, place, payment }: CategoryProps) => {
 };
 
 const Categories = styled.ul`
-    display: flex;
-    position: relative;
-    max-width: 40%;
-    & span {
-      color: ${colors.gray700};
-      font: ${fonts.score12Regular};
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      word-break: break-all;
-    }
-    &::after {
-      content: '';
-      position: absolute;
-      right: -4px;
-      top: 4px;
-      display: block;
-      width: 1px;
-      height: 6px;
-      background: ${colors.gray700};
-    }
-    &:last-child::after {
-      display: none;
-    }
+  display: flex;
+  position: relative;
+  max-width: 40%;
+  & span {
+    color: ${colors.gray700};
+    font: ${fonts.score12Regular};
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: 4px;
+    display: block;
+    width: 1px;
+    height: 6px;
+    background: ${colors.gray700};
+  }
+  &:last-child::after {
+    display: none;
   }
 `;
 export default Category;
