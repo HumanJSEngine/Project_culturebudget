@@ -11,8 +11,8 @@
 
 <img src="https://user-images.githubusercontent.com/103413040/222675624-1f5126bf-04ed-423b-944d-294327ffab73.gif" width="300" height="600"/>
 
-
-<a href="https://www.figma.com/file/Z4r9QKgLsIGKaQmNEqkHw2/second-project?node-id=0%3A1&t=dh7wRQ8InFe6iQmL-1">### 와이어프레임</a>
+### 와이어프레임
+#### <a href="https://www.figma.com/file/Z4r9QKgLsIGKaQmNEqkHw2/second-project?node-id=0%3A1&t=dh7wRQ8InFe6iQmL-1">피그마</a>
 
 
 ## FE
