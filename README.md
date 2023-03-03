@@ -8,12 +8,13 @@
 
 [![My Skills](https://skillicons.dev/icons?i=html,css,js,react,ts,redux,styledcomponents,vite,git)](https://skillicons.dev)
 
-🎥 ### 시연영상
+
+### 시연영상
+
 ![가계부](https://user-images.githubusercontent.com/103413040/222675624-1f5126bf-04ed-423b-944d-294327ffab73.gif)
 
 
 ### 와이어프레임
-
 https://www.figma.com/file/Z4r9QKgLsIGKaQmNEqkHw2/second-project?node-id=0%3A1&t=dh7wRQ8InFe6iQmL-1
 
 
