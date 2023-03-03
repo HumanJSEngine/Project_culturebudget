@@ -71,7 +71,11 @@ const Write = () => {
 
   const handleCategorySelect = () => {
     openModal(
-      <ModalCategory closeModal={closeModal} categoryRef={categoryRef} />
+      <ModalCategory
+        closeModal={closeModal}
+        categoryRef={categoryRef}
+        memberNumber={memberNumber}
+      />
     );
   };
 
