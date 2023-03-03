@@ -17,170 +17,167 @@ import Container from '../styles/Container';
 import GetTotal from '../utils/GetTotal';
 import colors from '../styles/Theme';
 import { BudgetData } from '../types/Budget';
-import { getCal } from '../api/postApi';
+import { getPost } from '../api/postApi';
 import Loading from '../components/common/Loading';
 import GetMemberNumber from '../utils/GetMemberNumber';
+import moment from 'moment';
+import ChangeDay from '../utils/ChangeDay';
+import Post from './Post';
 
 const Calendar = () => {
-    const [result, setResult] = useState<BudgetData[]>([]);
-    const [item, setItem] = useState<BudgetData[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const memberNum = GetMemberNumber();
-    console.log(result);
-    const getFetchData = async () => {
-        setIsLoading(true);
-        try {
-            const res = await getCal(memberNum);
-            // const { expense } = res;
-            setResult(res);
-            const sliceData = res.slice(5);
-            setItem(sliceData);
-            setIsLoading(false);
-        } catch (err) {
-            console.log(err);
-            setIsLoading(false);
-        }
-        console.log(result);
-        // await axios
-        //   .get('http://haeji.mawani.kro.kr:8585/api/expense/list')
-        //   .then((res) => {
-        //     let response = res.data.expense;
-        //     setResult(response.slice(0, 5));
-        //     response = response.slice(5);
-        //     setItem(response);
-        //     setIsLoading(false);
-        //   });
-    };
+  const [result, setResult] = useState<BudgetData[]>([]);
+  const [postData, setPostData] = useState<BudgetData | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [value, setValue] = useState(new Date());
+  const [year, setYear] = useState<string>(moment().format('YYYY'));
+  const [month, setMonth] = useState<string>(moment().format('MM'));
+  const [day, setDay] = useState<string>(moment().format('DD'));
+  const memberNum = GetMemberNumber();
+  const getFetchData = async () => {
+    setIsLoading(true);
+    try {
+      const res = await getPost(memberNum, parseInt(year), parseInt(month));
+      setResult(res.list);
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
+  };
 
-    //   const _infiniteScroll = useCallback(() => {
-    //     let scrollHeight = Math.max(
-    //       document.documentElement.scrollHeight,
-    //       document.body.scrollHeight
-    //     );
-    //     let scrollTop = Math.max(
-    //       document.documentElement.scrollTop,
-    //       document.body.scrollTop
-    //     );
-    //     let clientHeight = document.documentElement.clientHeight;
-    //     scrollHeight -= 1000;
-    //     if (scrollTop + clientHeight >= scrollHeight && isLoading === false) {
-    //       fetchMoreData();
-    //     }
-    //   }, [isLoading]);
+  useEffect(() => {
+    moment(value).format('YYYY') !== year &&
+      setYear(moment(value).format('YYYY'));
+    moment(value).format('MM') !== month &&
+      setMonth(moment(value).format('MM'));
+    moment(value).format('DD') !== day && setDay(moment(value).format('DD'));
+  }, [value]);
 
-    useEffect(() => {
-        getFetchData();
-    }, []);
+  useEffect(() => {
+    getFetchData();
+  }, [year, month]);
 
-    //   useEffect(() => {
-    //     window.addEventListener('scroll', _infiniteScroll, true);
-    //     return () => {
-    //       window.removeEventListener('scroll', _infiniteScroll, true);
-    //     };
-    //   }, [_infiniteScroll]);
+  const filterList = result.filter(
+    (item) =>
+      moment(item.ehDate).format('YYYY-MM-DD') ===
+      moment(value).format('YYYY-MM-DD')
+  );
 
-    const fetchMoreData = async () => {
-        setIsLoading(true);
-        setResult(result.concat(item.slice(0, 10)));
-        setItem(item.slice(10));
+  const openPost = (postData: BudgetData) => {
+    setPostData(postData);
+  };
+  const closePost = () => {
+    setPostData(null);
+  };
 
-        if (item.length > 15) {
-            const timer = setTimeout(() => {
-                setResult(result.concat(item.slice(0, 20)));
-                setItem(item.slice(20));
-                if (item.length === 25) clearTimeout(timer);
-            }, 1000);
-        }
-        setIsLoading(false);
-    };
-
-    return (
-        <Page>
-            <Container>
-                <CalendarWrap>
-                    <ShowCalendar caldata={result} />
-                </CalendarWrap>
-                <Expenditure>
-                    <TotalBlock>
-                        <Datelist date={'1일'} weekday={'월요일'} />
-                        <Perdaytotal
-                            counts={result.length}
-                            amounts={GetTotal(result)}
-                        />
-                    </TotalBlock>
-                    {result.map(
-                        ({ ehSeq, ehTitle, ehCcSeq, ehLocation, ehPrice }) => (
-                            <ExpendList key={ehSeq}>
-                                <TitleList>
-                                    <Title title={ehTitle} />
-                                    <Category
-                                        culture={ehCcSeq}
-                                        place={ehLocation}
-                                        payment={ehCcSeq}
-                                    ></Category>
-                                </TitleList>
-                                <Price price={ehPrice} />
-                            </ExpendList>
-                        )
-                    )}
-                    <LoadingBox>{isLoading && <span>로딩중</span>}</LoadingBox>
-                </Expenditure>
-                {isLoading && <Loading />}
-            </Container>
-            <BottomNavigation />
-        </Page>
-    );
+  return (
+    <Page>
+      <Container>
+        <CalendarWrap>
+          <ShowCalendar
+            caldata={result}
+            calendarValue={value}
+            setCalendarValue={setValue}
+          />
+        </CalendarWrap>
+        <Expenditure>
+          <TotalBlock>
+            <Datelist date={day} weekday={ChangeDay(moment(value).day())} />
+            <Perdaytotal
+              counts={filterList.length}
+              amounts={GetTotal(filterList)}
+            />
+          </TotalBlock>
+          {filterList.map((item) => (
+            <ExpendList key={item.ehSeq} onClick={() => openPost(item)}>
+              <TitleList>
+                <Title title={item.ehTitle} />
+                <Category
+                  culture={item.ccName}
+                  place={item.ehLocation}
+                  payment={item.piName}
+                ></Category>
+              </TitleList>
+              <Price price={item.ehPrice} />
+            </ExpendList>
+          ))}
+          {isLoading && (
+            <LoadingBox>
+              {' '}
+              <span>로딩중</span>
+            </LoadingBox>
+          )}
+        </Expenditure>
+        {isLoading && <Loading />}
+      </Container>
+      <BottomNavigation />
+      <Post postData={postData} closePost={closePost} />s
+    </Page>
+  );
 };
 
 const TotalBlock = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    margin: 0 16px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid ${colors.gray200};
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0 16px;
+  padding-top: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid ${colors.gray200};
 `;
 const LoadingBox = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 52px;
 `;
 
 const CalendarWrap = styled.div`
-    .react-calendar {
-        width: 100%;
-        line-height: 1.25em;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        border: none;
-        .react-calendar__navigation {
-            width: 100%;
-            height: 44px;
-            padding: 0 16px;
-            & .react-calendar__navigation__arrow {
-                font-size: 24px;
-            }
-        }
-        .react-calendar__viewContainer {
-            width: 100%;
-            padding: 0 16px;
-            .react-calendar__month-view {
-                .react-calendar__month-view__days {
-                    .react-calendar__tile {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: flex-start;
-                        align-items: center;
-                        height: 52px;
-                    }
-                }
-            }
-        }
+  margin-bottom: 20px;
+  .react-calendar {
+    width: 100%;
+    line-height: 1.25em;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    .react-calendar__navigation {
+      width: 100%;
+      height: 44px;
+      padding: 0 16px;
+      & .react-calendar__navigation__arrow {
+        font-size: 24px;
+      }
     }
+    .react-calendar__viewContainer {
+      width: 100%;
+      padding: 0 16px;
+      .react-calendar__month-view {
+        .react-calendar__month-view__days {
+          .react-calendar__tile {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 52px;
+          }
+          .react-calendar__tile--now {
+            background: ${colors.gray200};
+          }
+          .react-calendar__tile--active {
+            background: ${colors.primary};
+            & div {
+              & span {
+                color: ${colors.white};
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 `;
 export default Calendar;

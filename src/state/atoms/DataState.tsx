@@ -1,6 +1,7 @@
-import { atom, selector } from 'recoil';
+import { atom } from 'recoil';
+import { BudgetData } from '../../types/Budget';
 
-export const dataState = atom({
+export const dataState = atom<BudgetData[]>({
   key: 'dataState',
   default: [],
 });

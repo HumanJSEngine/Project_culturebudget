@@ -11,9 +11,9 @@ import TitleList from '../calendar/TitleList';
 import DateListTotal from './DateListTotal';
 
 interface DefaultListProps {
-    list: BudgetData[];
-    openPost: (postData: BudgetData) => void;
-    month: number;
+  list: BudgetData[];
+  openPost: (postData: BudgetData) => void;
+  month: number;
 }
 
 interface ListFilterData {
@@ -53,7 +53,6 @@ const DefaultList = ({ list, openPost }: DefaultListProps) => {
             <Title title={item.ehTitle} />
             <Category
               culture={item.ccName}
-              culture2={item.cdcName}
               place={item.ehLocation}
               payment={item.piName}
             ></Category>

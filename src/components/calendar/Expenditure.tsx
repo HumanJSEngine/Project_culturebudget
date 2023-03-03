@@ -7,6 +7,7 @@ type ExpenditureProps = {
 };
 const Expenditure = ({ children }: ExpenditureProps) => {
     return <Expenditures>{children}</Expenditures>;
+
 };
 
 const Expenditures = styled.div`
