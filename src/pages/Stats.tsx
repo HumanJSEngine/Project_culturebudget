@@ -49,6 +49,7 @@ const Stats = () => {
     fetchData(year, month);
   }, [fetchData, year, month]);
 
+
   const result = statdata.reduce((ac: BudgetData[], cu) => {
     const index: number = ac.findIndex((item) => item.ccName === cu.ccName);
     if (index >= 0) {
@@ -94,6 +95,7 @@ const Stats = () => {
       <BottomNavigation />
     </Page>
   );
+
 };
 
 export default Stats;
