@@ -164,6 +164,17 @@ const CalendarWrap = styled.div`
             align-items: center;
             height: 52px;
           }
+          .react-calendar__tile--now {
+            background: ${colors.gray200};
+          }
+          .react-calendar__tile--active {
+            background: ${colors.primary};
+            & div {
+              & span {
+                color: ${colors.white};
+              }
+            }
+          }
         }
       }
     }
