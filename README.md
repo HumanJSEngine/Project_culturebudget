@@ -15,7 +15,7 @@
 [![My Skills](https://skillicons.dev/icons?i=html,css,js,react,ts,redux,styledcomponents,vite,git,vscode)](https://skillicons.dev)
 
 #### Backend
-[![My Skills](https://skillicons.dev/icons?i=spring, java, mysql, git)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=html,css,js,react,ts,redux,styledcomponents,vite,git,vscode)](https://skillicons.dev)
 
 ### 시연영상
 
