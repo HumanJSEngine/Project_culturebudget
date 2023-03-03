@@ -101,17 +101,11 @@ const Calendar = () => {
               <Price price={item.ehPrice} />
             </ExpendList>
           ))}
-          {isLoading && (
-            <LoadingBox>
-              {' '}
-              <span>로딩중</span>
-            </LoadingBox>
-          )}
         </Expenditure>
         {isLoading && <Loading />}
       </Container>
       <BottomNavigation />
-      <Post postData={postData} closePost={closePost} />s
+      <Post postData={postData} closePost={closePost} />
     </Page>
   );
 };
@@ -124,13 +118,6 @@ const TotalBlock = styled.div`
   padding-top: 32px;
   padding-bottom: 16px;
   border-bottom: 1px solid ${colors.gray200};
-`;
-const LoadingBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 52px;
 `;
 
 const CalendarWrap = styled.div`

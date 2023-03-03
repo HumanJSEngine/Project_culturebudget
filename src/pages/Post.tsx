@@ -55,7 +55,7 @@ const Post = ({ postData, closePost }: PostProps) => {
             <ContentsArea>
               <MainContents>
                 <Category>
-                  {`${postData.ccName} ${
+                  {`${postData.ccName ? postData.ccName : '알수없음'} ${
                     postData.cdcName ? ` > ${postData.cdcName}` : ''
                   }`}
                 </Category>
@@ -66,7 +66,9 @@ const Post = ({ postData, closePost }: PostProps) => {
                 <BudgetPrice>{`${postData.ehPrice.toLocaleString()}원`}</BudgetPrice>
                 <BudgetInfo>
                   <BudgetInfoItem>{postData.ehStoreName}</BudgetInfoItem>
-                  <BudgetInfoItem>{postData.piName}</BudgetInfoItem>
+                  <BudgetInfoItem>
+                    {postData.piName ? postData.piName : '알수없음'}
+                  </BudgetInfoItem>
                 </BudgetInfo>
               </BudgetContents>
             </ContentsArea>

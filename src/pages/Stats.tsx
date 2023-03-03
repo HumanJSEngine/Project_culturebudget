@@ -25,89 +25,81 @@ import { BudgetData } from '../types/Budget';
 type fetchData = (year: number, month: number) => Promise<void>;
 
 const Stats = () => {
-    // const statdata: Array<BudgetData> = useFetch(
-    //     'get',
-    //     'http://haeji.mawani.kro.kr:8585/api/expense/list'
-    // );
+  // const statdata: Array<BudgetData> = useFetch(
+  //     'get',
+  //     'http://haeji.mawani.kro.kr:8585/api/expense/list'
+  // );
 
-    const [statdata, setStatdata] = useState<BudgetData[]>([]);
-    const [month, setMonth] = useState(3);
-    const [year, setYear] = useState(2023);
+  const [statdata, setStatdata] = useState<BudgetData[]>([]);
+  const [month, setMonth] = useState(3);
+  const [year, setYear] = useState(2023);
 
-    // const statdata2 = useRecoilValue(dataList);
-    let memberNum = GetMemberNumber();
-    console.log('유저번호', memberNum);
-    console.log('데이터', statdata);
+  // const statdata2 = useRecoilValue(dataList);
+  let memberNum = GetMemberNumber();
+  console.log('유저번호', memberNum);
+  console.log('데이터', statdata);
 
-    const fetchData: fetchData = useCallback(
-        async (year: number, month: number) => {
-            try {
-                const result = await axios.get(
-                    `http://haeji.mawani.kro.kr:8585/api/expense/history/monthly/list2?member=${memberNum}&dt=${year}-${month}&page=0&size=10`
-                );
-                setStatdata(result.data.list);
-            } catch (error) {
-                console.log(error);
-            }
-        },
-        [memberNum, setStatdata]
-    );
+  const fetchData: fetchData = useCallback(
+    async (year: number, month: number) => {
+      try {
+        const result = await axios.get(
+          `http://haeji.mawani.kro.kr:8585/api/expense/history/monthly/list2?member=${memberNum}&dt=${year}-${month}&page=0&size=10`
+        );
+        setStatdata(result.data.list);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    [memberNum, setStatdata]
+  );
 
-    useEffect(() => {
-        console.log('month: ', month);
-        fetchData(year, month);
-    }, [fetchData, year, month]);
+  const result = statdata.reduce((ac: BudgetData[], cu) => {
+    const index: number = ac.findIndex((item) => item.ccName === cu.ccName);
+    if (index >= 0) {
+      ac[index].ehPrice += cu.ehPrice;
+    } else if (index === -1) {
+      ac.push(cu);
+    }
+    return ac;
+  }, []);
 
-    const result = statdata.reduce((ac: BudgetData[], cu) => {
-        const index: number = ac.findIndex((item) => item.ccName === cu.ccName);
-        if (index >= 0) {
-            ac[index].ehPrice += cu.ehPrice;
-        } else if (index === -1) {
-            ac.push(cu);
-        }
-        return ac;
-    }, []);
+  console.log('분류', result);
 
-    console.log('분류', result);
-
-    return (
-        <Page>
-            <Header
-                month={month}
-                year={year}
-                setMonth={setMonth}
-                setYear={setYear}
-                fetchData={fetchData}
-            />
-            <Container>
-                <Exppermonth
-                    month={month}
-                    monthprice={ConvertPercent(result)}
-                />
-                <Category>
-                    <Monthprice ccSeq={'대분류'} />
-                    <Chart statdata={result} />
-                    <Expcatelist>
-                        {result.map((item: any, idx: number) => {
-                            return (
-                                <List key={idx}>
-                                    <Leftlist
-                                        part={item.ccName}
-                                        price={item.ehPrice}
-                                        percent={ConvertPercent(result)}
-                                        color={'#6C80FF'}
-                                    />
-                                    <Rightlist price={item.ehPrice} />
-                                </List>
-                            );
-                        })}
-                    </Expcatelist>
-                </Category>
-                {/* {isLoading && <Loading />} */}
-            </Container>
-            <BottomNavigation />
-        </Page>
-    );
+  return (
+    <Page>
+      <Header
+        month={month}
+        year={year}
+        setMonth={setMonth}
+        setYear={setYear}
+        fetchData={fetchData}
+      />
+      <Container>
+        <Exppermonth month={month} monthprice={ConvertPercent(result)} />
+        <Category>
+          <Monthprice ccSeq={'대분류'} />
+          <Chart statdata={result} />
+          <Expcatelist>
+            {result.map((item: any, idx: number) => {
+              return (
+                <List key={idx}>
+                  <Leftlist
+                    part={item.ccName}
+                    price={item.ehPrice}
+                    percent={ConvertPercent(result)}
+                    color={'#6C80FF'}
+                  />
+                  <Rightlist price={item.ehPrice} />
+                </List>
+              );
+            })}
+          </Expcatelist>
+        </Category>
+        {/* {isLoading && <Loading />} */}
+      </Container>
+      <BottomNavigation />
+    </Page>
+  );
 };
 
 export default Stats;
