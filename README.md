@@ -7,11 +7,11 @@
 
 ### 프로젝트 기능
 <hr/>
-
-### 감성 지출내역 기록
-<hr/>
-+ 위치, 장소, 날짜별
-+ 
+#### 로그인
+#### 지출내역 
+#### 캘린더, 통계
+#### 카테고리 대분류, 소분류 추가
+#### 글 작성, 모달, 팝업 
 
 ### 기술스택
 <hr/>
@@ -29,6 +29,7 @@
 
 ### 와이어프레임
 <hr/>
+
 #### <a href="https://www.figma.com/file/Z4r9QKgLsIGKaQmNEqkHw2/second-project?node-id=0%3A1&t=dh7wRQ8InFe6iQmL-1">피그마</a>
 
 
