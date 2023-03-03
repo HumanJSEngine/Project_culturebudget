@@ -31,7 +31,7 @@
 #### <a href="https://www.figma.com/file/Z4r9QKgLsIGKaQmNEqkHw2/second-project?node-id=0%3A1&t=dh7wRQ8InFe6iQmL-1">피그마</a>
 
 
-### Team
+# Team
 
 ### FE
 #### 배민준
