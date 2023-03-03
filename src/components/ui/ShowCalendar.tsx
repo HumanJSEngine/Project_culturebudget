@@ -37,7 +37,6 @@ const ShowCalendar = ({ caldata }: ShowCalendarProps) => {
         return acc;
     }, []);
 
-    console.log('가공', result);
     return (
         <div>
             {result.length !== 0 && (

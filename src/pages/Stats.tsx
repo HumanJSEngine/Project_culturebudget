@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import BottomNavigation from '../components/common/BottomNavigation';
 import Page from '../styles/Page';
@@ -15,10 +15,11 @@ import Monthprice from '../components/stats/Monthprice';
 import Header from '../components/Layout/Header';
 import Container from '../styles/Container';
 import ConvertPercent from '../utils/ConvertPercent';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { dataState } from '../state/atoms/DataState';
-import { dataList } from '../state/selectors/Selector';
+// import { useRecoilState, useRecoilValue } from 'recoil';
+// import { dataState } from '../state/atoms/DataState';
+// import { dataList } from '../state/selectors/Selector';
 import GetMemberNumber from '../utils/GetMemberNumber';
+import { BudgetData } from '../types/Budget';
 
 // type fetchData =<() => Promise<void>, []>;
 type fetchData = (year: number, month: number) => Promise<void>;
@@ -29,10 +30,11 @@ const Stats = () => {
     //     'http://haeji.mawani.kro.kr:8585/api/expense/list'
     // );
 
-    const [statdata, setStatdata] = useRecoilState(dataState);
-    const [month, setMonth] = useState(2);
+    const [statdata, setStatdata] = useState<BudgetData[]>([]);
+    const [month, setMonth] = useState(3);
     const [year, setYear] = useState(2023);
-    const statdata2 = useRecoilValue(dataList);
+
+    // const statdata2 = useRecoilValue(dataList);
     let memberNum = GetMemberNumber();
     console.log('유저번호', memberNum);
     console.log('데이터', statdata);
@@ -48,18 +50,18 @@ const Stats = () => {
                 console.log(error);
             }
         },
-        [setStatdata]
+        [memberNum, setStatdata]
     );
 
-    // useEffect(() => {
-    //     console.log('month: ', month);
-    //     fetchData(year, month);
-    // }, [year, month]);
+    useEffect(() => {
+        console.log('month: ', month);
+        fetchData(year, month);
+    }, [fetchData, year, month]);
 
-    const result = statdata.reduce((ac, cu) => {
+    const result = statdata.reduce((ac: BudgetData[], cu) => {
         const index: number = ac.findIndex((item) => item.ccName === cu.ccName);
         if (index >= 0) {
-            ac[index].ehPrice + cu.ehPrice;
+            ac[index].ehPrice += cu.ehPrice;
         } else if (index === -1) {
             ac.push(cu);
         }
@@ -86,17 +88,19 @@ const Stats = () => {
                     <Monthprice ccSeq={'대분류'} />
                     <Chart statdata={result} />
                     <Expcatelist>
-                        {result.map((item: any, idx: number) => (
-                            <List key={idx}>
-                                <Leftlist
-                                    part={item.ccName}
-                                    price={item.ehPrice}
-                                    percent={ConvertPercent(result)}
-                                    color={'#6C80FF'}
-                                />
-                                <Rightlist price={item.ehPrice} />
-                            </List>
-                        ))}
+                        {result.map((item: any, idx: number) => {
+                            return (
+                                <List key={idx}>
+                                    <Leftlist
+                                        part={item.ccName}
+                                        price={item.ehPrice}
+                                        percent={ConvertPercent(result)}
+                                        color={'#6C80FF'}
+                                    />
+                                    <Rightlist price={item.ehPrice} />
+                                </List>
+                            );
+                        })}
                     </Expcatelist>
                 </Category>
                 {/* {isLoading && <Loading />} */}
