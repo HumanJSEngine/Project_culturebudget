@@ -42,7 +42,7 @@ const SettingCdclist = () => {
         try {
             await axios
                 .put(
-                    'http://haeji.mawani.kro.kr:8585/api/category/detail/input',
+                    'http://haeji.mawani.kro.kr:8585/api/fix/category/detail/input',
                     body
                 )
                 .then((res) => {
