@@ -25,16 +25,10 @@ import { BudgetData } from '../types/Budget';
 type fetchData = (year: number, month: number) => Promise<void>;
 
 const Stats = () => {
-    // const statdata: Array<BudgetData> = useFetch(
-    //     'get',
-    //     'http://haeji.mawani.kro.kr:8585/api/expense/list'
-    // );
-
     const [statdata, setStatdata] = useState<BudgetData[]>([]);
     const [month, setMonth] = useState(3);
     const [year, setYear] = useState(2023);
 
-    // const statdata2 = useRecoilValue(dataList);
     let memberNum = GetMemberNumber();
     console.log('유저번호', memberNum);
     console.log('데이터', statdata);
@@ -67,8 +61,6 @@ const Stats = () => {
         }
         return ac;
     }, []);
-
-    console.log('분류', result);
 
     return (
         <Page>
