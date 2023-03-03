@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ChangeDay = (momentDay: number) => {
   let day: string;
   switch (momentDay) {

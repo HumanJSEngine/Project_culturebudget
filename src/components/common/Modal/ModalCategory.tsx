@@ -14,6 +14,7 @@ import ModalListItem, {
 interface ModalCategoryProps {
   closeModal: () => void;
   categoryRef: MutableRefObject<CategoryInfo>;
+  memberNumber: number;
 }
 
 type CategoryViewType = 'default' | 'detail';
@@ -27,7 +28,11 @@ interface ModalDetailCategoryInfo {
   cdcName: string;
 }
 
-const ModalCategory = ({ closeModal, categoryRef }: ModalCategoryProps) => {
+const ModalCategory = ({
+  closeModal,
+  categoryRef,
+  memberNumber,
+}: ModalCategoryProps) => {
   const [categoryView, switchCategoryView] =
     useState<CategoryViewType>('default');
   const [categoryList, setCategoryList] = useState<ModalCategoryInfo[]>([]);
@@ -38,7 +43,7 @@ const ModalCategory = ({ closeModal, categoryRef }: ModalCategoryProps) => {
   const getCategoryList = async () => {
     switchCategoryView('default');
     try {
-      const res = await getCategory();
+      const res = await getCategory(memberNumber);
       const { cclist, message, status } = res;
       if (!status) {
         return console.log(message);

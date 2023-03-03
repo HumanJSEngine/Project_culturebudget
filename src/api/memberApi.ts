@@ -10,8 +10,6 @@ export const memberJoin = async (joinData: Omit<MemberData, 'memberSeq'>) => {
     nickname: nickName,
   };
   const res = await authClient.post('/api/members/join', params);
-  // const { token } = res.data;
-  // setToken(token);
   return res.data;
 };
 

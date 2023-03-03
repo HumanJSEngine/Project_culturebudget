@@ -1,16 +1,8 @@
 import apiClient from './apiClient';
 
-export const getCategory = async () => {
-  const res = await apiClient.get('/api/category/list');
+export const getCategory = async (memberNum: number) => {
+  const res = await apiClient.get(`/api/fix/category/list?no=${memberNum}`);
   return res.data;
-};
-
-export const addCategory = async (categoryName: string) => {
-  // const params = {
-  //   ccName: categoryName,
-  // };
-  // const res = await apiClient.put('/api/category/input', { params });
-  // return res.data;
 };
 
 export const editCategory = async (

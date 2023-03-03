@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import BottomNavigation from '../components/common/BottomNavigation';
 import ShowCalendar from '../components/ui/ShowCalendar';
@@ -75,56 +75,44 @@ const Calendar = () => {
         setPostData(null);
     };
 
-    return (
-        <Page>
-            <Container>
-                <CalendarWrap>
-                    <ShowCalendar
-                        caldata={result}
-                        calendarValue={value}
-                        setCalendarValue={setValue}
-                    />
-                </CalendarWrap>
-                <Expenditure>
-                    <TotalBlock>
-                        <Datelist
-                            date={day}
-                            weekday={ChangeDay(moment(value).day())}
-                        />
-                        <Perdaytotal
-                            counts={filterList.length}
-                            amounts={GetTotal(filterList)}
-                        />
-                    </TotalBlock>
-                    {filterList.map((item) => (
-                        <ExpendList
-                            key={item.ehSeq}
-                            onClick={() => openPost(item)}
-                        >
-                            <TitleList>
-                                <Title title={item.ehTitle} />
-                                <Category
-                                    culture={item.ccName}
-                                    place={item.ehLocation}
-                                    payment={item.piName}
-                                ></Category>
-                            </TitleList>
-                            <Price price={item.ehPrice} />
-                        </ExpendList>
-                    ))}
-                    {isLoading && (
-                        <LoadingBox>
-                            {' '}
-                            <span>로딩중</span>
-                        </LoadingBox>
-                    )}
-                </Expenditure>
-                {isLoading && <Loading />}
-            </Container>
-            <BottomNavigation />
-            <Post postData={postData} closePost={closePost} />
-        </Page>
-    );
+  return (
+    <Page>
+      <Container>
+        <CalendarWrap>
+          <ShowCalendar
+            caldata={result}
+            calendarValue={value}
+            setCalendarValue={setValue}
+          />
+        </CalendarWrap>
+        <Expenditure>
+          <TotalBlock>
+            <Datelist date={day} weekday={ChangeDay(moment(value).day())} />
+            <Perdaytotal
+              counts={filterList.length}
+              amounts={GetTotal(filterList)}
+            />
+          </TotalBlock>
+          {filterList.map((item) => (
+            <ExpendList key={item.ehSeq} onClick={() => openPost(item)}>
+              <TitleList>
+                <Title title={item.ehTitle} />
+                <Category
+                  culture={item.ccName}
+                  place={item.ehLocation}
+                  payment={item.piName}
+                ></Category>
+              </TitleList>
+              <Price price={item.ehPrice} />
+            </ExpendList>
+          ))}
+        </Expenditure>
+        {isLoading && <Loading />}
+      </Container>
+      <BottomNavigation />
+      <Post postData={postData} closePost={closePost} />
+    </Page>
+  );
 };
 
 const TotalBlock = styled.div`
@@ -135,13 +123,6 @@ const TotalBlock = styled.div`
     padding-top: 32px;
     padding-bottom: 16px;
     border-bottom: 1px solid ${colors.gray200};
-`;
-const LoadingBox = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 52px;
 `;
 
 const CalendarWrap = styled.div`

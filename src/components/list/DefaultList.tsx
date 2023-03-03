@@ -42,7 +42,6 @@ const DefaultList = ({ list, openPost }: DefaultListProps) => {
       component.push(
         <DateListTotal
           key={key}
-          count={filterList[key].length}
           price={GetTotal(filterList[key]).toLocaleString()}
           day={moment(key).format('D')}
         />

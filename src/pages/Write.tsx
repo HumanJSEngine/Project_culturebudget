@@ -1,6 +1,5 @@
 import moment from 'moment';
-import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { addPost, PostParameter } from '../api/postApi';
@@ -8,6 +7,7 @@ import Header from '../components/common/Header';
 import HeaderButton from '../components/common/HeaderButton';
 import HeaderCloseButton from '../components/common/HeaderCloseButton';
 import ImageCropper from '../components/common/ImageCropper';
+import Loading from '../components/common/Loading';
 import Modal from '../components/common/Modal/Modal';
 import ModalCategory from '../components/common/Modal/ModalCategory';
 import ModalDate from '../components/common/Modal/ModalDate';
@@ -22,7 +22,6 @@ import WriteFormTitle from '../components/write/WriteFormTitle';
 import useImageCropper from '../hooks/useImageCropper';
 import useModal from '../hooks/useModal';
 import usePopup from '../hooks/usePopup';
-import { RootState } from '../store/store';
 import Container from '../styles/Container';
 import fonts from '../styles/FontStyle';
 import Page from '../styles/Page';
@@ -72,7 +71,11 @@ const Write = () => {
 
   const handleCategorySelect = () => {
     openModal(
-      <ModalCategory closeModal={closeModal} categoryRef={categoryRef} />
+      <ModalCategory
+        closeModal={closeModal}
+        categoryRef={categoryRef}
+        memberNumber={memberNumber}
+      />
     );
   };
 
@@ -232,6 +235,7 @@ const Write = () => {
             setValue={setPayPrice}
           />
         </WriteForm>
+        {isLoading && <Loading />}
       </Container>
       <Modal openedModal={openedModal} closeModal={closeModal} />
       <Popup
