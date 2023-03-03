@@ -1,7 +1,13 @@
-# project_budget
-가계부 프로젝트
+## 문화가계부 프로젝트 소개
 
-[![My Skills](https://skillicons.dev/icons?i=js,html,css,wasm)](https://skillicons.dev)
+
+
+
+## 기술스택
+
+[![My Skills](https://skillicons.dev/icons?i=html,css,js,react,ts,redux,styledcomponents,vite,git)](https://skillicons.dev)
+
+
 
 ## FE
 ### 배민준
