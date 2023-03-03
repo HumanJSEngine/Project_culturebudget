@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import fonts from '../../styles/FontStyle';
 import colors from '../../styles/Theme';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 
 interface AddPaymentProps {
     children: React.ReactNode;

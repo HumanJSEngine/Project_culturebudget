@@ -1,9 +1,12 @@
-import React from 'react';
 import styled from 'styled-components';
 import fonts from '../../styles/FontStyle';
 import colors from '../../styles/Theme';
 
-const AddPType = ({ title }) => {
+interface AddPTypeProps {
+    title: string;
+}
+
+const AddPType = ({ title }: AddPTypeProps) => {
     return (
         <>
             <Box>

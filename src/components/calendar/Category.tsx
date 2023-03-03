@@ -10,19 +10,19 @@ interface CategoryProps {
 }
 
 const Category = ({ culture, place, payment }: CategoryProps) => {
-  return (
-    <Categories>
-      <li>
-        <span>{culture}</span>
-      </li>
-      <li>
-        <span>{place}</span>
-      </li>
-      <li>
-        <span>{payment}</span>
-      </li>
-    </Categories>
-  );
+    return (
+        <Categories>
+            <li>
+                <span>{culture}</span>
+            </li>
+            <li>
+                <span>{place}</span>
+            </li>
+            <li>
+                <span>{payment}</span>
+            </li>
+        </Categories>
+    );
 };
 
 const Categories = styled.ul`
