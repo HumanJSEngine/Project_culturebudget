@@ -2,8 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/Theme';
 
-const Expenditure = ({ children }) => {
-    return <Expenditures>{children}</Expenditures>;
+interface ExpenditureProps {
+  children: React.ReactNode;
+}
+
+const Expenditure = ({ children }: ExpenditureProps) => {
+  return <Expenditures>{children}</Expenditures>;
 };
 
 const Expenditures = styled.div`

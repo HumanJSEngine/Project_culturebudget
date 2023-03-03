@@ -53,7 +53,6 @@ const List = () => {
   };
   const list = () => {
     if (postList.length === 0) {
-      // if (!postList) {
       return <NoListItem year={year} month={month} />;
     } else {
       if (listType === 'default') {
