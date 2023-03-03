@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import axios from 'axios';
 import BottomNavigation from '../components/common/BottomNavigation';
 import Page from '../styles/Page';
@@ -15,43 +15,39 @@ import Monthprice from '../components/stats/Monthprice';
 import Header from '../components/Layout/Header';
 import Container from '../styles/Container';
 import ConvertPercent from '../utils/ConvertPercent';
-// import { useRecoilState, useRecoilValue } from 'recoil';
-// import { dataState } from '../state/atoms/DataState';
-// import { dataList } from '../state/selectors/Selector';
 import GetMemberNumber from '../utils/GetMemberNumber';
 import { BudgetData } from '../types/Budget';
+import Loading from '../components/common/Loading';
 
-// type fetchData =<() => Promise<void>, []>;
 type fetchData = (year: number, month: number) => Promise<void>;
 
 const Stats = () => {
-  // const statdata: Array<BudgetData> = useFetch(
-  //     'get',
-  //     'http://haeji.mawani.kro.kr:8585/api/expense/list'
-  // );
-
+  const [isLoading, setIsLoding] = useState<boolean>(false);
   const [statdata, setStatdata] = useState<BudgetData[]>([]);
   const [month, setMonth] = useState(3);
   const [year, setYear] = useState(2023);
-
-  // const statdata2 = useRecoilValue(dataList);
   let memberNum = GetMemberNumber();
-  console.log('유저번호', memberNum);
-  console.log('데이터', statdata);
 
   const fetchData: fetchData = useCallback(
     async (year: number, month: number) => {
+      setIsLoding(true);
       try {
         const result = await axios.get(
           `http://haeji.mawani.kro.kr:8585/api/expense/history/monthly/list2?member=${memberNum}&dt=${year}-${month}&page=0&size=10`
         );
         setStatdata(result.data.list);
+        setIsLoding(false);
       } catch (error) {
         console.log(error);
+        setIsLoding(false);
       }
     },
     [memberNum, setStatdata]
   );
+
+  useEffect(() => {
+    fetchData(year, month);
+  }, [fetchData, year, month]);
 
   const result = statdata.reduce((ac: BudgetData[], cu) => {
     const index: number = ac.findIndex((item) => item.ccName === cu.ccName);
@@ -62,8 +58,6 @@ const Stats = () => {
     }
     return ac;
   }, []);
-
-  console.log('분류', result);
 
   return (
     <Page>
@@ -95,7 +89,7 @@ const Stats = () => {
             })}
           </Expcatelist>
         </Category>
-        {/* {isLoading && <Loading />} */}
+        {isLoading && <Loading />}
       </Container>
       <BottomNavigation />
     </Page>

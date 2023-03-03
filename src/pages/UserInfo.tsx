@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
@@ -26,7 +25,7 @@ const UserInfo = () => {
   };
   const onSubmitDeleteAccount = async () => {
     try {
-      const res = await deleteMember(memberNumber);
+      await deleteMember(memberNumber);
       dispatch(clearUser());
       removeToken();
       closePopup();
