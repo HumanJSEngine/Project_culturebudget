@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import fonts from '../../styles/FontStyle';
 import colors from '../../styles/Theme';
@@ -11,7 +10,7 @@ interface SetPaymentListProps {
     piType: number;
 }
 
-const SetPaymentList = ({ title, to, piType }: SetPaymentListProps) => {
+const SetPaymentList = ({ title, to }: SetPaymentListProps) => {
     return (
         <Link to={to}>
             <Box>

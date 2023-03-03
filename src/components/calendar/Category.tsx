@@ -4,13 +4,12 @@ import colors from '../../styles/Theme';
 import fonts from '../../styles/FontStyle';
 
 interface CategoryProps {
-    culture: number;
+    culture: string;
     place: string;
-    payment: number;
-    culture2: string | undefined;
+    payment: string;
 }
 
-const Category = ({ culture, culture2, place, payment }: CategoryProps) => {
+const Category = ({ culture, place, payment }: CategoryProps) => {
     return (
         <Categories>
             <li>

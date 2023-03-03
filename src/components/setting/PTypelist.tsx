@@ -11,13 +11,7 @@ interface PTypelistProps {
     name: string;
 }
 
-const PTypelist = ({
-    piSeq,
-    piType,
-    piName,
-    fetchData,
-    name,
-}: PTypelistProps) => {
+const PTypelist = ({ piSeq, piName, fetchData, name }: PTypelistProps) => {
     const delPlist = async (piSeq: number) => {
         try {
             const res = await axios.delete(

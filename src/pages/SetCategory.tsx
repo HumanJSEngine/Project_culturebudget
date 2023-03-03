@@ -7,7 +7,7 @@ import Container from '../styles/Container';
 import SettingCateList from '../components/setting/SettingCateList';
 import Header from '../components/common/Header';
 import AddCateList from '../components/setting/AddCateList';
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback } from 'react';
 import axios from 'axios';
 import HeaderGoBackButton from '../components/common/HeaderGoBackButton';
 import { categoryList } from '../state/selectors/Selector';
@@ -15,16 +15,10 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { catedataState } from '../state/atoms/DataState';
 import GetMemberNumber from '../utils/GetMemberNumber';
 
-interface CategoryData {
-    ccSeq: number;
-    ccName: string;
-}
-
 const SetCategory = () => {
     const [cclist, setCclist] = useRecoilState(catedataState);
     const cclist2 = useRecoilValue(categoryList);
     const memberNum = GetMemberNumber();
-    console.log('회원번호확인', memberNum);
 
     const fetchData = useCallback(async () => {
         try {
