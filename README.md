@@ -23,8 +23,7 @@
 [![My Skills](https://skillicons.dev/icons?i=java,mysql)](https://skillicons.dev)
 
 # 시연영상
-https://www.youtube.com/watch?v=If4hrmFJT6o
-<img src="https://user-images.githubusercontent.com/103413040/222675624-1f5126bf-04ed-423b-944d-294327ffab73.gif" width="300" height="600"/>
+<img src="https://user-images.githubusercontent.com/103413040/222675624-1f5126bf-04ed-423b-944d-294327ffab73.gif" width="400" height="700"/>
 
 # 와이어프레임
 
